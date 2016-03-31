@@ -41,7 +41,8 @@ public class RadiostationHandler {
 	 * Max saveable preferred radiostations
 	 */
 	public static final int MAX_PREFERRED_RADIOSTATIONS = 9;
-	private static final String DATABASE_CONNECTION = "jdbc:mysql://145.89.103.148/internetradio?user=radio&password=internetradio";
+	//private static final String DATABASE_CONNECTION = "jdbc:mysql://145.89.103.148/internetradio?user=radio&password=internetradio";
+	private static final String DATABASE_CONNECTION = "jdbc:mysql://localhost/internetradio?user=root&password=";
 	private static Connection connect = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;

@@ -89,7 +89,7 @@ public class MusicController {
      */
 	public void playMusic(Radiostation rs){
 	    try {
-	    	deviceHandler.amplifierSwitch(true);
+	    	//deviceHandler.amplifierSwitch(true);
 	    	try {
 	    		conn = rs.getUrl().openConnection();
 			} catch (IOException e) {
