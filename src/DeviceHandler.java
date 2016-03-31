@@ -63,7 +63,7 @@ public final class DeviceHandler implements RotaryEncoderListener {
 		// Exists only to defeat instantiation.
 		//Set up two interrupts for the clockwise resp. counter clockwise signals on
         //the encoder
-		board = Platform.createBoard();
+		/*board = Platform.createBoard();
         DigitalInput clockwiseSignal = board.getPin(BBBNames.P8_8).as(DigitalInput.class);
         DigitalInput counterClockwiseSignal = board.getPin(BBBNames.P8_10).as(DigitalInput.class);
 		amplifierSignal = board.getPin(BBBNames.P8_12).as(DigitalOutput.class);
@@ -77,7 +77,7 @@ public final class DeviceHandler implements RotaryEncoderListener {
         //System.out.println("DeviceHandler: DefaultImagePath: " + DefaultImagePath.toString());
         //System.out.println("DeviceHandler: test1: " + new File(DefaultImagePath,"noimage.png").getPath());
 		getAmixerControl();
-		setVolume(sVOLUME);
+		setVolume(sVOLUME);*/
 	}
 
 	/**
@@ -275,15 +275,15 @@ public final class DeviceHandler implements RotaryEncoderListener {
      */
     public boolean addListener(DeviceHandlerListener listener)
     {
-    	if (!listeners.contains(listener))
-    	{
-    		listeners.add(listener);
-    		return true;
-    	}
-    	else
-    	{
-    		return false;
-    	}
+		if(listeners != null) {
+			if (!listeners.contains(listener)) {
+				listeners.add(listener);
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
     }
     
     /**
