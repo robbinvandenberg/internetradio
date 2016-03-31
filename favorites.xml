@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Stations>
+  <Station country="Netherlands" genre="Top 40" id="slamfm" img="slamfm.png" name="slamfm" source="http://vip-icecast.538.lw.triple-it.nl/SLAMFM_MP3"/>
+  <Station country="Netherlands" genre="Hot Adult Contemporary" id="q-music" img="q-music.png" name="q-music" source="http://icecast-qmusic.cdp.triple-it.nl/Qmusic_nl_live_96.mp3"/>
+  <Station country="Netherlands" genre="Adult Contemporary" id="5" img="npo_radio_2.png" name="NPO Radio 2" source="http://icecast.omroep.nl:80/radio2-bb-mp3"/>
+  <Station country="Netherlands" genre="Top 40" id="538hitzone" img="538hitzone.png" name="538hitzone" source="http://vip-icecast.538.lw.triple-it.nl/WEB11_MP3"/>
+  <Station country="Netherlands" genre="Top 40" id="q-musicnonstop" img="q-musicnonstop.png" name="q-musicnonstop" source="http://icecast-qmusic.cdp.triple-it.nl/Qmusic_nl_nonstop_96.mp3"/>
+  <Station country="Netherlands" genre="Dance" id="538ibiza" img="538ibiza.png" name="538ibiza" source="http://vip-icecast.538.lw.triple-it.nl/WEB19_MP3"/>
+  <Station country="Netherlands" genre="Classical" id="62" img="classicfm.png" name="Classic FM" source="http://provisioning.streamtheworld.com/pls/classicfm.pls"/>
+</Stations>

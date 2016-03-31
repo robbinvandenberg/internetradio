@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Sound_Preferences>
+  <Preference id="DEFAULT">
+    <Bass value="0"/>
+    <Treble value="0"/>
+    <Gain value="10"/>
+    <Pan value="0"/>
+  </Preference>
+  <Preference id="MELVIN">
+    <Bass value="5"/>
+    <Treble value="3"/>
+    <Gain value="4"/>
+    <Pan value="1"/>
+  </Preference>
+  <Preference id="MARCO">
+    <Bass value="100"/>
+    <Treble value="5"/>
+    <Gain value="6"/>
+    <Pan value="-1"/>
+  </Preference>
+  <Preference id="KASPER">
+    <Bass value="0"/>
+    <Treble value="0"/>
+    <Gain value="0"/>
+    <Pan value="6"/>
+  </Preference>
+  <Preference id="RICK">
+    <Bass value="1"/>
+    <Treble value="8"/>
+    <Gain value="6"/>
+    <Pan value="-4"/>
+  </Preference>
+</Sound_Preferences>

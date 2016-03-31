@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Stations>
+  <Station country="Netherlands" genre="Reggae" id="95" img="noimage.png" name="FunX Reggae" source="http://icecast.omroep.nl:80/funx-reggae-bb-mp3"/>
+  <Station country="Netherlands" genre="News/Feature programmes" id="3" img="noimage.png" name="NPO Radio 1" source="http://icecast.omroep.nl:80/radio1-bb-mp3"/>
+  <Station country="Netherlands" genre="News" id="4" img="noimage.png" name="NPO Radio 1 Nieuws24" source="http://icecast.omroep.nl:80/nieuws24-bb-mp3"/>
+</Stations>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Layout>
+	<MainMenu>
+		<Element label="Stop" id="btnStop">
+			<x pos="371" length="99"/>
+			<y pos="223" length="38"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Prev" id="btnPrev">
+			<x pos="10" length="78"/>
+			<y pos="223" length="38"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Next" id="btnNext">
+			<x pos="288" length="78"/>
+			<y pos="223" length="38"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="" id="slVolume">
+			<x pos="10" length="460"/>
+			<y pos="146" length="66"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Volume" id="lbVolume">
+			<x pos="10" length="460"/>
+			<y pos="128" length="14"/>
+			<Font size="13" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Play" id="tglBtnPlay">
+			<x pos="93" length="190"/>
+			<y pos="223" length="38"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="image" id="jpImage">
+			<x pos="10" length="106"/>
+			<y pos="11" length="106"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Settings" id="btnSettings">
+			<x pos="176" length="190"/>
+			<y pos="11" length="38"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Radiostations" id="btnStationList">
+			<x pos="176" length="190"/>
+			<y pos="77" length="38"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Favourites" id="btnFavorites">
+			<x pos="371" length="99"/>
+			<y pos="11" length="104"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+	</MainMenu>
+	<SettingsController>
+		<Element label="comboBox" id="combobox">
+			<x pos="10" length="173"/>
+			<y pos="10" length="32"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="lblBrightness" id="Brightness">
+			<x pos="10" length="460"/>
+			<y pos="96" length="14"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="slBrightness" id="slBrightness">
+			<x pos="10" length="460"/>
+			<y pos="112" length="66"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="" id="spGain">
+			<x pos="20" length="69"/>
+			<y pos="61" length="33"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="" id="spBass">
+			<x pos="268" length="69"/>
+			<y pos="61" length="33"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="" id="spTreble">
+			<x pos="391" length="69"/>
+			<y pos="61" length="33"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="" id="spBalance">
+			<x pos="143" length="69"/>
+			<y pos="61" length="33"/>
+			<Font size="13" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Gain" id="lblGain">
+			<x pos="20" length="69"/>
+			<y pos="43" length="18"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Balance" id="lblBalance">
+			<x pos="143" length="69"/>
+			<y pos="43" length="18"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Bass" id="lblBass">
+			<x pos="268" length="69"/>
+			<y pos="40" length="21"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Treble" id="lblTreble">
+			<x pos="390" length="69"/>
+			<y pos="40" length="21"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Home" id="btnHome">
+			<x pos="390" length="80"/>
+			<y pos="10" length="32"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Save" id="btnSave">
+			<x pos="301" length="80"/>
+			<y pos="10" length="32"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Shutdown" id="btnShutdown">
+			<x pos="192" length="100"/>
+			<y pos="10" length="32"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Network centrum" id="btnNetwork">
+			<x pos="10" length="460"/>
+			<y pos="196" length="65"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Network" id="lblNetwork">
+			<x pos="10" length="460"/>
+			<y pos="180" length="14"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+	</SettingsController>
+	<StationsMenu>
+		<Element label="Home" id="btnHome">
+			<x pos="352" length="128"/>
+			<y pos="0" length="32"/>
+			<Font size="14" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Back" id="btnBack">
+			<x pos="0" length="128"/>
+			<y pos="0" length="32"/>
+			<Font size="14" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="" id="scrollBar">
+			<x pos="10" length="460"/>
+			<y pos="40" length="189"/>
+			<Font size="24" weight="Plain" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Add to favourites" id="btnAddFav">
+			<x pos="0" length="190"/>
+			<y pos="240" length="32"/>
+			<Font size="14" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="" id="image2">
+			<x pos="10" length="460"/>
+			<y pos="40" length="189"/>
+			<Font size="14" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Play" id="btnPlay">
+			<x pos="190" length="100"/>
+			<y pos="240" length="32"/>
+			<Font size="14" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Path" id="lblPath">
+			<x pos="140" length="200"/>
+			<y pos="8" length="22"/>
+			<Font size="14" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Add to blacklist" id="btnAddBlacklist">
+			<x pos="290" length="190"/>
+			<y pos="240" length="32"/>
+			<Font size="14" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+	</StationsMenu>
+	<FavoriteMenu>
+		<Element label="" id="pPlayedImage">
+			<x pos="10" length="81"/>
+			<y pos="11" length="81"/>
+			<Font size="8" weight="Plain" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Play" id="tglBtnPlay">
+			<x pos="10" length="81"/>
+			<y pos="96" length="38"/>
+			<Font size="10" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Stop" id="btnStop">
+			<x pos="10" length="81"/>
+			<y pos="139" length="38"/>
+			<Font size="10" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="" id="slVolume2">
+			<x pos="101" length="95"/>
+			<y pos="11" length="252"/>
+			<Font size="11" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Home" id="btnHome">
+			<x pos="10" length="81"/>
+			<y pos="222" length="38"/>
+			<Font size="10" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="Remove" id="btnRemove">
+			<x pos="10" length="81"/>
+			<y pos="180" length="38"/>
+			<Font size="10" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+	</FavoriteMenu>
+</Layout>

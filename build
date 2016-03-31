@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Compiling..."
+javac -d bin -sourcepath src -cp `find * -name "*.jar" | tr "\n" ":"` src/PreferenceAgent.java
+echo "Building jar..."
+ant
+echo "Done :)"
