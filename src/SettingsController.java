@@ -31,6 +31,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import jade.core.MainContainer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
@@ -75,6 +76,7 @@ public class SettingsController extends JFrame implements ActionListener, Change
 	private ArrayList<Audio_Setting> al;
 	private int currentALIndex;
 	private MusicController myMusicController;
+	private MainMenu mainMenu;
 
 	/**
 	 * The constructor of SettingsController.
@@ -82,9 +84,10 @@ public class SettingsController extends JFrame implements ActionListener, Change
 	 * 
 	 * @param musicController The instance to the MusicController, required for controlling the music stream
 	 */
-	public SettingsController(MusicController musicController) {
+	public SettingsController(MusicController musicController, MainMenu mainMenu) {
 		settingsXML = new File(DeviceHandler.getInstance().ExecutionPath, "AudioSettings.xml");
 		myMusicController = musicController;
+		this.mainMenu = mainMenu;
 		handler = DeviceHandler.getInstance();
 	}
 	
@@ -317,6 +320,7 @@ public class SettingsController extends JFrame implements ActionListener, Change
 		if(e.getSource() == btnHome)
 		{
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+			mainMenu.setVisible(true);
 		}
 		else if(e.getSource() == btnSave)
 		{

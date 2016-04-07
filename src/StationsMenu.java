@@ -1,3 +1,5 @@
+import sun.applet.Main;
+
 import java.awt.Color;
 
 import java.awt.Cursor;
@@ -55,6 +57,7 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	private String currentFilterName = "";
 	private Radiostation selectedRadiostation = null;
 	private MusicController myMusicController;
+	private MainMenu mainMenu;
 	private DeviceHandler handler;
 	private RadiostationHandler rHandler;
 	
@@ -65,9 +68,10 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	 * 
 	 * @param musicController The instance to the MusicController, required for controlling the music stream
 	 */
-	public StationsMenu(MusicController musicController) {
+	public StationsMenu(MusicController musicController, MainMenu mainMenu) {
 		UI ui = UI_Handler.readLayout("StationsMenu");
 		myMusicController = musicController;
+		this.mainMenu = mainMenu;
 		handler = DeviceHandler.getInstance();
 		rHandler = new RadiostationHandler();
 		filters.put("country", "");
@@ -243,8 +247,9 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnHome){
-			handler.removeListener(this);
+			//handler.removeListener(this);
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+			mainMenu.setVisible(true);
 		}
 		else if (e.getSource() == btnBack)
 		{

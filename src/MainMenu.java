@@ -209,7 +209,7 @@ public class MainMenu extends JFrame implements ActionListener,ChangeListener, D
 		handler.addListener(this); //uses rotaryencoder and volumechanged listeners
 		myMusicController.addListener(this);
 		updateButtons();
-		SettingsController settingsController = new SettingsController(myMusicController);
+		SettingsController settingsController = new SettingsController(myMusicController, this);
 		settingsController.parseDefaultValues();
 	}
 
@@ -249,17 +249,24 @@ public class MainMenu extends JFrame implements ActionListener,ChangeListener, D
 			updateButtons();
 		}
 		else if(e.getSource()== btnSettings){
-			SettingsController frame = new SettingsController(myMusicController);
+
+			SettingsController frame = new SettingsController(myMusicController, this);
 			frame.StartGUI();
 			frame.setVisible(true);
+
+			this.setVisible(false);
 		}
 		else if(e.getSource()== btnStationList){
-			StationsMenu frame = new StationsMenu(myMusicController);
+			StationsMenu frame = new StationsMenu(myMusicController, this);
 			frame.setVisible(true);
+
+			this.setVisible(false);
 		}
 		else if(e.getSource()== btnFavorites){
-			FavoriteMenu frame = new FavoriteMenu(myMusicController);
+			FavoriteMenu frame = new FavoriteMenu(myMusicController, this);
 			frame.setVisible(true);
+
+			this.setVisible(false);
 		}
 		else if(e.getSource()== btnNext){
 			int listSize = rhandler.getPreferredStations().size();

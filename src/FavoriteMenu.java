@@ -51,6 +51,7 @@ public class FavoriteMenu extends JFrame implements ActionListener, MouseListene
 	private boolean volumeChangedByUser = true;
 	
 	private MusicController myMusicController;
+	private MainMenu mainMenu;
 	
 	/**
 	 * Constructor
@@ -59,13 +60,14 @@ public class FavoriteMenu extends JFrame implements ActionListener, MouseListene
 	 * 
 	 * @param musicController The instance to the MusicController, required for controlling the music stream
 	 */
-	public FavoriteMenu(MusicController musicController) {
+	public FavoriteMenu(MusicController musicController, MainMenu mainMenu) {
 		UI ui = UI_Handler.readLayout("FavoriteMenu");
 		handler = DeviceHandler.getInstance();
 		rHandler = new RadiostationHandler();
 		list = rHandler.getPreferredStations();
 		selectedStation = -1;
 		myMusicController = musicController;
+		this.mainMenu = mainMenu;
 		// Transparent 16 x 16 pixel cursor image.
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 		// Create a new blank cursor.
@@ -239,8 +241,8 @@ public class FavoriteMenu extends JFrame implements ActionListener, MouseListene
 			updateButtons();
 		}
 		else if(e.getSource() == btnHome){
-			handler.removeListener(this);
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+			mainMenu.setVisible(true);
 		}
 		else if(e.getSource() == btnRemove){
 			Radiostation rs;	
