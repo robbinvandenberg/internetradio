@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
@@ -21,6 +23,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -42,10 +46,11 @@ public class RadiostationHandler {
 	 */
 	public static final int MAX_PREFERRED_RADIOSTATIONS = 9;
 	//private static final String DATABASE_CONNECTION = "jdbc:mysql://145.89.103.148/internetradio?user=radio&password=internetradio";
-	private static final String DATABASE_CONNECTION = "jdbc:mysql://localhost/internetradio?user=root&password=";
-	private static Connection connect = null;
+	//private static final String DATABASE_CONNECTION = "jdbc:mysql://localhost/internetradio?user=root&password=";
+	private static final String DATABASE_CONNECTION = "http://muelders.nl/api.php?query=";
+	//private static Connection connect = null;
 	private PreparedStatement preparedStatement = null;
-	private ResultSet resultSet = null;
+	//private ResultSet resultSet = null;
 	
 
 	public enum RadiostationError{
@@ -173,7 +178,8 @@ public class RadiostationHandler {
 	 */
 	public boolean checkDatabaseConnection()
 	{
-		boolean result = false;
+		return true;
+		/*boolean result = false;
 		try
 		{
 			connect = DriverManager.getConnection(DATABASE_CONNECTION);
@@ -194,7 +200,7 @@ public class RadiostationHandler {
 		{
 			sqlClose();		
 		}
-		return result;
+		return result;*/
 	}
 	
 	/**
@@ -206,7 +212,7 @@ public class RadiostationHandler {
 	 */
 	public int getFilteredCount(String key) {
 		int count = -1;
-		try {
+		/*try {
 			connect = DriverManager.getConnection(DATABASE_CONNECTION);
 
 			// Statements allow to issue SQL queries to the database
@@ -223,7 +229,7 @@ public class RadiostationHandler {
 		} finally
 		{
 			sqlClose();
-		}
+		}*/
 		return count;
 	}
 	
@@ -236,7 +242,7 @@ public class RadiostationHandler {
 	 */
 	public ArrayList<String> getFilteredList(String key) {
 		ArrayList<String> countries = new ArrayList<String>();
-		try {
+		/*try {
 			// This will load the MySQL driver, each DB has its own driver
 			Class.forName("com.mysql.jdbc.Driver");
 			// Setup the connection with the DB
@@ -254,7 +260,13 @@ public class RadiostationHandler {
 		} catch (Exception e) {
 		} finally {
 			sqlClose();
+		}*/
+		JSONArray jsonArray = HTTPGetDataFromQuery("radiostations");
+		for (Object object : jsonArray) {
+			JSONObject jsonObject = new JSONObject(object);
+			countries.add(jsonObject.getString(key));
 		}
+
 		return countries;
 	}
 	
@@ -269,7 +281,7 @@ public class RadiostationHandler {
 		ArrayList<Radiostation> stations = new ArrayList<Radiostation>();
 		try {
 			// This will load the MySQL driver, each DB has its own driver
-			Class.forName("com.mysql.jdbc.Driver");
+			/*Class.forName("com.mysql.jdbc.Driver");
 			// Setup the connection with the DB
 			connect = DriverManager.getConnection(DATABASE_CONNECTION);
 
@@ -279,12 +291,12 @@ public class RadiostationHandler {
 			preparedStatement = connect
 					.prepareStatement("SELECT * FROM stations WHERE id="
 							+ Integer.toString(id));
-			resultSet = preparedStatement.executeQuery();
-			stations = buildRadiostations(resultSet);
+			resultSet = preparedStatement.executeQuery();*/
+			stations = buildRadiostations(HTTPGetDataFromQuery("radiostations"));
 
 		} catch (Exception e) {
 		} finally {
-			sqlClose();
+			//sqlClose();
 		}
 		if (stations.size() == 1)
 		{
@@ -310,7 +322,7 @@ public class RadiostationHandler {
 	public int getRadiostationsCount(HashMap<String, String> map, boolean inclusive) {
 		int stationsCount = -1;
 		try {
-			connect = DriverManager.getConnection(DATABASE_CONNECTION);
+			/*connect = DriverManager.getConnection(DATABASE_CONNECTION);
 
 			// Statements allow to issue SQL queries to the database
 			//statement = connect.createStatement();
@@ -336,11 +348,13 @@ public class RadiostationHandler {
 			while(resultSet.next()) {
 				//System.out.println(Integer.toString(resultSet.getInt(1)));
 				stationsCount = resultSet.getInt(1);
-			}
+			}*/
+			HTTPGetDataFromQuery("radiostations").length();
 		} catch (Exception e) {
+			e.printStackTrace();
 		} finally
 		{
-			sqlClose();
+			//sqlClose();
 		}
 		return stationsCount;
 	}
@@ -357,7 +371,7 @@ public class RadiostationHandler {
 	public ArrayList<Radiostation> getRadiostations(HashMap<String, String> map, boolean inclusive) {
 		ArrayList<Radiostation> stations = new ArrayList<Radiostation>();
 		try {
-			connect = DriverManager.getConnection(DATABASE_CONNECTION);
+			/*connect = DriverManager.getConnection(DATABASE_CONNECTION);
 
 			// Statements allow to issue SQL queries to the database
 			//statement = connect.createStatement();
@@ -378,13 +392,15 @@ public class RadiostationHandler {
 			//System.out.println("Size of map: " + map.entrySet().size());
 			//System.out.println(st);
 			preparedStatement = connect.prepareStatement(st);
-			resultSet = preparedStatement.executeQuery();
+			resultSet = preparedStatement.executeQuery();*/
 			
-			stations = buildRadiostations(resultSet);
+			stations = buildRadiostations(HTTPGetDataFromQuery("radiostations"));
+
 		} catch (Exception e) {
+			e.printStackTrace();
 		} finally
 		{
-			sqlClose();
+			//sqlClose();
 		}
 		return stations;
 	}
@@ -396,11 +412,25 @@ public class RadiostationHandler {
 	 * @return Arraylist<Radiostation>
 	 * @throws SQLException
 	 */
-	private ArrayList<Radiostation> buildRadiostations(ResultSet resultSet) throws SQLException {
+	private ArrayList<Radiostation> buildRadiostations(JSONArray resultSet) throws SQLException {
 		ArrayList<Radiostation> stations = new ArrayList<Radiostation>();
 		ArrayList<Radiostation> blacklists = getBlacklistStations();
 		// ResultSet is initially before the first data set
-		while (resultSet.next()) {
+		for (int i = 0; i < resultSet.length(); ++i) {
+			try {
+				JSONObject jsonObject = resultSet.getJSONObject(i);
+				Radiostation station = new Radiostation(new URL(jsonObject.getString("url")), jsonObject.getString("ID"),
+						jsonObject.getString("name"), jsonObject.getString("genre"), jsonObject.getString("country"), jsonObject.getString("image"));
+				if(blacklists.contains(station))
+					continue;
+				stations.add(station);
+				System.out.println(jsonObject.toString());
+			} catch (MalformedURLException e){
+				e.printStackTrace();
+			}
+
+		}
+		/*while (resultSet.next()) {
 			try {
 
 				Radiostation station = new Radiostation(new URL(resultSet.getString("url")), resultSet.getString("ID"), 
@@ -410,14 +440,14 @@ public class RadiostationHandler {
 				stations.add(station);
 			} catch (Exception e) {
 			}
-		}
+		}*/
 		return stations;
 	}
 	
 	/**
 	 * Closes the database connection, preparedStatement and resultSet
 	 */
-	private void sqlClose() {
+	/*private void sqlClose() {
 		try {
 			if (resultSet != null) {
 				resultSet.close();
@@ -433,7 +463,7 @@ public class RadiostationHandler {
 		} catch (Exception e) {
 
 		}
-	}
+	}*/
 	
 	/**
 	 * Writes a list of Radiostations to an XML file using the DocumentBuilderFactory.
@@ -523,5 +553,21 @@ public class RadiostationHandler {
 		} catch (Exception e) {
 		}
 		return stations;
+	}
+
+	private JSONArray HTTPGetDataFromQuery(String query){
+		JSONArray jsonArray = null;
+		try {
+			URL url = new URL(DATABASE_CONNECTION + query);
+			BufferedReader streamReader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+			StringBuilder responseStrBuilder = new StringBuilder();
+			String inputStr;
+			while ((inputStr = streamReader.readLine()) != null)
+				responseStrBuilder.append(inputStr);
+			jsonArray = new JSONArray(responseStrBuilder.toString());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return jsonArray;
 	}
 }

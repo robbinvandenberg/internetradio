@@ -22,7 +22,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -217,6 +221,7 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 		{
 			//download all radiostations
 			ArrayList<Radiostation> result = rHandler.getRadiostations(removeUnusedFilters(), true);
+			System.out.println(result.toString());
 			model.clear();
 			for (Radiostation r : result)
 			{
@@ -518,41 +523,41 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	 */
 	class ImageLoadingWorker extends SwingWorker<Boolean, Void> {
 
-		  public ImageLoadingWorker() {
-		    imageLabel.setVisible(true);
-		    scrollBar.setVisible(false);
-		  }
-
-		  // In the EDT
-		  @Override
-		  protected void done() {
-		  
-		    try {
-				if(get() == false){
-					JOptionPane.showMessageDialog(StationsMenu.this,
-						    "Connection to server failed!\nMake sure your internet connection is available.",
-						    "Connection to server failed",
-						    JOptionPane.ERROR_MESSAGE);
-					handler.removeListener(StationsMenu.this);
-					dispatchEvent(new WindowEvent(StationsMenu.this, WindowEvent.WINDOW_CLOSING));
-				}
-				else
-				{
-					imageLabel.setVisible(false);
-					scrollBar.setVisible(true);
-					buildList();
-				}
-			} catch (InterruptedException e) {	
-			} catch (ExecutionException e) {	
-			}
-		  }
-
-		  // In a thread
-		  @Override
-		  public Boolean doInBackground() {
-		    return rHandler.checkDatabaseConnection();
-		  }  
+		public ImageLoadingWorker() {
+		imageLabel.setVisible(true);
+		scrollBar.setVisible(false);
 		}
+
+		// In the EDT
+		@Override
+		protected void done() {
+
+		try {
+			if(get() == false){
+				JOptionPane.showMessageDialog(StationsMenu.this,
+						"Connection to server failed!\nMake sure your internet connection is available.",
+						"Connection to server failed",
+						JOptionPane.ERROR_MESSAGE);
+				handler.removeListener(StationsMenu.this);
+				dispatchEvent(new WindowEvent(StationsMenu.this, WindowEvent.WINDOW_CLOSING));
+			}
+			else
+			{
+				imageLabel.setVisible(false);
+				scrollBar.setVisible(true);
+				buildList();
+			}
+		} catch (InterruptedException e) {
+		} catch (ExecutionException e) {
+		}
+		}
+
+		// In a thread
+		@Override
+		public Boolean doInBackground() {
+			return rHandler.checkDatabaseConnection();
+		}
+	}
 }
 
 

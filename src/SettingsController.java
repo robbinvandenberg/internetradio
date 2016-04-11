@@ -122,7 +122,7 @@ public class SettingsController extends JFrame implements ActionListener, Change
 		
 		UI_Element brightness = ui.getElementById("slBrightness");
 		slBrightness = new JSlider();
-		slBrightness.setValue(handler.getBrightness());
+		slBrightness.setValue(100);//handler.getBrightness()); Cannot be used with HDMI
 		slBrightness.setMinimum(10);
 		slBrightness.setPaintTicks(true);
 		slBrightness.setPaintLabels(true);
@@ -413,19 +413,18 @@ public class SettingsController extends JFrame implements ActionListener, Change
 	public void parseDefaultValues(){
 		//System.out.println("Parse default values");
 		al = readSettings();
-		if (spGain == null)
-		{
-			myMusicController.setGain(al.get(0).getGain());
-			handler.setBass(al.get(0).getBass());
-			handler.setTreble(al.get(0).getTreble());
-			myMusicController.setBalance(al.get(0).getPan());
-		}
-		else
-		{
-			spGain.setValue(al.get(0).getGain());
-			spBass.setValue(al.get(0).getBass());
-			spBalance.setValue(al.get(0).getPan());
-			spTreble.setValue(al.get(0).getTreble());
+		if(al != null) {
+			if (spGain == null) {
+				myMusicController.setGain(al.get(0).getGain());
+				handler.setBass(al.get(0).getBass());
+				handler.setTreble(al.get(0).getTreble());
+				myMusicController.setBalance(al.get(0).getPan());
+			} else {
+				spGain.setValue(al.get(0).getGain());
+				spBass.setValue(al.get(0).getBass());
+				spBalance.setValue(al.get(0).getPan());
+				spTreble.setValue(al.get(0).getTreble());
+			}
 		}
 	}
 
@@ -439,7 +438,7 @@ public class SettingsController extends JFrame implements ActionListener, Change
 			//System.out.println("Brightness changed");
 			JSlider source = (JSlider)e.getSource();
 			if(!source.getValueIsAdjusting()){
-				handler.setBrightness(slBrightness.getValue());
+				//handler.setBrightness(slBrightness.getValue()); Cannot be used with HDMI
 			}	
 		}		
 		else if(e.getSource().getClass().equals(spBalance.getClass())){

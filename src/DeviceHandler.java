@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import com.pi4j.io.gpio.*;
+import com.pi4j.wiringpi.Gpio;
 import org.bulldog.beagleboneblack.BBBNames;
 import org.bulldog.core.gpio.DigitalInput;
 import org.bulldog.core.gpio.DigitalOutput;
@@ -22,24 +24,23 @@ import org.bulldog.devices.switches.RotaryEncoderListener;
  * This static class has to ability to control some hardware.
  * With this class you can change volume, run linux commands, listen to rotary encoder changes etc.
  */
-public final class DeviceHandler implements RotaryEncoderListener {
+public final class DeviceHandler {
 	private static DeviceHandler instance;
 	/**
 	 * Possible Hardware controls
 	 */
-	public static enum Hardware {
+	private enum Hardware {
 	    BRIGHTNESS, LED_USR0, LED_USR1, LED_USR2, LED_USR3
 	}
 	/**
 	 * Volume controls, to change master volume percentage use PCT
 	 */
-	public static enum Volume {
+	private enum Volume {
 	    PCT_PLUS, PCT_MINUS, PCT, Value
 	}
-	private Board board = null;
+	//private Board board = null;
 	private IncrementalRotaryEncoder encoder = null;
 	private ArrayList<DeviceHandlerListener> listeners;
-	private DigitalOutput amplifierSignal =  null;
 	/**
 	 * The directory where the .jar file is located
 	 */
@@ -51,9 +52,12 @@ public final class DeviceHandler implements RotaryEncoderListener {
 	
 	private int sVOLUME = 10;
 	private String amixerControl;
-	private int sBRIGHTNESS = 100;
+	//private int sBRIGHTNESS = 100; // cant set brightness on HDMI
 	private int sTREBLE = 0;
 	private int sBASS = 0;
+
+	private static GpioController gpioController;
+	private static GpioPinDigitalOutput amplifierSignal;
 	
 	/**
 	 * Constructor
@@ -63,21 +67,28 @@ public final class DeviceHandler implements RotaryEncoderListener {
 		// Exists only to defeat instantiation.
 		//Set up two interrupts for the clockwise resp. counter clockwise signals on
         //the encoder
-		/*board = Platform.createBoard();
-        DigitalInput clockwiseSignal = board.getPin(BBBNames.P8_8).as(DigitalInput.class);
-        DigitalInput counterClockwiseSignal = board.getPin(BBBNames.P8_10).as(DigitalInput.class);
-		amplifierSignal = board.getPin(BBBNames.P8_12).as(DigitalOutput.class);
-        //Create the encoder with these digital inputs
-        encoder = new IncrementalRotaryEncoder(clockwiseSignal, counterClockwiseSignal);
-        encoder.addListener(this);
-        listeners = new ArrayList<DeviceHandlerListener>();
+		//board = Platform.createBoard();
+        //DigitalInput clockwiseSignal = board.getPin(BBBNames.P8_8).as(DigitalInput.class);
+        //DigitalInput counterClockwiseSignal = board.getPin(BBBNames.P8_10).as(DigitalInput.class);
+
+		if(gpioController == null) {
+			gpioController = GpioFactory.getInstance();
+			if(amplifierSignal == null){
+				amplifierSignal = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, PinState.LOW);
+			}
+		}
+
+		//Create the encoder with these digital inputs
+        //encoder = new IncrementalRotaryEncoder(clockwiseSignal, counterClockwiseSignal);
+        //encoder.addListener(this);
+        listeners = new ArrayList<>();
         ExecutionPath = getJarDir(this.getClass());
         //System.out.println("DeviceHandler: ExecutionPath: " + ExecutionPath.toString());
-        DefaultImagePath = new File(ExecutionPath, File.separator.toString() + "images");
-        //System.out.println("DeviceHandler: DefaultImagePath: " + DefaultImagePath.toString());
+        DefaultImagePath = new File(ExecutionPath, File.separator + "images");
+        System.out.println("DeviceHandler: DefaultImagePath: " + DefaultImagePath.toString());
         //System.out.println("DeviceHandler: test1: " + new File(DefaultImagePath,"noimage.png").getPath());
-		getAmixerControl();
-		setVolume(sVOLUME);*/
+		amixerControl = getAmixerControl();
+		setVolume(sVOLUME);
 	}
 
 	/**
@@ -154,7 +165,7 @@ public final class DeviceHandler implements RotaryEncoderListener {
 	 * Retrieves the amixer volume simple control. This can change overtime
 	 * In development time we found the values 'PCM' and 'Speaker'.
 	 */
-	private void getAmixerControl()
+	private String getAmixerControl()
 	{
 		ArrayList<String> response = command("amixer scontrols",".");
 		if (response == null)
@@ -183,18 +194,19 @@ public final class DeviceHandler implements RotaryEncoderListener {
 			}
 			index += 1;
 			int endindex = response.get(0).indexOf("'", index);
-			amixerControl = response.get(0).substring(index, endindex);
+			return response.get(0).substring(index, endindex);
 		}
 		//System.out.println("amixer control: " + amixerControl);
+		return null;
 	}
 	
 	/**
 	 * Set linux hardware values
 	 * 
 	 * @param hw The hardware to control
-	 * @param value The value to set
+	 * @param Value The value to set
 	 */
-	private void setLinuxHardwareValues(Hardware hw, int Value) {
+	/*private void setLinuxHardwareValues(Hardware hw, int Value) {
 		String command = "";
 		switch (hw)
 		{
@@ -221,6 +233,8 @@ public final class DeviceHandler implements RotaryEncoderListener {
             for (String line : output)
                 System.out.println(line);
     }
+    Not usefull for the raspi
+    */
 
 	/**
 	 * Execute a linux command, default wait till command is finished
@@ -303,45 +317,6 @@ public final class DeviceHandler implements RotaryEncoderListener {
     		return false;
     	}
     }
-
-    /**
-     * This function is called when the rotary encoder value is changed
-     */
-	@Override
-	public void valueChanged(Integer arg0, Integer arg1) {
-		//System.out.println("DeviceHandler: Rotaryencoder Value changed");
-		//System.out.println("DeviceHandler: listeners: " + listeners.size());
-		if (listeners.size() > 0)
-		{
-			listeners.get(listeners.size()-1).rotaryValueChanged(arg0, arg1);
-		}
-	}
-
-	/**
-	 * This function is called when the rotary encoder is turned clockwise
-	 */
-	@Override
-	public void turnedClockwise() {
-		//System.out.println("DeviceHandler: Rotaryencoder turnedClockwise");
-		//System.out.println("DeviceHandler: listeners: " + listeners.size());
-		if (listeners.size() > 0)
-		{
-			listeners.get(listeners.size()-1).rotaryTurnedClockwise();
-		}
-	}
-
-	/**
-	 * This function is called when the rotary encoder is turned counter clockwise
-	 */
-	@Override
-	public void turnedCounterclockwise() {
-		//System.out.println("DeviceHandler: Rotaryencoder turnedCounterclockwise");
-		//System.out.println("DeviceHandler: listeners: " + listeners.size());
-		if (listeners.size() > 0)
-		{
-			listeners.get(listeners.size()-1).rotaryTurnedCounterclockwise();
-		}
-	}
 	
 	/**
 	 * Switches the amplifier on or off
@@ -349,13 +324,15 @@ public final class DeviceHandler implements RotaryEncoderListener {
 	 * @param state The state to set the amplifier to
 	 */
 	public void amplifierSwitch(boolean state){
-		if(state == true)
+		if(state)
 		{
 			amplifierSignal.high();
+			System.out.println("Ga aaaaan");
 		}
 		else
 		{
 			amplifierSignal.low();
+			System.out.println("Ga uuiutiuitt");
 		}
 	}	
 	
@@ -422,19 +399,19 @@ public final class DeviceHandler implements RotaryEncoderListener {
 	 * 
 	 * @return The brightness. Range 0 - 100
 	 */
-	public int getBrightness(){
+	/*public int getBrightness(){
 		return sBRIGHTNESS;
-	}
+	}*/
 	
 	/**
 	 * Set screen brightness
 	 * 
 	 * @param x The brightness percentage. Range 0 - 100
 	 */
-	public void setBrightness(int x){
+	/*public void setBrightness(int x){
 		setLinuxHardwareValues(DeviceHandler.Hardware.BRIGHTNESS, x);	
 		sBRIGHTNESS = x;
-	}
+	}*/
 	
 	/**
 	 * Get treble value. Currently not implemented
