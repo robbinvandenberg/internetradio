@@ -56,8 +56,9 @@ public final class DeviceHandler {
 	private int sTREBLE = 0;
 	private int sBASS = 0;
 
-	private static GpioController gpioController;
-	private static GpioPinDigitalOutput amplifierSignal;
+	//Dont use pi4j. Testing on pc
+	/*private static GpioController gpioController;
+	private static GpioPinDigitalOutput amplifierSignal;*/
 	
 	/**
 	 * Constructor
@@ -71,12 +72,12 @@ public final class DeviceHandler {
         //DigitalInput clockwiseSignal = board.getPin(BBBNames.P8_8).as(DigitalInput.class);
         //DigitalInput counterClockwiseSignal = board.getPin(BBBNames.P8_10).as(DigitalInput.class);
 
-		if(gpioController == null) {
+		/*if(gpioController == null) {
 			gpioController = GpioFactory.getInstance();
 			if(amplifierSignal == null){
 				amplifierSignal = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, PinState.LOW);
 			}
-		}
+		}*/
 
 		//Create the encoder with these digital inputs
         //encoder = new IncrementalRotaryEncoder(clockwiseSignal, counterClockwiseSignal);
@@ -326,12 +327,12 @@ public final class DeviceHandler {
 	public void amplifierSwitch(boolean state){
 		if(state)
 		{
-			amplifierSignal.high();
+			//amplifierSignal.high();
 			System.out.println("Ga aaaaan");
 		}
 		else
 		{
-			amplifierSignal.low();
+			//amplifierSignal.low();
 			System.out.println("Ga uuiutiuitt");
 		}
 	}	
