@@ -57,8 +57,8 @@ public final class DeviceHandler {
 	private int sBASS = 0;
 
 	//Dont use pi4j. Testing on pc
-	/*private static GpioController gpioController;
-	private static GpioPinDigitalOutput amplifierSignal;*/
+	private static GpioController gpioController;
+	private static GpioPinDigitalOutput amplifierSignal;
 	
 	/**
 	 * Constructor
@@ -72,12 +72,14 @@ public final class DeviceHandler {
         //DigitalInput clockwiseSignal = board.getPin(BBBNames.P8_8).as(DigitalInput.class);
         //DigitalInput counterClockwiseSignal = board.getPin(BBBNames.P8_10).as(DigitalInput.class);
 
-		/*if(gpioController == null) {
-			gpioController = GpioFactory.getInstance();
-			if(amplifierSignal == null){
-				amplifierSignal = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, PinState.LOW);
+		if(!System.getProperty("os.name").startsWith("Windows")) {
+			if(gpioController == null) {
+				gpioController = GpioFactory.getInstance();
+				if(amplifierSignal == null){
+					amplifierSignal = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_07, PinState.LOW);
+				}
 			}
-		}*/
+		}
 
 		//Create the encoder with these digital inputs
         //encoder = new IncrementalRotaryEncoder(clockwiseSignal, counterClockwiseSignal);
@@ -88,7 +90,9 @@ public final class DeviceHandler {
         DefaultImagePath = new File(ExecutionPath, File.separator + "images");
         System.out.println("DeviceHandler: DefaultImagePath: " + DefaultImagePath.toString());
         //System.out.println("DeviceHandler: test1: " + new File(DefaultImagePath,"noimage.png").getPath());
-		amixerControl = getAmixerControl();
+		if(!System.getProperty("os.name").startsWith("Windows")) {
+			amixerControl = getAmixerControl();
+		}
 		setVolume(sVOLUME);
 	}
 
@@ -327,13 +331,17 @@ public final class DeviceHandler {
 	public void amplifierSwitch(boolean state){
 		if(state)
 		{
-			//amplifierSignal.high();
-			System.out.println("Ga aaaaan");
+			if(!System.getProperty("os.name").startsWith("Windows")) {
+				amplifierSignal.high();
+				System.out.println("Ga aaaaan");
+			}
 		}
 		else
 		{
-			//amplifierSignal.low();
-			System.out.println("Ga uuiutiuitt");
+			if(!System.getProperty("os.name").startsWith("Windows")) {
+				amplifierSignal.low();
+				System.out.println("Ga uuiutiuitt");
+			}
 		}
 	}	
 	

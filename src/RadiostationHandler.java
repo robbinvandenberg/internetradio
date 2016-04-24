@@ -419,12 +419,13 @@ public class RadiostationHandler {
 		for (int i = 0; i < resultSet.length(); ++i) {
 			try {
 				JSONObject jsonObject = resultSet.getJSONObject(i);
-				Radiostation station = new Radiostation(new URL(jsonObject.getString("url")), jsonObject.getString("ID"),
+				URL streamURL = new URL(jsonObject.getString("url"));
+				System.out.println(streamURL.toString());
+				Radiostation station = new Radiostation(streamURL, jsonObject.getString("ID"),
 						jsonObject.getString("name"), jsonObject.getString("genre"), jsonObject.getString("country"), jsonObject.getString("image"));
 				if(blacklists.contains(station))
 					continue;
 				stations.add(station);
-				System.out.println(jsonObject.toString());
 			} catch (MalformedURLException e){
 				e.printStackTrace();
 			}
