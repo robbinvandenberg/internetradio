@@ -363,44 +363,15 @@ public class RadiostationHandler {
 	 * Executes an SQL query to return the stations matching the given filters.
 	 * 
 	 * "Inclusive" parameter is used to set whether all a station has to conform to both filters or only one
-	 * 
-	 * @param map
-	 * @param inclusive
+	 *
 	 * @return ArrayList<Radiostation>
 	 */
-	public ArrayList<Radiostation> getRadiostations(HashMap<String, String> map, boolean inclusive) {
+	public ArrayList<Radiostation> getRadiostations() {
 		ArrayList<Radiostation> stations = new ArrayList<Radiostation>();
 		try {
-			/*connect = DriverManager.getConnection(DATABASE_CONNECTION);
-
-			// Statements allow to issue SQL queries to the database
-			//statement = connect.createStatement();
-			// Result set get the result of the SQL query
-			String st = "SELECT * FROM stations" + (map.entrySet().size() > 0 ? " WHERE " : "");
-			int length = map.entrySet().size();
-			int count = 0;
-			for(Map.Entry<String, String> entry : map.entrySet()) {
-				if(count == length-1) {
-					st += entry.getKey() +  "=\"" + entry.getValue() + "\"";
-				}
-				else {
-					st += entry.getKey() +  "=\"" + entry.getValue() + "\" " + (inclusive ? "AND " : "OR ");
-				}
-				count++;
-				
-			}
-			//System.out.println("Size of map: " + map.entrySet().size());
-			//System.out.println(st);
-			preparedStatement = connect.prepareStatement(st);
-			resultSet = preparedStatement.executeQuery();*/
-			
 			stations = buildRadiostations(HTTPGetDataFromQuery("radiostations"));
-
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally
-		{
-			//sqlClose();
 		}
 		return stations;
 	}
