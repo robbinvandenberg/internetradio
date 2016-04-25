@@ -82,9 +82,9 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 		filters.put("genre", "");
 		
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-		    cursorImg, new Point(0, 0), "blank cursor");
-		getContentPane().setCursor(blankCursor);
+		//Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+		  //  cursorImg, new Point(0, 0), "blank cursor");
+		//getContentPane().setCursor(blankCursor);
 		
 		getContentPane().setBackground(new Color(192, 192, 192));
 		setResizable(false);
@@ -261,6 +261,7 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 			if (currentFilterName.equals(""))
 			{
 				this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+				mainMenu.setVisible(true);
 			}
 			else 
 			{
