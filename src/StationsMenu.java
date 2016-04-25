@@ -207,43 +207,16 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	 */
 	private void buildList()
 	{
-		if (currentFilterName.equals(""))
-		{
-			//build filter menu
-			model.clear();
-			for (Map.Entry<String, String> entry : filters.entrySet())
-			{
-				JListEntry jlistEntry = new JListEntry(entry.getKey());
-				model.addElement(jlistEntry);
-			}
-			int count = rHandler.getRadiostationsCount(removeUnusedFilters(), true);
-			JListEntry jlistEntry = new JListEntry("results", "Show results (" + count + ")");
-			model.addElement(jlistEntry);
-			lblPath.setText("");
-		}
-		else if (currentFilterName.equals("results"))
-		{
 			//download all radiostations
-			ArrayList<Radiostation> result = rHandler.getRadiostations(removeUnusedFilters(), true);
+			ArrayList<Radiostation> result = rHandler.getRadiostations();
 			System.out.println(result.toString());
 			model.clear();
 			for (Radiostation r : result)
 			{
-				model.addElement(new JListEntry(r));
+				JListEntry jlistEntry = new JListEntry(r);
+				model.addElement(jlistEntry);
 			}
 			lblPath.setText("Show results");
-		}
-		else
-		{
-			//download filterByKey
-			ArrayList<String> result = rHandler.getFilteredList(currentFilterName);
-			model.clear();
-			for (String s : result)
-			{
-				model.addElement(new JListEntry(s));
-			}
-			lblPath.setText("Filter by: " + currentFilterName);
-		}
 	}
 	
 	/**
@@ -357,33 +330,9 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
         if (index >= 0)
         {
         	JListEntry entry  = (JListEntry)list.getModel().getElementAt(index);
+			selectedRadiostation = entry.getStation();
+			setRadiostationButtonsEnabled(true);
 			//System.out.println(entry.getFilterName());
-			if (!currentFilterName.equals(""))
-			{
-				//we have a filter selected and a item has been pressed.
-				//Save the selected item and return to main menu.
-				//possibilities are that we have selected a radio station or a filter
-				if (currentFilterName.equals("results"))
-				{
-					//a radio station has been selected
-					//System.out.println(entry.getStation().getName());
-					selectedRadiostation = entry.getStation();
-					setRadiostationButtonsEnabled(true);
-				}
-				else
-				{
-					filters.put(currentFilterName, entry.getFilterName());
-					currentFilterName = "";
-					buildList();
-					setRadiostationButtonsEnabled(false);
-				}
-			}
-			else
-			{
-				currentFilterName = entry.getFilterName();
-				buildList();
-				setRadiostationButtonsEnabled(false);
-			}
 		}
 	}
 
@@ -446,29 +395,12 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	 * This class is made so you can build easier the radio station list of the StationsMenu class.
 	 */
 	private class JListEntry {
-		private String filtername;
-		private String optionalText;
 		private Radiostation station;
-		
-		public JListEntry(String filtername)
-		{
-			this.filtername = filtername;
-		}
-		
-		public JListEntry(String filtername, String optionalText)
-		{
-			this.filtername = filtername;
-			this.optionalText = optionalText;
-		}
+
 		
 		public JListEntry(Radiostation r)
 		{
 			this.station = r;
-		}
-		
-		public String getFilterName()
-		{
-			return filtername;
 		}
 		
 		public Radiostation getStation()
@@ -479,41 +411,7 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 		@Override
 		public String toString()
 		{
-			//We have no filter, so build main menu
-			if (currentFilterName.equals(""))
-			{
-				if (optionalText != null)
-				{
-					return optionalText;
-				}
-				else 
-				{
-					if (filters.containsKey(filtername))
-					{
-						if (filters.get(filtername).equals(""))
-						{
-							return "Filter by " + filtername;
-						}
-						else
-						{
-							return "Filter by " + filtername + " (" + filters.get(filtername) + ")";
-						}
-					}
-					else
-					{
-						return filtername;
-					}
-				}
-			} 
-			else
-			{
-				if (currentFilterName.equals("results") && station != null)
-				{
-					//we have results filter so we are returning radiostations
-					return station.getName();
-				}
-				return filtername;
-			}
+			return station.getName();
 		}
 	}
 
