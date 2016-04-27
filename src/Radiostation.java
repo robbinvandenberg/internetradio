@@ -2,54 +2,48 @@ import java.net.URL;
 
 
 /**
- * @file Radiostation.java
+ * @file RadioStation.java
  *
- * @brief      Radiostation data object
- * @details    The Radiostation class contains all the variables needed to connect to a given radiostation
+ * @brief      RadioStation data object
+ * @details    The RadioStation class contains all the variables needed to connect to a given radiostation
  */
 
-public class Radiostation {
-	private URL rsStreamAddress;
-	private String rsId;
-	private String rsName;
-	private String rsGenre;
-	private String rsCountry;
-	private String imageFileName = "";
+public class RadioStation {
+	private int id;
+	private String name;
+	private String genre;
+	private String country;
+	private URL streamUrl;
 
 
 	/**
 	 * Constructor
-	 * 
-	 * @param StreamAddress
+	 *
 	 * @param id
 	 * @param name
 	 * @param genre
 	 * @param country
-	 * @param image
 	 */
-	public Radiostation(URL StreamAddress, String id, String name, String genre, String country, String image) {
-		rsStreamAddress = StreamAddress;
-		rsId = id;
-		rsName = name;
-		rsGenre = genre;
-		rsCountry = country;
-		imageFileName = image;
-		//System.out.println("Selected radio station " + rsId +  " with: " + rsName + " from " + rsStreamAddress + " with genre " + rsGenre + ".");
+	public RadioStation(int id, String name, String genre, String country, URL streamUrl) {
+		this.id = id;
+		this.name = name;
+		this.genre = genre;
+		this.country = country;
+		this.streamUrl = streamUrl;
 	}
 	
 	/**
 	 * Compares a radiostation with another object and returns whether they are equal
-	 * 
-	 * @param Object
+	 *
 	 * @return boolean
 	 */
 	public boolean equals(Object other){
 	    if (other == null) return false;
 	    if (other == this) return true;
-	    if (!(other instanceof Radiostation))
+	    if (!(other instanceof RadioStation))
 	    	return false;
-	    Radiostation otherStation = (Radiostation)other;
-	    if (otherStation.getId().equals(this.getId())) 
+	    RadioStation otherStation = (RadioStation)other;
+	    if (otherStation.getId() == id)
 	    	return true;
 	    else
 	    	return false;
@@ -59,9 +53,9 @@ public class Radiostation {
 	 * 
 	 * @return String
 	 */
-	public String getId()
+	public int getId()
 	{
-		return rsId;
+		return id;
 	}
 	
 	/**
@@ -70,7 +64,7 @@ public class Radiostation {
 	 */
 	public String getName()
 	{
-		return rsName;
+		return name;
 	}
 	
 	/**
@@ -79,7 +73,7 @@ public class Radiostation {
 	 */
 	public String getGenre()
 	{
-		return rsGenre;
+		return genre;
 	}
 	
 	/**
@@ -88,81 +82,15 @@ public class Radiostation {
 	 */
 	public String getCountry()
 	{
-		return rsCountry;
+		return country;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return URL
 	 */
-	public URL getUrl()
+	public URL getStreamUrl()
 	{
-		return rsStreamAddress;
-	}
-	
-	/**
-	 * Sets the ID
-	 * 
-	 * @param id
-	 */
-	public void setId(String id)
-	{
-		this.rsId = id;
-	}
-	
-	/**
-	 * Sets the name
-	 * 
-	 * @param name
-	 */
-	public void setName(String name)
-	{
-		this.rsName = name;
-	}
-	
-	/**
-	 * Sets the genre
-	 * 
-	 * @param genre
-	 */
-	public void setGenre(String genre)
-	{
-		this.rsGenre = genre;
-	}
-	
-	/**
-	 * Sets the country
-	 * 
-	 * @param country
-	 */
-	public void setCountry(String country)
-	{
-		this.rsCountry = country;
-	}
-	
-	/**
-	 * Sets the stream url
-	 * 
-	 * @param url
-	 */
-	public void setURL(URL url)
-	{
-		this.rsStreamAddress = url;
-	}
-	
-	/**
-	 * 
-	 * @return String
-	 */
-	public String getImage() {
-		return imageFileName;
-	}
-	/**
-	 * Sets image filename
-	 * 
-	 * @param im
-	 */
-	public void setImage(String im) {
-		imageFileName = im;
+		return streamUrl;
 	}
 }

@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout>
 	<MainMenu>
-		<Element label="Stop" id="btnStop">
-			<x pos="371" length="99"/>
-			<y pos="223" length="38"/>
-			<Font size="11" weight="Bold" style="Tahoma"/>
-			<Border style="Default"/>
-		</Element>
-		<Element label="Prev" id="btnPrev">
-			<x pos="10" length="78"/>
-			<y pos="223" length="38"/>
-			<Font size="11" weight="Bold" style="Tahoma"/>
-			<Border style="Default"/>
-		</Element>
-		<Element label="Next" id="btnNext">
-			<x pos="288" length="78"/>
-			<y pos="223" length="38"/>
-			<Font size="11" weight="Bold" style="Tahoma"/>
-			<Border style="Default"/>
-		</Element>
 		<Element label="" id="slVolume">
 			<x pos="10" length="460"/>
 			<y pos="146" length="66"/>
@@ -32,32 +14,32 @@
 			<Border style="Default"/>
 		</Element>
 		<Element label="Play" id="tglBtnPlay">
-			<x pos="93" length="190"/>
+			<x pos="10" length="153"/>
 			<y pos="223" length="38"/>
 			<Font size="11" weight="Bold" style="Tahoma"/>
 			<Border style="Default"/>
 		</Element>
-		<Element label="image" id="jpImage">
-			<x pos="10" length="106"/>
-			<y pos="11" length="106"/>
+		<Element label="StationName" id="stationName">
+			<x pos="10" length="460"/>
+			<y pos="20" length="30"/>
+			<Font size="25" weight="Bold" style="Tahoma"/>
+			<Border style="Default"/>
+		</Element>
+		<Element label="StationGenre" id="stationGenre">
+			<x pos="10" length="460"/>
+			<y pos="50" length="15"/>
 			<Font size="11" weight="Bold" style="Tahoma"/>
 			<Border style="Default"/>
 		</Element>
 		<Element label="Settings" id="btnSettings">
-			<x pos="176" length="190"/>
-			<y pos="11" length="38"/>
+			<x pos="316" length="153"/>
+			<y pos="223" length="38"/>
 			<Font size="11" weight="Bold" style="Tahoma"/>
 			<Border style="Default"/>
 		</Element>
 		<Element label="Radiostations" id="btnStationList">
-			<x pos="176" length="190"/>
-			<y pos="77" length="38"/>
-			<Font size="11" weight="Bold" style="Tahoma"/>
-			<Border style="Default"/>
-		</Element>
-		<Element label="Favourites" id="btnFavorites">
-			<x pos="371" length="99"/>
-			<y pos="11" length="104"/>
+			<x pos="163" length="153"/>
+			<y pos="223" length="38"/>
 			<Font size="11" weight="Bold" style="Tahoma"/>
 			<Border style="Default"/>
 		</Element>
@@ -161,12 +143,6 @@
 		</Element>
 	</SettingsController>
 	<StationsMenu>
-		<Element label="Home" id="btnHome">
-			<x pos="352" length="128"/>
-			<y pos="0" length="32"/>
-			<Font size="14" weight="Bold" style="Tahoma"/>
-			<Border style="Default"/>
-		</Element>
 		<Element label="Back" id="btnBack">
 			<x pos="0" length="128"/>
 			<y pos="0" length="32"/>
@@ -200,12 +176,6 @@
 		<Element label="Path" id="lblPath">
 			<x pos="140" length="200"/>
 			<y pos="8" length="22"/>
-			<Font size="14" weight="Bold" style="Tahoma"/>
-			<Border style="Default"/>
-		</Element>
-		<Element label="Add to blacklist" id="btnAddBlacklist">
-			<x pos="290" length="190"/>
-			<y pos="240" length="32"/>
 			<Font size="14" weight="Bold" style="Tahoma"/>
 			<Border style="Default"/>
 		</Element>

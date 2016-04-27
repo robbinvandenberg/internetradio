@@ -87,8 +87,8 @@ public class PreferenceAgentHandler {
 	 * 
 	 * This function is to read the data from the preferencedXML.
 	 * 
-	 * @return a Hashmap with the types <String, Integer>. Were the String is the name of the Radiostation 
-	 * and the Integer is the played time of this Radiostation. 
+	 * @return a Hashmap with the types <String, Integer>. Were the String is the name of the RadioStation
+	 * and the Integer is the played time of this RadioStation.
 	 */
 	public HashMap<String, Integer> readFavoritesXML() {
 		final HashMap<String, Integer> stations = new HashMap<String, Integer>();

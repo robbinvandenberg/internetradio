@@ -1,7 +1,6 @@
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
@@ -18,12 +17,11 @@ public class MusicController {
 	private DeviceHandler deviceHandler = new DeviceHandler();
 	private BasicPlayer myMusicPlayer;
 	private BasicController playerController;
-	private Radiostation currentRadiostation;
+	private RadioStation currentRadiostation;
 	private URLConnection conn;
 	private InputStream is;
 	private BufferedInputStream bis;
 	private PlayState playState;
-	private ArrayList<RadiostationListener> listeners;
 	
 	/**
 	 * The current play state
@@ -40,58 +38,22 @@ public class MusicController {
 	 */
 	public MusicController() {
 		playState = PlayState.STOPPED;
-		listeners = new ArrayList<RadiostationListener>();
 		myMusicPlayer=new BasicPlayer();
 		playerController=(BasicController)myMusicPlayer;	
 	}
-	
-	/**
-	 * Add listener for current radiostation changes
-	 * 
-	 * @param listener The listener to add
-	 * @return True if added successfully. Returns false only when already added
-	 */
-	public boolean addListener(RadiostationListener listener)
-    {
-    	if (!listeners.contains(listener))
-    	{
-    		listeners.add(listener);
-    		return true;
-    	}
-    	else
-    	{
-    		return false;
-    	}
-    }
-    
-	/**
-	 * Remove a listener. Should be called when closing GUI.
-	 * @param listener The listener to remove
-     * @return False if already removed
-	 */
-    public boolean removeListener(RadiostationListener listener)
-    {
-    	if (listeners.contains(listener))
-    	{
-    		listeners.remove(listener);
-    		return true;
-    	}
-    	else
-    	{
-    		return false;
-    	}
-    }
+
+
 	
     /**
      * Start streaming a radiostation
      * 
      * @param rs The radiostation to start streaming
      */
-	public void playMusic(Radiostation rs){
+	public void playMusic(RadioStation rs){
 	    try {
 	    	deviceHandler.amplifierSwitch(true);
 	    	try {
-	    		conn = rs.getUrl().openConnection();
+	    		conn = rs.getStreamUrl().openConnection();
 			} catch (IOException e) {
 				return;
 			}
@@ -104,7 +66,7 @@ public class MusicController {
 			playerController.open(bis);
 			playerController.play();
 			playState = PlayState.PLAYING;
-			setCurrentRadiostation(rs);
+			currentRadiostation = rs;
 			System.out.println("Now playing: " + rs.getName());
 		} catch (BasicPlayerException e) {
 		}
@@ -143,22 +105,14 @@ public class MusicController {
 		} catch (BasicPlayerException e) {
 		}
 	}
-	
-	/**
-	 * Set current radiostation, this function calls all hooked listeners
-	 */
-	public void setCurrentRadiostation(Radiostation rs){
-		currentRadiostation = rs;
-		for (RadiostationListener listener : listeners)
-			listener.onChange(rs);
-	}
+
 	
 	/**
 	 * Get current selected radiostation
 	 * 
 	 * @return The current radiostation
 	 */
-	public Radiostation getCurrentRadiostation(){
+	public RadioStation getCurrentRadiostation(){
 		return currentRadiostation;
 	}
 	
