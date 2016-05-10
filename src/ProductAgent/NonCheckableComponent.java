@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class NonCheckableComponent extends Component {
 
-    public NonCheckableComponent(String name, List<Step> replacementSteps){
-        super(name, replacementSteps);
+    public NonCheckableComponent(String name, List<Step> replacementSteps, String fileName){
+        super(name, replacementSteps, fileName);
     }
 }

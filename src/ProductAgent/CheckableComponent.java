@@ -10,8 +10,8 @@ import java.util.List;
 public abstract class CheckableComponent extends Component {
     private int checkInterval; //in seconds
 
-    public CheckableComponent(String name, List<Step> replacementSteps, int checkInterval){
-        super(name, replacementSteps);
+    public CheckableComponent(String name, List<Step> replacementSteps, String fileName, int checkInterval){
+        super(name, replacementSteps, fileName);
         this.checkInterval = checkInterval;
     }
 

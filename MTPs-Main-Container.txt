@@ -1,1 +1,1 @@
-http://DESKTOP-FUHSUFC.wifi.hu.nl:7778/acc
+http://M-Zenbook.wifi.hu.nl:7778/acc
