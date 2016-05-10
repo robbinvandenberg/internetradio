@@ -23,6 +23,8 @@ public class MusicController {
 	private InputStream is;
 	private BufferedInputStream bis;
 	private PlayState playState;
+
+	private Thread playMusicThread;
 	
 	/**
 	 * The current play state
@@ -51,26 +53,42 @@ public class MusicController {
      * @param rs The radiostation to start streaming
      */
 	public void playMusic(RadioStation rs){
-	    try {
-	    	deviceHandler.amplifierSwitch(true);
-	    	try {
-	    		conn = rs.getStreamUrl().openConnection();
-			} catch (IOException e) {
-				return;
+		// if there is already a playMusic thread created, let it join with the main thread. <<Antiserum82>>
+		if(playMusicThread != null) {
+			try {
+				playMusicThread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-	    	try {
-				is = conn.getInputStream();
-			} catch (IOException e) {
-				return;
-			}
-	    	bis = new BufferedInputStream(is);
-			playerController.open(bis);
-			playerController.play();
-			playState = PlayState.PLAYING;
-			currentRadiostation = rs;
-			System.out.println("Now playing: " + rs.getName());
-		} catch (BasicPlayerException e) {
 		}
+
+		// create a new thread with a connection to the selected radiostation <<Antiserum82>>
+		playMusicThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					deviceHandler.amplifierSwitch(true);
+					try {
+						conn = rs.getStreamUrl().openConnection();
+					} catch (IOException e) {
+						return;
+					}
+					try {
+						is = conn.getInputStream();
+					} catch (IOException e) {
+						return;
+					}
+					bis = new BufferedInputStream(is);
+					playerController.open(bis);
+					playerController.play();
+					playState = PlayState.PLAYING;
+					currentRadiostation = rs;
+					System.out.println("Now playing: " + rs.getName());
+				} catch (BasicPlayerException e) {
+				}
+			}
+		});
+		playMusicThread.start();
 	}
 	
 	/**
