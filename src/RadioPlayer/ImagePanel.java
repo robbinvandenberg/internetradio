@@ -1,3 +1,5 @@
+package RadioPlayer;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -34,7 +36,7 @@ public class ImagePanel extends JPanel{
 	}
 	
 	/**
-	 * Set a ImageIcon to the ImagePanel, can redraw
+	 * Set a ImageIcon to the RadioPlayer.ImagePanel, can redraw
 	 * 
 	 * @param img The image to be drawn
 	 */

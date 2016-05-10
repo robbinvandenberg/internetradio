@@ -1,23 +1,19 @@
+package RadioPlayer;
+
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
-import javax.swing.SpinnerModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.metal.MetalSliderUI;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
-import java.awt.Font;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -31,7 +27,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import jade.core.MainContainer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
@@ -48,8 +43,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /** 
- * SettingsController.java
- * The SettingsController class.
+ * RadioPlayer.SettingsController.java
+ * The RadioPlayer.SettingsController class.
  * 
  * In this class the settings menu GUI is represented to the user
  */
@@ -79,10 +74,10 @@ public class SettingsController extends JFrame implements ActionListener, Change
 	private MainMenu mainMenu;
 
 	/**
-	 * The constructor of SettingsController.
+	 * The constructor of RadioPlayer.SettingsController.
 	 *
 	 * 
-	 * @param musicController The instance to the MusicController, required for controlling the music stream
+	 * @param musicController The instance to the RadioPlayer.MusicController, required for controlling the music stream
 	 */
 	public SettingsController(MusicController musicController, MainMenu mainMenu) {
 		settingsXML = new File(DeviceHandler.getInstance().ExecutionPath, "AudioSettings.xml");

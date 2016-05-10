@@ -1,6 +1,8 @@
+package RadioPlayer;
+
 /**
- * Audio_Setting.java
- * The Audio_Setting class
+ * RadioPlayer.Audio_Setting.java
+ * The RadioPlayer.Audio_Setting class
  * 
  * This data holder class defines the different audio settings that can be done.
  */
@@ -13,7 +15,7 @@ public class Audio_Setting {
 	private int pan;
 	
 	/**
-	 * The constructor of the Audio_Setting class.
+	 * The constructor of the RadioPlayer.Audio_Setting class.
 	 * 
 	 * @param id Unique identifier
 	 * @param bass bass value

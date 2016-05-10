@@ -1,3 +1,5 @@
+package RadioPlayer;
+
 import java.awt.Color;
 
 import javax.swing.DefaultListModel;
@@ -15,8 +17,8 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 /**
- * StationsMenu.java 
- * The StationsMenu class.
+ * RadioPlayer.StationsMenu.java
+ * The RadioPlayer.StationsMenu class.
  * 
  * In this class the stations menu GUI is represented to the user
  */
@@ -33,11 +35,11 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	private RadiostationWebservice radioStationWebservice;
 	
 	/**
-	 * The constructor of StationsMenu.
+	 * The constructor of RadioPlayer.StationsMenu.
 	 * 
 	 * In this constructor the GUI frame of the stations menu is build
 	 * 
-	 * @param musicController The instance to the MusicController, required for controlling the music stream
+	 * @param musicController The instance to the RadioPlayer.MusicController, required for controlling the music stream
 	 */
 	public StationsMenu(MainMenu mainMenu) {
 		UI ui = UI_Handler.readLayout("StationsMenu");
@@ -190,9 +192,9 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	}
 	
 	/**
-	 * Inner classe JListEntry of the class StationsMenu.
+	 * Inner classe JListEntry of the class RadioPlayer.StationsMenu.
 	 * 
-	 * This class is made so you can build easier the radio station radioStationList of the StationsMenu class.
+	 * This class is made so you can build easier the radio station radioStationList of the RadioPlayer.StationsMenu class.
 	 */
 	private class JListEntry {
 		private RadioStation station;

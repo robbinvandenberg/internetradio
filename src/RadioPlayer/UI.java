@@ -1,15 +1,17 @@
+package RadioPlayer;
+
 import java.util.ArrayList;
 
 /**
- * UI.java
- * The UI class.
+ * RadioPlayer.UI.java
+ * The RadioPlayer.UI class.
  * 
  */
 public class UI {
 
 	ArrayList<UI_Element> list;
 	/**
-	 * Constructs UI object
+	 * Constructs RadioPlayer.UI object
 	 * 
 	 * @param ui
 	 */
@@ -17,7 +19,7 @@ public class UI {
 		list = ui.getElements();
 	}
 	/**
-	 * Constructs UI object
+	 * Constructs RadioPlayer.UI object
 	 * 
 	 * @param uilist
 	 */
@@ -29,9 +31,9 @@ public class UI {
 		return "asdf";	
 	}*/
 	/**
-	 * Returns the list of UI elements
+	 * Returns the list of RadioPlayer.UI elements
 	 * 
-	 * @return ArrayList<UI_Element>
+	 * @return ArrayList<RadioPlayer.UI_Element>
 	 */
 	public ArrayList<UI_Element> getElements() {
 		return list;
@@ -41,7 +43,7 @@ public class UI {
 	 * Returns an element using the id variable as key
 	 * 
 	 * @param id
-	 * @return UI_Element
+	 * @return RadioPlayer.UI_Element
 	 */
 	public UI_Element getElementById(String id) {
 		

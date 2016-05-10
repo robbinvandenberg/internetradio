@@ -1,9 +1,7 @@
+package RadioPlayer;
+
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -23,8 +21,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * PreferenceAgentHandler.java
- * The PreferenceAgentHandler class
+ * RadioPlayer.PreferenceAgentHandler.java
+ * The RadioPlayer.PreferenceAgentHandler class
  * 
  * The function of this class is to read and write the preferenceXML. This xml contains data how long a radiostation
  * has been played.
@@ -87,8 +85,8 @@ public class PreferenceAgentHandler {
 	 * 
 	 * This function is to read the data from the preferencedXML.
 	 * 
-	 * @return a Hashmap with the types <String, Integer>. Were the String is the name of the RadioStation
-	 * and the Integer is the played time of this RadioStation.
+	 * @return a Hashmap with the types <String, Integer>. Were the String is the name of the RadioPlayer.RadioStation
+	 * and the Integer is the played time of this RadioPlayer.RadioStation.
 	 */
 	public HashMap<String, Integer> readFavoritesXML() {
 		final HashMap<String, Integer> stations = new HashMap<String, Integer>();

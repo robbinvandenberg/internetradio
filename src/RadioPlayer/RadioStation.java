@@ -1,11 +1,13 @@
+package RadioPlayer;
+
 import java.net.URL;
 
 
 /**
- * @file RadioStation.java
+ * @file RadioPlayer.RadioStation.java
  *
- * @brief      RadioStation data object
- * @details    The RadioStation class contains all the variables needed to connect to a given radiostation
+ * @brief      RadioPlayer.RadioStation data object
+ * @details    The RadioPlayer.RadioStation class contains all the variables needed to connect to a given radiostation
  */
 
 public class RadioStation {

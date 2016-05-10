@@ -1,3 +1,5 @@
+package RadioPlayer;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JSlider;
@@ -15,7 +17,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * MainMenu.java
+ * RadioPlayer.MainMenu.java
  * The main menu GUI of the internetradio
  * 
  * In this class the main menu GUI is represented to the user
@@ -23,7 +25,7 @@ import javax.swing.event.ChangeListener;
 public class MainMenu extends JFrame implements ActionListener,ChangeListener, DeviceHandlerListener, WindowListener, PlayerMenu {
 	private static final long serialVersionUID = 1L;
 	
-	//private PreferenceAgent PrefAgent;
+	//private RadioPlayer.PreferenceAgent PrefAgent;
 	private DeviceHandler handler;
 	private RadioStation currentRadioStation;
 	private JSlider volumeSlider;
@@ -225,7 +227,7 @@ public class MainMenu extends JFrame implements ActionListener,ChangeListener, D
 	}
 
 	/**
-	 * Gets called by DeviceHandler when the master volume is changed
+	 * Gets called by RadioPlayer.DeviceHandler when the master volume is changed
 	 * 
 	 * @param volume The volume percentage. Range 0 - 100
 	 */

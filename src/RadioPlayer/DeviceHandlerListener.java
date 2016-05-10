@@ -1,5 +1,7 @@
+package RadioPlayer;
+
 /**
- * Interface for listening to volume and rotary encoder changes. Used by DeviceHandler
+ * Interface for listening to volume and rotary encoder changes. Used by RadioPlayer.DeviceHandler
  */
 interface DeviceHandlerListener {
 	/**

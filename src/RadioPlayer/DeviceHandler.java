@@ -1,3 +1,5 @@
+package RadioPlayer;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -9,17 +11,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import com.pi4j.io.gpio.*;
-import com.pi4j.wiringpi.Gpio;
-import org.bulldog.beagleboneblack.BBBNames;
-import org.bulldog.core.gpio.DigitalInput;
-import org.bulldog.core.gpio.DigitalOutput;
-import org.bulldog.core.platform.Board;
-import org.bulldog.core.platform.Platform;
 import org.bulldog.devices.switches.IncrementalRotaryEncoder;
-import org.bulldog.devices.switches.RotaryEncoderListener;
 
 /**
- * DeviceHandler.java
+ * RadioPlayer.DeviceHandler.java
  * 
  * This static class has to ability to control some hardware.
  * With this class you can change volume, run linux commands, listen to rotary encoder changes etc.
@@ -86,10 +81,10 @@ public final class DeviceHandler {
         //encoder.addListener(this);
         listeners = new ArrayList<>();
         ExecutionPath = getJarDir(this.getClass());
-        //System.out.println("DeviceHandler: ExecutionPath: " + ExecutionPath.toString());
+        //System.out.println("RadioPlayer.DeviceHandler: ExecutionPath: " + ExecutionPath.toString());
         DefaultImagePath = new File(ExecutionPath, File.separator + "images");
-        System.out.println("DeviceHandler: DefaultImagePath: " + DefaultImagePath.toString());
-        //System.out.println("DeviceHandler: test1: " + new File(DefaultImagePath,"noimage.png").getPath());
+        System.out.println("RadioPlayer.DeviceHandler: DefaultImagePath: " + DefaultImagePath.toString());
+        //System.out.println("RadioPlayer.DeviceHandler: test1: " + new File(DefaultImagePath,"noimage.png").getPath());
 		if(!System.getProperty("os.name").startsWith("Windows")) {
 			amixerControl = getAmixerControl();
 		}
@@ -97,7 +92,7 @@ public final class DeviceHandler {
 	}
 
 	/**
-	 * Should be used to get an instance of the DeviceHandler static class
+	 * Should be used to get an instance of the RadioPlayer.DeviceHandler static class
 	 */
 	public static DeviceHandler getInstance() {
 	  if(instance == null) {
@@ -134,8 +129,8 @@ public final class DeviceHandler {
 	    } catch (SecurityException ex) {
 	        url = aclass.getResource(aclass.getSimpleName() + ".class");
 	        // url is in one of two forms, both ending "/com/physpics/tools/ui/PropNode.class"
-	        //          file:/U:/Fred/java/Tools/UI/build/classes
-	        //          jar:file:/U:/Fred/java/Tools/UI/dist/UI.jar!
+	        //          file:/U:/Fred/java/Tools/RadioPlayer.UI/build/classes
+	        //          jar:file:/U:/Fred/java/Tools/RadioPlayer.UI/dist/RadioPlayer.UI.jar!
 	    }
 
 	    // convert to external form
@@ -418,7 +413,7 @@ public final class DeviceHandler {
 	 * @param x The brightness percentage. Range 0 - 100
 	 */
 	/*public void setBrightness(int x){
-		setLinuxHardwareValues(DeviceHandler.Hardware.BRIGHTNESS, x);	
+		setLinuxHardwareValues(RadioPlayer.DeviceHandler.Hardware.BRIGHTNESS, x);
 		sBRIGHTNESS = x;
 	}*/
 	

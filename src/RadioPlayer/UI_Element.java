@@ -1,9 +1,11 @@
+package RadioPlayer;
+
 import java.awt.Font;
 
 
 /**
- * UI_Element.java
- * The UI_Element class.
+ * RadioPlayer.UI_Element.java
+ * The RadioPlayer.UI_Element class.
  * 
  */
 public class UI_Element {
@@ -23,7 +25,7 @@ public class UI_Element {
 	
 	
 	/**
-	 * Constructs the UI_Element object. 
+	 * Constructs the RadioPlayer.UI_Element object.
 	 * Font parameters are used to create a font object.
 	 * 
 	 * @param xL

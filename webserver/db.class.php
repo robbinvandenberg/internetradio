@@ -24,7 +24,7 @@ class InternetradioPDO extends PDO
 	 * 
 	 * @param map
 	 * @param inclusive
-	 * @return ArrayList<RadioStation>
+	 * @return ArrayList<RadioPlayer.RadioStation>
 	 */
     public function getRadiostations() {
     	$res = false;

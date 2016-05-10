@@ -1,3 +1,5 @@
+package RadioPlayer;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,9 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * @file RadiostationWebservice.java
+ * @file RadioPlayer.RadiostationWebservice.java
  * 
- * @brief The RadiostationWebservice contains database connectability to get radiostation from an external server. It has also
+ * @brief The RadioPlayer.RadiostationWebservice contains database connectability to get radiostation from an external server. It has also
  * favorite XML read and write functionality.
  */
 public class RadiostationWebservice {
@@ -31,7 +33,7 @@ public class RadiostationWebservice {
 	 * 
 	 * "Inclusive" parameter is used to set whether all a station has to conform to both filters or only one
 	 *
-	 * @return ArrayList<RadioStation>
+	 * @return ArrayList<RadioPlayer.RadioStation>
 	 */
 	public ArrayList<RadioStation> getRadiostations() {
 		ArrayList<RadioStation> stations = new ArrayList<RadioStation>();
@@ -47,7 +49,7 @@ public class RadiostationWebservice {
 	 * Builds a list of radiostations from the ResultSet of a SQL query
 	 *
 	 * @param resultSet
-	 * @return Arraylist<RadioStation>
+	 * @return Arraylist<RadioPlayer.RadioStation>
 	 * @throws SQLException
 	 */
 	private ArrayList<RadioStation> buildRadiostations(JSONArray resultSet) {

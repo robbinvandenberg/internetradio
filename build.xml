@@ -5,7 +5,7 @@
     <target name="create_run_jar">
         <jar destfile="Internetradio.jar" filesetmanifest="mergewithoutmain">
             <manifest>
-                <attribute name="Main-Class" value="PreferenceAgent"/>
+                <attribute name="Main-Class" value="RadioPlayer.PreferenceAgent"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
             <fileset dir="bin"/>

@@ -1,15 +1,16 @@
+package RadioPlayer;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
-import java.util.ArrayList;
 
 import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 /**
- * The MusicController class
+ * The RadioPlayer.MusicController class
  * 
  * This class provides radiostreaming functionality and holds current radiostation
  */

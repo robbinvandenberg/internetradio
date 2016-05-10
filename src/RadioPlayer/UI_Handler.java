@@ -1,38 +1,30 @@
+package RadioPlayer;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 /**
- * UI_Handler.java
- * The UI_Handler class.
+ * RadioPlayer.UI_Handler.java
+ * The RadioPlayer.UI_Handler class.
  * 
  */
 public class UI_Handler {
 	
 	/**
 	 * @param final String menuID
-	 * @return UI
+	 * @return RadioPlayer.UI
 	 * 
 	 * This function reads out the layout of the given menu (indicated by the menuID parameter) from the layout.xml file
 	 * present on the Beaglebone using the SAX parser.
 	 * 
-	 * UI_Element objects are constructed from the data in the XML file and added to an arraylist, 
-	 * which is used to construct the UI object.
+	 * RadioPlayer.UI_Element objects are constructed from the data in the XML file and added to an arraylist,
+	 * which is used to construct the RadioPlayer.UI object.
 	 * 
 	 */	
 	public static UI readLayout(final String menuID) {

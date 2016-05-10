@@ -40,7 +40,7 @@ function connectDatabase() {
  * 
  * @param map
  * @param inclusive
- * @return ArrayList<RadioStation>
+ * @return ArrayList<RadioPlayer.RadioStation>
  */
 function getRadioStations() {
 	$ret = -1;
