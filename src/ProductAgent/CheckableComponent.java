@@ -1,38 +1,34 @@
 package ProductAgent;
 
+import ProductAgent.Exceptions.UnableToParseComponentFileException;
+import ProductAgent.Exceptions.UnableToStoreComponentFileException;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.List;
 
 /**
  * Created by Bart on 10-5-2016.
  */
 public abstract class CheckableComponent extends Component {
-    private int checkInterval; //in seconds
 
-    public CheckableComponent(String name, List<Step> replacementSteps, String fileName, int checkInterval){
+    public CheckableComponent(String name, List<Step> replacementSteps, String fileName){
         super(name, replacementSteps, fileName);
-        this.checkInterval = checkInterval;
     }
 
-    public int getCheckInterval() {
-        return checkInterval;
-    }
+    public ComponentStatus checkStatus() throws UnableToParseComponentFileException, UnableToStoreComponentFileException {
+        ComponentStatus currentStatus = getComponentStatus();
 
-    public ComponentStatus checkStatus(){
-        ComponentStatus currentStatus = blabla();
+        ComponentFile file = ComponentFile.Load(fileName);
 
-        if(currentStatus != getPreviousStatus()){
-
-            //TODO log verandering naar logfile
+        if(currentStatus != file.getStatus()){
+            file.setComponentStatus(currentStatus);
+            log(currentStatus);
         }
         return currentStatus;
     }
 
-    private ComponentStatus getPreviousStatus(){
-        //TODO haal laatste status op uit log
-        throw new NotImplementedException();
-    }
+    protected abstract ComponentStatus getComponentStatus();
 
-    protected abstract ComponentStatus blabla();
+
 }
