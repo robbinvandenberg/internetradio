@@ -12,14 +12,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,6 +43,51 @@ public class ComponentFile {
 
     public String getComponentName(){
         return root.getElementsByTagName("name").item(0).getTextContent();
+    }
+
+    public Date getInstallDate(){
+        SimpleDateFormat formatter = new SimpleDateFormat(dateTimeFormat);
+        Date timeStamp = null;
+        try {
+            timeStamp = formatter.parse(root.getElementsByTagName("installDate").item(0).getTextContent());
+        } catch (ParseException e) {
+            return null;
+        }
+        return timeStamp;
+    }
+
+    private void setInstallDate() throws UnableToStoreComponentFileException {
+        Format formatter = new SimpleDateFormat(dateTimeFormat);
+
+        root.getElementsByTagName("installDate").item(0).setTextContent(formatter.format(new Date()));
+
+        try {
+            writeToFile();
+        } catch (TransformerException e) {
+            throw new UnableToStoreComponentFileException(e);
+        }
+
+        addToLog(new Log(new Date(), "Installment date has been stored."));
+    }
+
+    public long getMileage(){
+        return Long.parseLong(root.getElementsByTagName("mileage").item(0).getTextContent());
+    }
+
+    public void addMileage(long seconds) throws UnableToStoreComponentFileException {
+        long newMileage = getMileage() + seconds;
+
+        Element mileageElement = (Element) root.getElementsByTagName("mileage").item(0);
+
+        mileageElement.setTextContent(""+newMileage);
+
+        try {
+            writeToFile();
+        } catch (TransformerException e) {
+            throw new UnableToStoreComponentFileException(e);
+        }
+
+        addToLog(new Log(new Date(), "" + seconds + "seconds has been added to mileage."));
     }
 
     public ComponentStatus getStatus(){
@@ -109,7 +152,7 @@ public class ComponentFile {
         return replacementSteps;
     }
 
-    public void AddToLog(Log log) throws UnableToStoreComponentFileException {
+    public void addToLog(Log log) throws UnableToStoreComponentFileException {
         Element logsElement = (Element) root.getElementsByTagName("logs").item(0);
 
         Format formatter = new SimpleDateFormat(dateTimeFormat);
@@ -180,7 +223,16 @@ public class ComponentFile {
                 throw new IllegalArgumentException("root element 'component' not found in file.");
             }
 
-            return new ComponentFile(fileName, componentDocument);
+            ComponentFile file = new ComponentFile(fileName, componentDocument);
+
+            if(file.getInstallDate() == null){
+                try {
+                    file.setInstallDate();
+                } catch (UnableToStoreComponentFileException e) {
+                }
+            }
+
+            return file;
 
         } catch (SAXException e) {
             throw new UnableToParseComponentFileException(e);

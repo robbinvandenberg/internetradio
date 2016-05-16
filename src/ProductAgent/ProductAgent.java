@@ -2,6 +2,7 @@ package ProductAgent;
 
 import ProductAgent.Exceptions.UnableToParseComponentFileException;
 import ProductAgent.Exceptions.UnableToReadAttachmentException;
+import ProductAgent.Exceptions.UnableToStoreComponentFileException;
 import jade.core.Agent;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,6 +28,35 @@ public class ProductAgent extends Agent {
 
         componentChecker = new ComponentChecker(this, componentCheckInterval, checkableComponents);
         addBehaviour(componentChecker);
+
+        for (CheckableComponent component: checkableComponents){
+            component.startMileageCount();
+        }
+        for (NonCheckableComponent component: nonCheckableComponents){
+            component.startMileageCount();
+        }
+    }
+
+    public void takeDown(){
+        for (CheckableComponent component: checkableComponents){
+            try {
+                component.stopMilageCount();
+            } catch (UnableToParseComponentFileException e) {
+                e.printStackTrace();
+            } catch (UnableToStoreComponentFileException e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (NonCheckableComponent component: nonCheckableComponents){
+            try {
+                component.stopMilageCount();
+            } catch (UnableToParseComponentFileException e) {
+                e.printStackTrace();
+            } catch (UnableToStoreComponentFileException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void addComponentToCheckAbles(String file){
