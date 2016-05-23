@@ -23,6 +23,10 @@ public class Attachment {
         return name;
     }
 
+    public String getFileName(){
+        String paths[] = fileName.split("[/]");
+        return paths[paths.length-1];}
+
     public FileInputStream getFileContent() throws UnableToReadAttachmentException {
         try {
             return new FileInputStream(fileName);

@@ -1,13 +1,15 @@
 package ProductAgent;
 
 import ProductAgent.Exceptions.UnableToParseComponentFileException;
-import ProductAgent.Exceptions.UnableToReadAttachmentException;
 import ProductAgent.Exceptions.UnableToStoreComponentFileException;
+import ProductAgent.Web.DownloadAttachmentPage;
+import ProductAgent.Web.HomePage;
+import ProductAgent.Web.LogPage;
+import com.sun.net.httpserver.HttpServer;
 import jade.core.Agent;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.Vector;
 
 /**
@@ -19,6 +21,9 @@ public class ProductAgent extends Agent {
 
     private Vector<CheckableComponent> checkableComponents;
     private Vector<NonCheckableComponent> nonCheckableComponents;
+    private Vector<Component> allComponents;
+
+    private HttpServer webServer;
 
     public void setup() {
         checkableComponents = new Vector<CheckableComponent>();
@@ -26,14 +31,32 @@ public class ProductAgent extends Agent {
 
         addComponentToCheckAbles("components/amplifier/componentInfo.xml");
 
+        allComponents = new Vector<Component>();
+
+        for (CheckableComponent component: checkableComponents){
+            allComponents.add(component);
+        }
+        for (NonCheckableComponent component: nonCheckableComponents){
+            allComponents.add(component);
+        }
+
         componentChecker = new ComponentChecker(this, componentCheckInterval, checkableComponents);
         addBehaviour(componentChecker);
 
-        for (CheckableComponent component: checkableComponents){
+        for (Component component: allComponents){
             component.startMileageCount();
         }
-        for (NonCheckableComponent component: nonCheckableComponents){
-            component.startMileageCount();
+
+        try {
+
+            webServer = HttpServer.create(new InetSocketAddress(8000), 0);
+            webServer.createContext("/", new HomePage(checkableComponents, nonCheckableComponents));
+            webServer.createContext("/downloadAttachment", new DownloadAttachmentPage(allComponents));
+            webServer.createContext("/logs", new LogPage(allComponents));
+            webServer.setExecutor(null); // creates a default executor
+            webServer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

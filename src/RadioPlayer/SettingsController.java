@@ -259,7 +259,7 @@ public class SettingsController extends JFrame implements ActionListener, Change
 		getContentPane().add(lblTreble);
 		
 		UI_Element home = ui.getElementById("btnHome");
-		btnHome = new JButton("Home");
+		btnHome = new JButton("HomePage");
 		btnHome.setFont(home.getFont());
 		btnHome.setBounds(home.getxPos(), home.getyPos(), home.getxLength(), home.getyLength());
 		//btnHome.setFont(new Font("Tahoma", Font.BOLD, 11));
