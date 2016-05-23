@@ -2,6 +2,7 @@ package ProductAgent;
 
 import ProductAgent.Exceptions.UnableToParseComponentFileException;
 import ProductAgent.Exceptions.UnableToStoreComponentFileException;
+import jade.util.leap.Collection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Vector;
 
@@ -87,7 +89,7 @@ public class ComponentFile {
             throw new UnableToStoreComponentFileException(e);
         }
 
-        addToLog(new Log(new Date(), "" + seconds + "seconds has been added to mileage."));
+        addToLog(new Log(new Date(), "" + seconds + " seconds has been added to mileage."));
     }
 
     public ComponentStatus getStatus(){
@@ -167,8 +169,10 @@ public class ComponentFile {
         logElement.appendChild(timestamp);
         logElement.appendChild(message);
 
-        //TODO: correct format (newline, tabs)
+        logsElement.appendChild(document.createTextNode("    "));
         logsElement.appendChild(logElement);
+        logsElement.appendChild(document.createTextNode("\n    "));
+
 
         try {
             writeToFile();
@@ -195,6 +199,7 @@ public class ComponentFile {
                 }
             }
 
+            Collections.reverse(logs);
             return logs;
 
         } catch (ParseException e) {
