@@ -6,8 +6,10 @@ import ProductAgent.Exceptions.UnableToStoreComponentFileException;
 import jade.core.Agent;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.*;
 import java.util.Vector;
 
 /**
@@ -23,8 +25,10 @@ public class ProductAgent extends Agent {
     public void setup() {
         checkableComponents = new Vector<CheckableComponent>();
         nonCheckableComponents = new Vector<NonCheckableComponent>();
+        System.err.println("PRODUCT AGENT SETUP");
 
-        addComponentToCheckAbles("components/amplifier/componentInfo.xml");
+        autoDetectComponents();
+        //addComponentToCheckAbles("components/checkable/amplifier/componentInfo.xml");
 
         componentChecker = new ComponentChecker(this, componentCheckInterval, checkableComponents);
         addBehaviour(componentChecker);
@@ -73,4 +77,37 @@ public class ProductAgent extends Agent {
             e.printStackTrace();
         }
     }
+
+    /*
+    Dynamically read out the checkable components folder and add them.
+     */
+    private void autoDetectComponents() {
+        DirectoryStream.Filter<Path> filter = new DirectoryStream.Filter<Path>() {
+            @Override
+            public boolean accept(Path file) throws IOException {
+                return (Files.isDirectory(file));
+            }
+        };
+
+        // Set default test path
+        Path dir = FileSystems.getDefault().getPath("");
+        // Try get the path to project folder
+        try {
+            dir = FileSystems.getDefault().getPath(new File(".").getCanonicalPath() + "\\src\\components\\checkable");
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        // Process all the components inside checkable components folder
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, filter)) {
+            for (Path path : stream) {
+                // Iterate over the paths in the directory and add found components
+                addComponentToCheckAbles("components/checkable/" + path.getFileName() + "/componentInfo.xml");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
