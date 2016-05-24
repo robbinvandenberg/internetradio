@@ -9,9 +9,7 @@ import ProductAgent.Web.ReplaceInstructionsPage;
 import com.sun.net.httpserver.HttpServer;
 import jade.core.Agent;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.*;
 import java.net.InetSocketAddress;
@@ -38,19 +36,19 @@ public class ProductAgent extends Agent {
         autoDetectComponents();
         //addComponentToCheckAbles("components/checkable/amplifier/componentInfo.xml");
 
-        addComponentToCheckAbles("components/amplifier/componentInfo.xml");
-        addComponentToCheckAbles("components/mainBoard/componentInfo.xml");
-        addComponentToCheckAbles("components/touchScreen/componentInfo.xml");
-        addComponentToCheckAbles("components/powerSupply/componentInfo.xml");
-        addComponentToCheckAbles("components/wifiModule/componentInfo.xml");
-
-        addComponentToNonCheckAbles("components/speaker/componentInfo.xml");
-        addComponentToNonCheckAbles("components/frontPanel/componentInfo.xml");
-        addComponentToNonCheckAbles("components/bottomPanel/componentInfo.xml");
-        addComponentToNonCheckAbles("components/rearPanel/componentInfo.xml");
-        addComponentToNonCheckAbles("components/topPanel/componentInfo.xml");
-        addComponentToNonCheckAbles("components/leftSidePanel/componentInfo.xml");
-        addComponentToNonCheckAbles("components/rightSidePanel/componentInfo.xml");
+        /*addComponentToCheckAbles("components/amplifier/componentInfo.xml");
+        addComponentToCheckAbles("components/checkable/mainBoard/componentInfo.xml");
+        addComponentToCheckAbles("components/checkable/touchScreen/componentInfo.xml");
+        addComponentToCheckAbles("components/checkable/powerSupply/componentInfo.xml");
+        addComponentToCheckAbles("components/checkable/wifiModule/componentInfo.xml");
+*/
+        addComponentToNonCheckAbles("components/nonCheckable/speaker/componentInfo.xml");
+        addComponentToNonCheckAbles("components/nonCheckable/frontPanel/componentInfo.xml");
+        addComponentToNonCheckAbles("components/nonCheckable/bottomPanel/componentInfo.xml");
+        addComponentToNonCheckAbles("components/nonCheckable/rearPanel/componentInfo.xml");
+        addComponentToNonCheckAbles("components/nonCheckable/topPanel/componentInfo.xml");
+        addComponentToNonCheckAbles("components/nonCheckable/leftSidePanel/componentInfo.xml");
+        addComponentToNonCheckAbles("components/nonCheckable/rightSidePanel/componentInfo.xml");
 
         allComponents = new Vector<Component>();
 
