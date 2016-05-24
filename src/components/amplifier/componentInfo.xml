@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><component>
     <name>amplifier</name>
-    <status>Ok</status>
-    <installDate>2016-05-16 11:08:17</installDate>
-    <mileage>127</mileage>
+    <status></status>
+    <installDate></installDate>
+    <mileage>0</mileage>
     <replacementSteps>
         <step>
             <title>unscrew</title>
@@ -27,6 +27,5 @@
         </step>
     </replacementSteps>
     <logs>
-
-    <log><timestamp>2016-05-16 11:08:17</timestamp><message>Installment date has been stored.</message></log><log><timestamp>2016-05-16 11:36:37</timestamp><message>88seconds has been added to mileage.</message></log><log><timestamp>2016-05-16 11:38:00</timestamp><message>39seconds has been added to mileage.</message></log></logs>
+    </logs>
 </component>

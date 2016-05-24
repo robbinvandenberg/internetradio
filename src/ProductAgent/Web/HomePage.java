@@ -29,11 +29,14 @@ public class HomePage implements HttpHandler {
         String response ="<html> <head/> <body> <h1>Radio component overzicht</h1><br />" +
         "<b>Controleerbare componenten</b><br /><hr />" +
         "<table style=\"width:100%\">" +
-        "<tr><th align=\"left\">Component</th><th align=\"left\">Status</th><th align=\"left\">Mileage</th></tr>";
+        "<tr><th align=\"left\">Component</th><th align=\"left\">Installatie datum</th><th align=\"left\">Status</th><th align=\"left\">Mileage</th></tr>";
 
         for (CheckableComponent component: checkableComponents ) {
             response+= " <tr>"+
                     "<td>"+component.getName()+"</td>";
+
+                    response+= "<td>"+component.getInstallDate().toString()+"</td>";
+
                     try {
                         response+= "<td>"+component.checkStatus().toString()+"</td>";
                     } catch (UnableToParseComponentFileException e) {
@@ -47,6 +50,7 @@ public class HomePage implements HttpHandler {
                     } catch (UnableToParseComponentFileException e) {
                         e.printStackTrace();
                     }
+
             response +=" <td><a href=\"/logs/?component="+component.getName()+"\">logs</a></td>" +
                     "<td><a href=\"/replaceInstructions/?component="+component.getName()+"\">vervang instructies</a></td>" +
                     " </tr>";
@@ -57,19 +61,24 @@ public class HomePage implements HttpHandler {
                 "<br />" +
                 "<b>Niet-controleerbare componenten</b><br /><hr />"+
                 "<table style=\"width:100%\">" +
-                "<tr><th align=\"left\">Component</th><th align=\"left\">Mileage</th></tr>";
+                "<tr><th align=\"left\">Component</th><th align=\"left\">Installatie datum</th><th align=\"left\">Mileage</th></tr>";
 
 
         for (NonCheckableComponent component: nonCheckableComponents ) {
             response+= " <tr>"+
                     "<td>"+component.getName()+"</td>";
 
+            response+= "<td>"+component.getInstallDate().toString()+"</td>";
+
+
             try {
                 response+= "<td>"+component.getMileage()/60+" minuten</td>";
             } catch (UnableToParseComponentFileException e) {
                 e.printStackTrace();
             }
-            response +="  </tr>";
+            response += " <td><a href=\"/logs/?component="+component.getName()+"\">logs</a></td>" +
+                    "<td><a href=\"/replaceInstructions/?component="+component.getName()+"\">vervang instructies</a></td>" +
+                    "</tr>";
         }
 
         response +="</body> </html>";

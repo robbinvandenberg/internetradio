@@ -12,12 +12,14 @@ import java.util.Vector;
  */
 public class Component {
     private String name;
+    private Date installDate;
     private List<Step> replaceingSteps;
     private long mileageStartTime;
     protected String fileName;
 
-    public Component(String name, List<Step> replaceingSteps, String fileName){
+    public Component(String name, Date installDate, List<Step> replaceingSteps, String fileName){
         this.name = name;
+        this.installDate = installDate;
         this.replaceingSteps = replaceingSteps;
         mileageStartTime = -1;
         this.fileName = fileName;
@@ -31,13 +33,17 @@ public class Component {
         return name;
     }
 
+    public Date getInstallDate(){
+        return installDate;
+    }
+
     public void startMileageCount(){
         if(mileageStartTime == -1) {
             mileageStartTime = System.currentTimeMillis();
         }
     }
 
-    public void stopMilageCount() throws UnableToParseComponentFileException, UnableToStoreComponentFileException {
+    public void stopMileageCount() throws UnableToParseComponentFileException, UnableToStoreComponentFileException {
         if(mileageStartTime != -1) {
             long mileage = (System.currentTimeMillis() - mileageStartTime) / 1000;
 

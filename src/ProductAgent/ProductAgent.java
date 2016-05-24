@@ -5,6 +5,7 @@ import ProductAgent.Exceptions.UnableToStoreComponentFileException;
 import ProductAgent.Web.DownloadAttachmentPage;
 import ProductAgent.Web.HomePage;
 import ProductAgent.Web.LogPage;
+import ProductAgent.Web.ReplaceInstructionsPage;
 import com.sun.net.httpserver.HttpServer;
 import jade.core.Agent;
 
@@ -30,6 +31,18 @@ public class ProductAgent extends Agent {
         nonCheckableComponents = new Vector<NonCheckableComponent>();
 
         addComponentToCheckAbles("components/amplifier/componentInfo.xml");
+        addComponentToCheckAbles("components/mainBoard/componentInfo.xml");
+        addComponentToCheckAbles("components/touchScreen/componentInfo.xml");
+        addComponentToCheckAbles("components/powerSupply/componentInfo.xml");
+        addComponentToCheckAbles("components/wifiModule/componentInfo.xml");
+
+        addComponentToNonCheckAbles("components/speaker/componentInfo.xml");
+        addComponentToNonCheckAbles("components/frontPanel/componentInfo.xml");
+        addComponentToNonCheckAbles("components/bottomPanel/componentInfo.xml");
+        addComponentToNonCheckAbles("components/rearPanel/componentInfo.xml");
+        addComponentToNonCheckAbles("components/topPanel/componentInfo.xml");
+        addComponentToNonCheckAbles("components/leftSidePanel/componentInfo.xml");
+        addComponentToNonCheckAbles("components/rightSidePanel/componentInfo.xml");
 
         allComponents = new Vector<Component>();
 
@@ -53,6 +66,7 @@ public class ProductAgent extends Agent {
             webServer.createContext("/", new HomePage(checkableComponents, nonCheckableComponents));
             webServer.createContext("/downloadAttachment", new DownloadAttachmentPage(allComponents));
             webServer.createContext("/logs", new LogPage(allComponents));
+            webServer.createContext("/replaceInstructions", new ReplaceInstructionsPage(allComponents));
             webServer.setExecutor(null); // creates a default executor
             webServer.start();
         } catch (IOException e) {
@@ -63,7 +77,7 @@ public class ProductAgent extends Agent {
     public void takeDown(){
         for (CheckableComponent component: checkableComponents){
             try {
-                component.stopMilageCount();
+                component.stopMileageCount();
             } catch (UnableToParseComponentFileException e) {
                 e.printStackTrace();
             } catch (UnableToStoreComponentFileException e) {
@@ -73,12 +87,23 @@ public class ProductAgent extends Agent {
 
         for (NonCheckableComponent component: nonCheckableComponents){
             try {
-                component.stopMilageCount();
+                component.stopMileageCount();
             } catch (UnableToParseComponentFileException e) {
                 e.printStackTrace();
             } catch (UnableToStoreComponentFileException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void addComponentToNonCheckAbles(String file){
+        try {
+            NonCheckableComponent component = NonCheckableComponent.fromFile(file);
+            nonCheckableComponents.add(component);
+            System.out.println("component " + component.getName() + " added");
+        } catch (UnableToParseComponentFileException e) {
+            System.err.println("Unable initialize component " + file);
+            e.printStackTrace();
         }
     }
 
