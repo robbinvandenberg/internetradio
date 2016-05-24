@@ -151,7 +151,12 @@ public class ProductAgent extends Agent {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, filter)) {
             for (Path path : stream) {
                 // Iterate over the paths in the directory and add found components
-                addComponentToCheckAbles("components/" + componentType + "/" + path.getFileName() + "/componentInfo.xml");
+                if(componentType.equals("checkable")) {
+                    addComponentToCheckAbles("components/" + componentType + "/" + path.getFileName() + "/componentInfo.xml");
+                }
+                else {
+                    addComponentToNonCheckAbles("components/" + componentType + "/" + path.getFileName() + "/componentInfo.xml");
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
