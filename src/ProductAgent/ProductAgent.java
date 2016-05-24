@@ -42,7 +42,7 @@ public class ProductAgent extends Agent {
         addComponentToCheckAbles("components/checkable/touchScreen/componentInfo.xml");
         addComponentToCheckAbles("components/checkable/powerSupply/componentInfo.xml");
         addComponentToCheckAbles("components/checkable/wifiModule/componentInfo.xml");
-*/
+
         addComponentToNonCheckAbles("components/nonCheckable/speaker/componentInfo.xml");
         addComponentToNonCheckAbles("components/nonCheckable/frontPanel/componentInfo.xml");
         addComponentToNonCheckAbles("components/nonCheckable/bottomPanel/componentInfo.xml");
@@ -50,7 +50,8 @@ public class ProductAgent extends Agent {
         addComponentToNonCheckAbles("components/nonCheckable/topPanel/componentInfo.xml");
         addComponentToNonCheckAbles("components/nonCheckable/leftSidePanel/componentInfo.xml");
         addComponentToNonCheckAbles("components/nonCheckable/rightSidePanel/componentInfo.xml");
-
+        */
+        
         allComponents = new Vector<Component>();
 
         for (CheckableComponent component: checkableComponents){
