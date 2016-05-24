@@ -23,6 +23,10 @@ import javax.swing.event.ChangeListener;
  * In this class the main menu GUI is represented to the user
  */
 public class MainMenu extends JFrame implements ActionListener,ChangeListener, DeviceHandlerListener, WindowListener, PlayerMenu {
+	public interface OnVolumeChangedListener {
+		void onVolumeChanged (int volume);
+	}
+
 	private static final long serialVersionUID = 1L;
 	
 	//private RadioPlayer.PreferenceAgent PrefAgent;
@@ -43,12 +47,12 @@ public class MainMenu extends JFrame implements ActionListener,ChangeListener, D
 	/**
 	 * Constructor, builds GUI 
 	 */
-	public MainMenu() 
+	public MainMenu(MusicController musicController)
 	{
 		UI ui = UI_Handler.readLayout("MainMenu");
 
 		handler = DeviceHandler.getInstance();
-		myMusicController = new MusicController();
+		myMusicController = musicController;
 
 		 
 		getContentPane().setBackground(new Color(192, 192, 192));

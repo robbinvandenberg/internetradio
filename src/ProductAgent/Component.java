@@ -48,6 +48,11 @@ public class Component {
         }
     }
 
+    public long getMileage() throws UnableToParseComponentFileException {
+        ComponentFile file = ComponentFile.Load(fileName);
+        return file.getMileage();
+    }
+
     protected void log(ComponentStatus componentStatus) throws UnableToParseComponentFileException, UnableToStoreComponentFileException {
         ComponentFile file = ComponentFile.Load(fileName);
         file.addToLog(new Log(new Date(), "The component status has been changed to " + componentStatus.toString()));

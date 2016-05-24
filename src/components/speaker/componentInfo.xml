@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><component>
+    <name>amplifier</name>
+    <status>Ok</status>
+    <installDate>2016-05-16 11:08:17</installDate>
+    <mileage>127</mileage>
+    <replacementSteps>
+        <step>
+            <title>unscrew</title>
+            <description>unscrew the screws from the amplifier.</description>
+            <attachments/>
+        </step>
+        <step>
+            <title>print new</title>
+            <description>print a new amplifier using the 3D printer file in attachments</description>
+            <attachments>
+                <attachment>
+                    <name>3D printer file</name>
+                    <fileName>something.3d</fileName>
+                </attachment>
+            </attachments>
+        </step>
+        <step>
+            <title>screw</title>
+            <description>screw the screws in the amplifier.</description>
+            <attachments>
+            </attachments>
+        </step>
+    </replacementSteps>
+    <logs>
+
+    <log><timestamp>2016-05-16 11:08:17</timestamp><message>Installment date has been stored.</message></log><log><timestamp>2016-05-16 11:36:37</timestamp><message>88seconds has been added to mileage.</message></log><log><timestamp>2016-05-16 11:38:00</timestamp><message>39seconds has been added to mileage.</message></log></logs>
+</component>

@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 import javazoom.jlgui.basicplayer.BasicController;
 import javazoom.jlgui.basicplayer.BasicPlayer;
@@ -15,6 +16,10 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
  * This class provides radiostreaming functionality and holds current radiostation
  */
 public class MusicController {
+	public interface OnRadioStationChangedListener {
+		void onRadioStationChanged (RadioStation rs);
+	}
+
 	private DeviceHandler deviceHandler = new DeviceHandler();
 	private BasicPlayer myMusicPlayer;
 	private BasicController playerController;
@@ -25,6 +30,8 @@ public class MusicController {
 	private PlayState playState;
 
 	private Thread playMusicThread;
+
+	private ArrayList<OnRadioStationChangedListener> listeners = new ArrayList<>();
 	
 	/**
 	 * The current play state
@@ -188,6 +195,16 @@ public class MusicController {
 		try {
 			myMusicPlayer.setPan(t);
 		} catch (BasicPlayerException e) {
+		}
+	}
+
+	public void setOnRadioStationChangedListener (OnRadioStationChangedListener listener) {
+		listeners.add(listener);
+	}
+
+	public void removeOnRadioStationChangedListener (OnRadioStationChangedListener listener) {
+		if (listeners.contains(listener)) {
+			listeners.remove(listener);
 		}
 	}
 }

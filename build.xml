@@ -5,7 +5,7 @@
     <target name="create_run_jar">
         <jar destfile="Internetradio.jar" filesetmanifest="mergewithoutmain">
             <manifest>
-                <attribute name="Main-Class" value="RadioPlayer.PreferenceAgent"/>
+                <attribute name="Main-Class" value="PreferenceAgent.PreferenceAgent"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
             <fileset dir="bin"/>
@@ -16,7 +16,6 @@
             <zipfileset excludes="META-INF/*.SF" src="lib/mp3spi1.9.4.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="lib/tritonus_share.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="lib/vorbisspi1.0.2.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="lib/bulldog.beagleboneblack.hardfp.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="lib/basicplayer3.0.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="lib/jl1.0.1.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="lib/mysql-connector-java-5.1.35-bin.jar"/>
