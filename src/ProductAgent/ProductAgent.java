@@ -51,7 +51,7 @@ public class ProductAgent extends Agent {
         addComponentToNonCheckAbles("components/nonCheckable/leftSidePanel/componentInfo.xml");
         addComponentToNonCheckAbles("components/nonCheckable/rightSidePanel/componentInfo.xml");
         */
-        
+
         allComponents = new Vector<Component>();
 
         for (CheckableComponent component: checkableComponents){
@@ -142,7 +142,7 @@ public class ProductAgent extends Agent {
         Path dir = FileSystems.getDefault().getPath("");
         // Try get the path to project folder
         try {
-            dir = FileSystems.getDefault().getPath(new File(".").getCanonicalPath() + "\\src\\" + componentType + "\\checkable");
+            dir = FileSystems.getDefault().getPath(new File(".").getCanonicalPath() + "\\src\\components\\" + componentType);
         } catch(IOException e) {
             e.printStackTrace();
         }
