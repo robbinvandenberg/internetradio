@@ -13,11 +13,11 @@ import java.util.Vector;
 public class Component {
     private String name;
     private Date installDate;
-    private List<Step> replaceingSteps;
+    private Vector<Step> replaceingSteps;
     private long mileageStartTime;
     protected String fileName;
 
-    public Component(String name, Date installDate, List<Step> replaceingSteps, String fileName){
+    public Component(String name, Date installDate, Vector<Step> replaceingSteps, String fileName){
         this.name = name;
         this.installDate = installDate;
         this.replaceingSteps = replaceingSteps;
@@ -25,7 +25,7 @@ public class Component {
         this.fileName = fileName;
     }
 
-    public List<Step> getReplaceingSteps() {
+    public Vector<Step> getReplaceingSteps() {
         return replaceingSteps;
     }
 

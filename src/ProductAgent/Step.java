@@ -1,6 +1,7 @@
 package ProductAgent;
 
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by Bart on 10-5-2016.
@@ -8,9 +9,9 @@ import java.util.List;
 public class Step {
     private String title;
     private String description;
-    private List<Attachment> attachments;
+    private Vector<Attachment> attachments;
 
-    public Step(String title, String description, List<Attachment> attachments){
+    public Step(String title, String description, Vector<Attachment> attachments){
         this.title = title;
         this.description = description;
         this.attachments = attachments;
@@ -24,7 +25,7 @@ public class Step {
         return description;
     }
 
-    public List<Attachment> getAttachments() {
+    public Vector<Attachment> getAttachments() {
         return attachments;
     }
 }

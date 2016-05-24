@@ -1,8 +1,10 @@
 package ProductAgent.Web;
 
+import ProductAgent.Attachment;
 import ProductAgent.Component;
 import ProductAgent.Exceptions.UnableToParseComponentFileException;
 import ProductAgent.Log;
+import ProductAgent.Step;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -28,8 +30,19 @@ public class ReplaceInstructionsPage extends Page implements HttpHandler {
         for (Component component: components ) {
             if(component.getName().equals(componentQuery.getValue())){
                 String response ="<html> <head/> <body> <h1>Vervang instructies van "+component.getName()+"</h1><br />" +
-                        "<hr />" +
-                        "Gooi radio weg, koop nieuwe ;)</html>";
+                        "<hr />";
+                Vector<Step> replacementSteps = component.getReplaceingSteps();
+                for (Step step: replacementSteps) {
+                    response += "<h2>"+step.getTitle()+"</h2>";
+                    response += step.getDescription()+"<br /><br />";
+                    response += "<i>attachments</i>";
+                    response += "<ul>";
+                    for (Attachment attachment: step.getAttachments()){
+                        response += "<li><a href=\"/downloadAttachment/?component="+component.getName()+"&replacementStep="+step.getTitle()+"&attachment="+attachment.getName()+"\">"+attachment.getName()+"</a></li>";
+                    }
+                    response += "</ul><br /><br />";
+                }
+                response+= "</html>";
                 httpExchange.sendResponseHeaders(200, response.length());
                 OutputStream os = httpExchange.getResponseBody();
                 os.write(response.getBytes());

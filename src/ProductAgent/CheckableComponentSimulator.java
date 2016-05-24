@@ -6,6 +6,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 
 /**
  * Created by Bart on 12-5-2016.
@@ -18,7 +19,7 @@ public class CheckableComponentSimulator extends CheckableComponent {
     boolean hasBroken;
     long creationTime;
 
-    public CheckableComponentSimulator(String name, Date installDate, List<Step> replacementSteps, String fileName, Mode simulationMode){
+    public CheckableComponentSimulator(String name, Date installDate, Vector<Step> replacementSteps, String fileName, Mode simulationMode){
         super(name, installDate, replacementSteps, fileName);
         this.mode = simulationMode;
         defectTime = 0;
@@ -26,7 +27,7 @@ public class CheckableComponentSimulator extends CheckableComponent {
         creationTime = System.currentTimeMillis();
     }
 
-    public CheckableComponentSimulator(String name, Date installDate, List<Step> replacementSteps, String fileName, Mode simulationMode, int defectTime){
+    public CheckableComponentSimulator(String name, Date installDate, Vector<Step> replacementSteps, String fileName, Mode simulationMode, int defectTime){
         super(name, installDate, replacementSteps, fileName);
         this.mode = simulationMode;
         this.defectTime = defectTime;
