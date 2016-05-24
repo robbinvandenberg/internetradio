@@ -35,7 +35,8 @@ public class ProductAgent extends Agent {
         nonCheckableComponents = new Vector<NonCheckableComponent>();
         System.err.println("PRODUCT AGENT SETUP");
 
-        autoDetectComponents();
+        autoDetectCheckableComponents();
+        autoDetectNonCheckableComponents();
         //addComponentToCheckAbles("components/checkable/amplifier/componentInfo.xml");
 
         addComponentToCheckAbles("components/amplifier/componentInfo.xml");
@@ -130,10 +131,7 @@ public class ProductAgent extends Agent {
         }
     }
 
-    /*
-    Dynamically read out the checkable components folder and add them.
-     */
-    private void autoDetectComponents() {
+    private void autoDetectComponents(String componentType) {
         DirectoryStream.Filter<Path> filter = new DirectoryStream.Filter<Path>() {
             @Override
             public boolean accept(Path file) throws IOException {
@@ -145,7 +143,7 @@ public class ProductAgent extends Agent {
         Path dir = FileSystems.getDefault().getPath("");
         // Try get the path to project folder
         try {
-            dir = FileSystems.getDefault().getPath(new File(".").getCanonicalPath() + "\\src\\components\\checkable");
+            dir = FileSystems.getDefault().getPath(new File(".").getCanonicalPath() + "\\src\\" + componentType + "\\checkable");
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -154,12 +152,24 @@ public class ProductAgent extends Agent {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, filter)) {
             for (Path path : stream) {
                 // Iterate over the paths in the directory and add found components
-                addComponentToCheckAbles("components/checkable/" + path.getFileName() + "/componentInfo.xml");
+                addComponentToCheckAbles("components/" + componentType + "/" + path.getFileName() + "/componentInfo.xml");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    /*
+    Dynamically read out the checkable components folder and add them.
+     */
+    private void autoDetectCheckableComponents() {
+        autoDetectComponents("checkable");
+    }
 
+    /*
+    Dynamically read out the non checkable components folder and add them.
+     */
+    private void autoDetectNonCheckableComponents() {
+        autoDetectComponents("nonCheckable");
     }
 
 }
