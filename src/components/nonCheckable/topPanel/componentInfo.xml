@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><component>
+    <name>top panel</name>
+    <status></status>
+    <installDate></installDate>
+    <mileage>0</mileage>
+    <replacementSteps>
+        <step>
+            <title>unscrew</title>
+            <description>unscrew the screws from the speaker.</description>
+            <attachments/>
+        </step>
+        <step>
+            <title>screw</title>
+            <description>screw the screws in the speaker.</description>
+            <attachments>
+                <attachment>
+                    <name>plaatje</name>
+                    <fileName>_89769777_img_8311.jpg</fileName>
+                </attachment>
+            </attachments>
+        </step>
+    </replacementSteps>
+    <logs>
+    </logs>
+</component>

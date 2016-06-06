@@ -3,8 +3,10 @@ package ProductAgent;
 import ProductAgent.Exceptions.UnableToParseComponentFileException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 
 /**
  * Created by Bart on 12-5-2016.
@@ -17,16 +19,16 @@ public class CheckableComponentSimulator extends CheckableComponent {
     boolean hasBroken;
     long creationTime;
 
-    public CheckableComponentSimulator(String name, List<Step> replacementSteps, String fileName, Mode simulationMode){
-        super(name, replacementSteps, fileName);
+    public CheckableComponentSimulator(String name, Date installDate, Vector<Step> replacementSteps, String fileName, Mode simulationMode){
+        super(name, installDate, replacementSteps, fileName);
         this.mode = simulationMode;
         defectTime = 0;
         hasBroken = false;
         creationTime = System.currentTimeMillis();
     }
 
-    public CheckableComponentSimulator(String name, List<Step> replacementSteps, String fileName, Mode simulationMode, int defectTime){
-        super(name, replacementSteps, fileName);
+    public CheckableComponentSimulator(String name, Date installDate, Vector<Step> replacementSteps, String fileName, Mode simulationMode, int defectTime){
+        super(name, installDate, replacementSteps, fileName);
         this.mode = simulationMode;
         this.defectTime = defectTime;
         hasBroken = false;
@@ -73,11 +75,11 @@ public class CheckableComponentSimulator extends CheckableComponent {
 
     public static CheckableComponent fromFile(String fileName, Mode simulationMode) throws UnableToParseComponentFileException {
         ComponentFile file = ComponentFile.Load(fileName);
-        return new CheckableComponentSimulator(file.getComponentName(), file.getReplacementSteps(), fileName, simulationMode);
+        return new CheckableComponentSimulator(file.getComponentName(), file.getInstallDate(), file.getReplacementSteps(), fileName, simulationMode);
     }
 
     public static CheckableComponent fromFile(String fileName, Mode simulationMode, int defectTime) throws UnableToParseComponentFileException {
         ComponentFile file = ComponentFile.Load(fileName);
-        return new CheckableComponentSimulator(file.getComponentName(), file.getReplacementSteps(), fileName, simulationMode, defectTime);
+        return new CheckableComponentSimulator(file.getComponentName(), file.getInstallDate(), file.getReplacementSteps(), fileName, simulationMode, defectTime);
     }
 }

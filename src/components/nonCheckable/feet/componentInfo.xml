@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><component>
+    <name>feet</name>
+    <status></status>
+    <installDate></installDate>
+    <mileage>0</mileage>
+    <replacementSteps>
+        <step>
+            <title>unscrew</title>
+            <description>unscrew the screws from the speaker.</description>
+            <attachments/>
+        </step>
+        <step>
+            <title>screw</title>
+            <description>screw the screws in the speaker.</description>
+            <attachments>
+            </attachments>
+        </step>
+    </replacementSteps>
+    <logs>
+    </logs>
+</component>
