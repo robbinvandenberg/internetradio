@@ -1,5 +1,7 @@
 package RadioPlayer;
 
+import PreferenceAgent.VolumePreferenceHandler;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JSlider;
@@ -12,6 +14,8 @@ import java.awt.Color;
 import javax.swing.JLabel;
 
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -43,6 +47,8 @@ public class MainMenu extends JFrame implements ActionListener,ChangeListener, D
 	private boolean volumeChangedByUser = true;
 	
 	public MusicController myMusicController;
+
+	private ArrayList<OnVolumeChangedListener> listeners = new ArrayList<>();
 	
 	/**
 	 * Constructor, builds GUI 
@@ -227,6 +233,10 @@ public class MainMenu extends JFrame implements ActionListener,ChangeListener, D
 		if(!source.getValueIsAdjusting() && volumeChangedByUser){
 			handler.setVolume(volumeSlider.getValue());
 			volumeChangedByUser = true; //reset
+
+			for(OnVolumeChangedListener listener : listeners) {
+				listener.onVolumeChanged(handler.getVolume());
+			}
 		}
 	}
 
@@ -284,6 +294,16 @@ public class MainMenu extends JFrame implements ActionListener,ChangeListener, D
 		myMusicController.playMusic(currentRadioStation);
 		stationNameLabel.setText(currentRadioStation.getName());
 		stationGenreLabel.setText(currentRadioStation.getGenre());
+	}
+
+	public void setOnVolumeChangedListener(OnVolumeChangedListener listener) {
+		listeners.add(listener);
+	}
+
+	public void removeOnVolumeChangedListener (OnVolumeChangedListener listener) {
+		if (listeners.contains(listener)) {
+			listeners.remove(listener);
+		}
 	}
 }
 	        
