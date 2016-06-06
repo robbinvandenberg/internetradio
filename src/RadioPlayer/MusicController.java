@@ -96,6 +96,10 @@ public class MusicController {
 			}
 		});
 		playMusicThread.start();
+
+		for(OnRadioStationChangedListener listener : listeners) {
+			listener.onRadioStationChanged(rs);
+		}
 	}
 	
 	/**
