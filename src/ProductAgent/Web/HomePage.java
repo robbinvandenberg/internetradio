@@ -26,7 +26,8 @@ public class HomePage implements HttpHandler {
 
     @Override
     public void handle(HttpExchange t) throws IOException {
-        String response ="<html> <head/> <body> <h1>Radio component overzicht</h1><br />" +
+        String response ="<html> <head></head> <body> <a style=\"float:right;\" href=\"/export\">Export</a>" +
+        "<h1>Radio component overzicht</h1>" +
         "<b>Controleerbare componenten</b><br /><hr />" +
         "<table style=\"width:100%\">" +
         "<tr><th align=\"left\">Component</th><th align=\"left\">Installatie datum</th><th align=\"left\">Status</th><th align=\"left\">Mileage</th></tr>";

@@ -2,10 +2,7 @@ package ProductAgent;
 
 import ProductAgent.Exceptions.UnableToParseComponentFileException;
 import ProductAgent.Exceptions.UnableToStoreComponentFileException;
-import ProductAgent.Web.DownloadAttachmentPage;
-import ProductAgent.Web.HomePage;
-import ProductAgent.Web.LogPage;
-import ProductAgent.Web.ReplaceInstructionsPage;
+import ProductAgent.Web.*;
 import com.sun.net.httpserver.HttpServer;
 import jade.core.Agent;
 
@@ -35,22 +32,6 @@ public class ProductAgent extends Agent {
 
         autoDetectCheckableComponents();
         autoDetectNonCheckableComponents();
-        //addComponentToCheckAbles("components/checkable/amplifier/componentInfo.xml");
-
-        /*addComponentToCheckAbles("components/amplifier/componentInfo.xml");
-        addComponentToCheckAbles("components/checkable/mainBoard/componentInfo.xml");
-        addComponentToCheckAbles("components/checkable/touchScreen/componentInfo.xml");
-        addComponentToCheckAbles("components/checkable/powerSupply/componentInfo.xml");
-        addComponentToCheckAbles("components/checkable/wifiModule/componentInfo.xml");
-
-        addComponentToNonCheckAbles("components/nonCheckable/speaker/componentInfo.xml");
-        addComponentToNonCheckAbles("components/nonCheckable/frontPanel/componentInfo.xml");
-        addComponentToNonCheckAbles("components/nonCheckable/bottomPanel/componentInfo.xml");
-        addComponentToNonCheckAbles("components/nonCheckable/rearPanel/componentInfo.xml");
-        addComponentToNonCheckAbles("components/nonCheckable/topPanel/componentInfo.xml");
-        addComponentToNonCheckAbles("components/nonCheckable/leftSidePanel/componentInfo.xml");
-        addComponentToNonCheckAbles("components/nonCheckable/rightSidePanel/componentInfo.xml");
-        */
 
         allComponents = new Vector<Component>();
 
@@ -75,6 +56,8 @@ public class ProductAgent extends Agent {
             webServer.createContext("/downloadAttachment", new DownloadAttachmentPage(allComponents));
             webServer.createContext("/logs", new LogPage(allComponents));
             webServer.createContext("/replaceInstructions", new ReplaceInstructionsPage(allComponents));
+            webServer.createContext("/export", new ExportPage());
+
             webServer.setExecutor(null); // creates a default executor
             webServer.start();
         } catch (IOException e) {
