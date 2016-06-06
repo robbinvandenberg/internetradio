@@ -2,6 +2,8 @@ package ProductAgent.Exceptions;
 
 /**
  * Created by Bart on 15-5-2016.
+ *
+ * Exception class in case a componentfile cannot be parsed.
  */
 public class UnableToParseComponentFileException extends Exception{
 

@@ -28,6 +28,8 @@ import java.util.Vector;
 
 /**
  * Created by Bart on 12-5-2016.
+ *
+ * Class for easy reading and writing to component files. Changes are only committed to the componentfile if storwriteToFile() is called.
  */
 public class ComponentFile {
 
@@ -37,16 +39,32 @@ public class ComponentFile {
     private Document document;
     private Element root;
 
+    /**
+     * Constructor of ComponentFile.
+     *
+     * @param fileName path to file.
+     * @param document DOM object containing the component elemeonts.
+     */
     private ComponentFile(String fileName, Document document){
         this.fileName = fileName;
         this.document = document;
         root = document.getDocumentElement();
     }
 
+    /**
+     * Get component name.
+     *
+     * @return name of component.
+     */
     public String getComponentName(){
         return root.getElementsByTagName("name").item(0).getTextContent();
     }
 
+    /**
+     * Get component installation date.
+     *
+     * @return date of installation.
+     */
     public Date getInstallDate(){
         SimpleDateFormat formatter = new SimpleDateFormat(dateTimeFormat);
         Date timeStamp = null;
@@ -58,6 +76,9 @@ public class ComponentFile {
         return timeStamp;
     }
 
+    /**
+     * writes the current datetime as installation date to file.
+     */
     private void setInstallDate() throws UnableToStoreComponentFileException {
         Format formatter = new SimpleDateFormat(dateTimeFormat);
 
@@ -72,10 +93,20 @@ public class ComponentFile {
         addToLog(new Log(new Date(), "Installment date has been stored."));
     }
 
+    /**
+     * Get mileage of component.
+     *
+     * @return mileage of component in seconds.
+     */
     public long getMileage(){
         return Long.parseLong(root.getElementsByTagName("mileage").item(0).getTextContent());
     }
 
+    /**
+     * Adds the given amount of seconds to the mileage.
+     *
+     * @param seconds amount of seconds to add to mileage.
+     */
     public void addMileage(long seconds) throws UnableToStoreComponentFileException {
         long newMileage = getMileage() + seconds;
 
@@ -92,6 +123,11 @@ public class ComponentFile {
         addToLog(new Log(new Date(), "" + seconds + " seconds has been added to mileage."));
     }
 
+    /**
+     * Get the current componentstatus.
+     *
+     * @return componentstatus stored in the component file.
+     */
     public ComponentStatus getStatus(){
         String status = root.getElementsByTagName("status").item(0).getTextContent();
         if(status.equals(ComponentStatus.Ok.toString())){
@@ -105,6 +141,12 @@ public class ComponentFile {
         }
     }
 
+    /**
+     * Writes the given componentstatus to the componentfile
+     *
+     * @param status status which should be written to the componentfile
+     */
+
     public void setComponentStatus(ComponentStatus status) throws UnableToStoreComponentFileException {
         Element statusElement = (Element) root.getElementsByTagName("status").item(0);
 
@@ -117,6 +159,12 @@ public class ComponentFile {
         }
     }
 
+
+    /**
+     * Load replacement steps from file.
+     *
+     * @return Vector containing replacementsteps.
+     */
     public Vector<Step> getReplacementSteps(){
         Vector<Step> replacementSteps = new Vector<Step>();
 
@@ -154,6 +202,11 @@ public class ComponentFile {
         return replacementSteps;
     }
 
+    /**
+     * Add given log to log section in componentfile.
+     *
+     * @param log Log which should be stored.
+     */
     public void addToLog(Log log) throws UnableToStoreComponentFileException {
         Element logsElement = (Element) root.getElementsByTagName("logs").item(0);
 
@@ -181,6 +234,11 @@ public class ComponentFile {
         }
     }
 
+    /**
+     * Get component logs.
+     *
+     * @return logs from componentfile.
+     */
     public Vector<Log> getLogs() throws UnableToParseComponentFileException {
         try {
             Vector<Log> logs = new Vector<Log>();
@@ -207,6 +265,9 @@ public class ComponentFile {
         }
     }
 
+    /**
+     * Writes the DOM document to the component file.
+     */
     private void writeToFile() throws TransformerException {
         DOMSource source = new DOMSource(document);
 
@@ -217,6 +278,11 @@ public class ComponentFile {
         transformer.transform(source, result);
     }
 
+    /**
+     * Static method for creating a ComponentFile object from a given filepath.
+     *
+     * @param fileName path to componentfile.
+     */
     public static ComponentFile Load(String fileName) throws UnableToParseComponentFileException {
         try {
             File componentFile = new File(filePrefix + fileName);
