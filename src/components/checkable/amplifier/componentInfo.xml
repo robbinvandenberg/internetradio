@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><component>
-    <name>amplifier</name>
+    <name>Versterker</name>
     <status></status>
     <installDate></installDate>
     <mileage>0</mileage>
     <replacementSteps>
         <step>
-            <title>unscrew</title>
-            <description>unscrew the screws from the amplifier.</description>
-            <attachments/>
-        </step>
-        <step>
-            <title>print new</title>
-            <description>print a new amplifier using the 3D printer file in attachments</description>
+            <title>Schroef achterkant los</title>
+            <description>Schroef het achterpaneel van de radio los en neem het paneel weg.</description>
             <attachments>
-                <attachment>
-                    <name>3D printer file</name>
-                    <fileName>something.3d</fileName>
-                </attachment>
             </attachments>
         </step>
         <step>
-            <title>screw</title>
-            <description>screw the screws in the amplifier.</description>
+            <title>Neem versterker uit de radio</title>
+            <description>Koppel de kabels los van de versterker en schroef de schroeven uit de versterker. Neem daarna de versterker uit de radio.</description>
             <attachments>
+            </attachments>
+        </step>
+        <step>
+            <title>Plaats nieuwe versterker in de radio.</title>
+            <description>Plaats een nieuwe versterker in de radio en schroef de schroeven terug. Koppel vervolgens de kabels weer aan de nieuwe versterker.</description>
+            <attachments>
+                <attachment>
+                    <name>Product link</name>
+                    <fileName>Versterker.url</fileName>
+                </attachment>
             </attachments>
         </step>
     </replacementSteps>

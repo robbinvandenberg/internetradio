@@ -23,6 +23,7 @@ public class Page {
         return null;
     }
 
+
     protected HttpQuery[] parseQuery(String query) throws UnsupportedEncodingException {
         Vector<HttpQuery> queries = new Vector<HttpQuery>();
 
