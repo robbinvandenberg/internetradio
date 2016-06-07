@@ -21,9 +21,15 @@
             <description>Plaats een nieuwe versterker in de radio en schroef de schroeven terug. Koppel vervolgens de kabels weer aan de nieuwe versterker.</description>
             <attachments>
                 <attachment>
-                    <name>Product link</name>
-                    <fileName>Versterker.url</fileName>
+                    <name>Link naar product</name>
+                    <fileName>amplifier.url</fileName>
                 </attachment>
+            </attachments>
+        </step>
+        <step>
+            <title>Plaats het achterpaneel terug.</title>
+            <description>Plaats het achterpaneel terug en schroef de schroeven op hun plaats.</description>
+            <attachments>
             </attachments>
         </step>
     </replacementSteps>

@@ -1,6 +1,7 @@
 package ProductAgent;
 
 import ProductAgent.Exceptions.UnableToParseComponentFileException;
+import ProductAgent.Exceptions.UnableToParseSimulationFileException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.Date;
@@ -104,23 +105,17 @@ public class CheckableComponentSimulator extends CheckableComponent {
     * Load a Checkcomponent from a given file
      *
      * @param fileName path to componentFile.
-     * @param simulationMode simulationmode the simulator should operate in.
     */
 
-    public static CheckableComponent fromFile(String fileName, Mode simulationMode) throws UnableToParseComponentFileException {
+    public static CheckableComponent fromFile(String fileName) throws UnableToParseComponentFileException, UnableToParseSimulationFileException {
         ComponentFile file = ComponentFile.Load(fileName);
-        return new CheckableComponentSimulator(file.getComponentName(), file.getInstallDate(), file.getReplacementSteps(), fileName, simulationMode);
-    }
-
-    /**
-     * Load a Checkcomponent from a given file
-     *
-     * @param fileName path to componentFile.
-     * @param simulationMode simulationmode the simulator should operate in.
-     * @param defectTime the timespan in which the component will fail.
-     */
-    public static CheckableComponent fromFile(String fileName, Mode simulationMode, int defectTime) throws UnableToParseComponentFileException {
-        ComponentFile file = ComponentFile.Load(fileName);
-        return new CheckableComponentSimulator(file.getComponentName(), file.getInstallDate(), file.getReplacementSteps(), fileName, simulationMode, defectTime);
+        String paths[] = fileName.split("[/]");
+        String path = "";
+        for(int i = 0; i < paths.length-1; i++){
+            path += paths[i] + '/';
+        }
+        path += "simulation.xml";
+        SimulationFile simFile = SimulationFile.Load(path);
+        return new CheckableComponentSimulator(file.getComponentName(), file.getInstallDate(), file.getReplacementSteps(), fileName, simFile.getSimulationMode(), simFile.getDefectTime());
     }
 }

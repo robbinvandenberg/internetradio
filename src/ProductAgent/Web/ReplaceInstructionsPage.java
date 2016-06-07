@@ -32,15 +32,18 @@ public class ReplaceInstructionsPage extends Page implements HttpHandler {
                 String response ="<html> <head/> <body> <h1>Vervang instructies van "+component.getName()+"</h1><br />" +
                         "<hr />";
                 Vector<Step> replacementSteps = component.getReplaceingSteps();
-                for (Step step: replacementSteps) {
-                    response += "<h2>"+step.getTitle()+"</h2>";
-                    response += step.getDescription()+"<br /><br />";
-                    response += "<i>attachments</i>";
-                    response += "<ul>";
-                    for (Attachment attachment: step.getAttachments()){
-                        response += "<li><a href=\"/downloadAttachment/?component="+component.getName()+"&replacementStep="+step.getTitle()+"&attachment="+attachment.getName()+"\">"+attachment.getName()+"</a></li>";
+                for (Step step : replacementSteps) {
+                    response += "<h2>" + step.getTitle() + "</h2>";
+                    response += step.getDescription() + "<br /><br />";
+
+                    if(step.getAttachments().size() > 0) {
+                        response += "<i>bijlagen</i>";
+                        response += "<ul>";
+                        for (Attachment attachment : step.getAttachments()) {
+                            response += "<li><a href=\"/downloadAttachment/?component=" + component.getName() + "&replacementStep=" + step.getTitle() + "&attachment=" + attachment.getName() + "\">" + attachment.getName() + "</a></li>";
+                        }
+                        response += "</ul><br /><br />";
                     }
-                    response += "</ul><br /><br />";
                 }
                 response+= "</html>";
                 httpExchange.sendResponseHeaders(200, response.length());

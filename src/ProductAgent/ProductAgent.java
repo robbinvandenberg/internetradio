@@ -1,6 +1,7 @@
 package ProductAgent;
 
 import ProductAgent.Exceptions.UnableToParseComponentFileException;
+import ProductAgent.Exceptions.UnableToParseSimulationFileException;
 import ProductAgent.Exceptions.UnableToStoreComponentFileException;
 import ProductAgent.Web.*;
 import com.sun.net.httpserver.HttpServer;
@@ -99,15 +100,15 @@ public class ProductAgent extends Agent {
     }
 
     private void addComponentToCheckAbles(String file){
-        addComponentToCheckAbles(file, CheckableComponentSimulator.Mode.AlwaysOk);
-    }
-
-    private void addComponentToCheckAbles(String file, CheckableComponentSimulator.Mode simulationMode){
         try {
-            CheckableComponent component = CheckableComponentSimulator.fromFile(file, CheckableComponentSimulator.Mode.AlwaysOk);
+            CheckableComponent component = CheckableComponentSimulator.fromFile(file);
             checkableComponents.add(component);
             System.out.println("component " + component.getName() + " added");
         } catch (UnableToParseComponentFileException e) {
+            System.err.println("Unable initialize component " + file);
+            e.printStackTrace();
+        }
+        catch (UnableToParseSimulationFileException e) {
             System.err.println("Unable initialize component " + file);
             e.printStackTrace();
         }

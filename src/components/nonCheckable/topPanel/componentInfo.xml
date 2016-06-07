@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><component>
-    <name>top panel</name>
+    <name>Bovenpaneel</name>
     <status></status>
     <installDate></installDate>
     <mileage>0</mileage>
     <replacementSteps>
         <step>
-            <title>unscrew</title>
-            <description>unscrew the screws from the speaker.</description>
-            <attachments/>
+            <title>Schroef bovenpaneel los</title>
+            <description>Schroef het bovenpaneel  van de radio los en neem het paneel weg.</description>
+            <attachments>
+            </attachments>
         </step>
         <step>
-            <title>screw</title>
-            <description>screw the screws in the speaker.</description>
+            <title>Fabriceer nieuw paneel</title>
+            <description>Gebruik het bijgeleverde bestand om een nieuw paneel te fabriceren.</description>
             <attachments>
                 <attachment>
-                    <name>plaatje</name>
-                    <fileName>_89769777_img_8311.jpg</fileName>
+                    <name>3D bestand</name>
+                    <fileName>paneel.obj</fileName>
                 </attachment>
+            </attachments>
+        </step>
+        <step>
+            <title>Plaats het bovenpaneel terug.</title>
+            <description>Plaats het nieuwe bovenpaneel  terug en schroef de schroeven op hun plaats.</description>
+            <attachments>
             </attachments>
         </step>
     </replacementSteps>

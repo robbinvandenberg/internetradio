@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><component>
-    <name>front panel</name>
+    <name>Voorpaneel</name>
     <status></status>
     <installDate></installDate>
     <mileage>0</mileage>
     <replacementSteps>
         <step>
-            <title>unscrew</title>
-            <description>unscrew the screws from the speaker.</description>
-            <attachments/>
+            <title>Schroef voorpaneel los</title>
+            <description>Schroef het voorpaneel van de radio los en neem het paneel weg.</description>
+            <attachments>
+            </attachments>
         </step>
         <step>
-            <title>screw</title>
-            <description>screw the screws in the speaker.</description>
+            <title>Fabriceer nieuw paneel</title>
+            <description>Gebruik het bijgeleverde bestand om een nieuw paneel te fabriceren.</description>
+            <attachments>
+                <attachment>
+                    <name>3D bestand</name>
+                    <fileName>paneel.obj</fileName>
+                </attachment>
+            </attachments>
+        </step>
+        <step>
+            <title>Plaats het voorpaneel terug.</title>
+            <description>Plaats het nieuwe voorpaneel terug en schroef de schroeven op hun plaats.</description>
             <attachments>
             </attachments>
         </step>

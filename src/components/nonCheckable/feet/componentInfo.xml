@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><component>
-    <name>feet</name>
+    <name>Voetjes</name>
     <status></status>
     <installDate></installDate>
     <mileage>0</mileage>
     <replacementSteps>
         <step>
-            <title>unscrew</title>
-            <description>unscrew the screws from the speaker.</description>
-            <attachments/>
+            <title>Schroef voetjes los</title>
+            <description>Schroef de voetjes los die vervangen moeten worden.</description>
+            <attachments>
+            </attachments>
         </step>
         <step>
-            <title>screw</title>
-            <description>screw the screws in the speaker.</description>
+            <title>Fabriceer nieuwe voetjes</title>
+            <description>Gebruik het bijgeleverde bestand om een nieuwe voetjes te fabriceren.</description>
+            <attachments>
+                <attachment>
+                    <name>3D bestand</name>
+                    <fileName>voet.obj</fileName>
+                </attachment>
+            </attachments>
+        </step>
+        <step>
+            <title>Plaats de voetjes terug.</title>
+            <description>Plaats de nieuwe voetjes terug en schroef de schroeven op hun plaats.</description>
             <attachments>
             </attachments>
         </step>

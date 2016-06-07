@@ -5,13 +5,30 @@
     <mileage>0</mileage>
     <replacementSteps>
         <step>
-            <title>unscrew</title>
-            <description>unscrew the screws from the speaker.</description>
-            <attachments/>
+            <title>Schroef achterkant los</title>
+            <description>Schroef het achterpaneel van de radio los en neem het paneel weg.</description>
+            <attachments>
+            </attachments>
         </step>
         <step>
-            <title>screw</title>
-            <description>screw the screws in the speaker.</description>
+            <title>Neem de WiFi module uit de radio</title>
+            <description>Koppel de USB WiFi module los van het main board.</description>
+            <attachments>
+            </attachments>
+        </step>
+        <step>
+            <title>Plaats nieuwe WiFi module in de radio.</title>
+            <description>Plaats een nieuwe USB WiFi module in één van de USB aansluitingen van het main board.</description>
+            <attachments>
+                <attachment>
+                    <name>Link naar product</name>
+                    <fileName>wifimodule.url</fileName>
+                </attachment>
+            </attachments>
+        </step>
+        <step>
+            <title>Plaats het achterpaneel terug.</title>
+            <description>Plaats het achterpaneel terug en schroef de schroeven op hun plaats.</description>
             <attachments>
             </attachments>
         </step>
