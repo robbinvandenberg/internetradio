@@ -1,5 +1,7 @@
 package RadioPlayer;
 
+import PreferenceAgent.XMLManager;
+
 import java.awt.Color;
 
 import javax.swing.DefaultListModel;
@@ -95,6 +97,10 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	{
 			//download all radiostations
 			ArrayList<RadioStation> result = radioStationWebservice.getRadiostations();
+
+			XMLManager Manager = XMLManager.getInstance();
+			Manager.createDefaultStationXML(result);
+
 			System.out.println(result.toString());
 			model.clear();
 			for (RadioStation r : result)
