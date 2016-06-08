@@ -1,8 +1,14 @@
 package PreferenceAgent;
 
+import PreferenceAgent.Exceptions.UnableToParseFavoritesFileException;
 import RadioPlayer.MusicController;
 import RadioPlayer.RadioStation;
 
+import javax.xml.transform.TransformerException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,26 +18,37 @@ import java.util.TimerTask;
  */
 public class StationPreferenceHandler implements MusicController.OnRadioStationChangedListener {
 
-    private static XMLManager xmlManager = null;
     private RadioStation lastChoosenStation = null;
     private final static String DAYS[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     private Timer timer;
     private int timerCounter = 0;
 
+    private String beginHour;
+
+    private static FavouritesFile testFile = null;
+
+    private static final int UPDATE_THRESHOLD = 0;
+
+    private static final int TIMER_DELAY_HOURS = 1;
+
     public StationPreferenceHandler() {
-        xmlManager = XMLManager.getInstance();
+
         timer = new Timer();
+
     }
 
     @Override
     public void onRadioStationChanged(RadioStation rs) {
-        startListenTimer();
         if(lastChoosenStation != null){
             int listenTime = stopListenTimer();
-            xmlManager.updateRadiostation(lastChoosenStation, listenTime, 0 ,0, getCurrentDay());
+
+            if(listenTime >= UPDATE_THRESHOLD)
+                return;
+                //xmlManager.updateRadiostation(lastChoosenStation, listenTime, beginHour, getCurrentHour(), getCurrentDay());
         }
         lastChoosenStation = rs;
-        //xmlManager.updateRadiostation();
+
+        startListenTimer();
     }
 
     private String getCurrentDay(){
@@ -41,12 +58,14 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
 
 
     private void startListenTimer(){
+        beginHour = getCurrentHour();
+        System.out.println(beginHour);
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                timerCounter ++;
+                timerCounter++;
             }
-        }, 1 * 10 * 1000, 1*10 * 1000);
+        }, TIMER_DELAY_HOURS * 60 * 1000, 1 * 60 * 1000);
     }
 
     private int stopListenTimer(){
@@ -58,5 +77,13 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
         return returnValue;
     }
 
+    private String getCurrentHour() {
+        DateFormat df = new SimpleDateFormat("HH");
+        Calendar cal = Calendar.getInstance();
+        return df.format(cal.getTime());
+    }
+
 
 }
+
+
