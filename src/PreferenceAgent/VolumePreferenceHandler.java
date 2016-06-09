@@ -1,10 +1,10 @@
 package PreferenceAgent;
 
+import PreferenceAgent.Exceptions.UnableToParseFavoritesFileException;
 import RadioPlayer.MainMenu;
 
-import java.util.Queue;
+import javax.xml.transform.TransformerException;
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by nick on 17-5-2016.
@@ -17,13 +17,19 @@ public class VolumePreferenceHandler implements MainMenu.OnVolumeChangedListener
 
     public VolumePreferenceHandler() {
         timer = new Timer();
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
+        try {
+            VolumeFile volumeFile = VolumeFile.load("volumeHandler.xml");
+            try {
+                volumeFile.setVolume(VolumeFile.Day.FRIDAY, VolumeFile.DayPart.AFTERNOON, 56);
+            } catch (TransformerException e) {
+                e.printStackTrace();
             }
-        }, TIMER_DELAY);
+            int test = volumeFile.getVolume(VolumeFile.Day.FRIDAY, VolumeFile.DayPart.AFTERNOON);
+            System.out.println("Volume: " + test);
+
+        } catch (UnableToParseFavoritesFileException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

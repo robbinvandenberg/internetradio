@@ -20,7 +20,15 @@ import java.io.IOException;
 /**
  * Created by Patrick on 24-5-2016.
  */
-public class FavouritesFile {
+public class VolumeFile {
+
+    public enum DayPart {
+        NIGHT,
+        MIDNIGHT,
+        MORNING,
+        EARLY_AFTERNOON,
+        AFTERNOON,
+    }
 
     public enum Day {
         SUNDAY,
@@ -43,16 +51,15 @@ public class FavouritesFile {
     private Document document = null;
     private Element root = null;
 
-    private FavouritesFile(String filename, Document document) {
+    private VolumeFile(String filename, Document document) {
         this.filename = filename;
         this.document = document;
         root = document.getDocumentElement();
     }
 
-    public static FavouritesFile load(final String filename) throws UnableToParseFavoritesFileException {
+    public static VolumeFile load(final String filename) throws UnableToParseFavoritesFileException {
 
         try {
-
             documentBuilderFactory = DocumentBuilderFactory.newInstance();
             transformerFactory = TransformerFactory.newInstance();
 
@@ -67,11 +74,11 @@ public class FavouritesFile {
 
             Document doc = documentBuilder.parse(file);
 
-            if(!doc.getDocumentElement().getTagName().equals("Stations")){
-                throw new IllegalArgumentException("root element 'Stations' not found in file.");
+            if(!doc.getDocumentElement().getTagName().equals("Volume")){
+                throw new IllegalArgumentException("root element 'Volume' not found in file.");
             }
 
-            FavouritesFile favoritesFile = new FavouritesFile(filename, doc);
+            VolumeFile favoritesFile = new VolumeFile(filename, doc);
 
             return favoritesFile;
 
@@ -100,18 +107,18 @@ public class FavouritesFile {
         transformer.transform(source, result);
     }
 
-    private void insertRadioStation(RadioStation radioStation) {
+    private void insertBlankVolumeContent() {
+        for(int i = 0; i < Day.values().length; i++) {
+            Element dayElement = document.createElement(Day.values()[i].toString());
 
-        Element stationElement = document.createElement("Station");
-        stationElement.setAttribute("id", Integer.toString(radioStation.getId()));
-        stationElement.setAttribute("name", radioStation.getName());
+            for(int j = 0; j < DayPart.values().length; j++){
+                Element currentDayPart = document.createElement(DayPart.values()[j].toString());
+                currentDayPart.appendChild(document.createTextNode("0"));
+                dayElement.appendChild(currentDayPart);
+            }
 
-        for(int i =0;i < Day.values().length; ++i) {
-            Element day = document.createElement(Day.values()[i].toString());
-            day.appendChild(document.createTextNode("0"));
-            stationElement.appendChild(day);
+            root.appendChild(dayElement);
         }
-       root.appendChild(stationElement);
 
         try {
             writeToFile();
@@ -120,75 +127,65 @@ public class FavouritesFile {
         }
     }
 
-    private boolean radioStationExists(RadioStation radioStation) {
+    private boolean dayExists(Day day) {
 
-        NodeList nodeList = root.getElementsByTagName("Station");
+        NodeList nodeList = root.getChildNodes();
 
         for(int i = 0; i < nodeList.getLength(); ++i) {
-            final int id = Integer.parseInt(nodeList.item(i).getAttributes().getNamedItem("id").getTextContent());
-
-            if(radioStation.getId() == id) {
+            final String fileDay = nodeList.item(i).getNodeName();
+            if(day.toString().equals(fileDay)) {
                 return true;
             }
         }
         return false;
     }
 
-    public long getTime(RadioStation radioStation, Day day) {
+    public int getVolume(Day day, DayPart dayPart) {
 
-        if(!radioStationExists(radioStation)) {
-            insertRadioStation(radioStation);
+        if(!dayExists(day)) {
+            insertBlankVolumeContent();
         }
 
-        NodeList nodeList = root.getElementsByTagName("Station");
+        NodeList nodeList = root.getChildNodes();
 
         for(int i = 0; i < nodeList.getLength(); ++i) {
             Node currentNode = nodeList.item(i);
-            final int id = Integer.parseInt(currentNode.getAttributes().getNamedItem("id").getTextContent());
 
-            if(radioStation.getId() == id) {
+            final String fileDay = currentNode.getNodeName();
+
+            if(day.toString().equals(fileDay)) {
                 if (nodeList.item(i).getNodeType() == Node.ELEMENT_NODE) {
                     Element currentElement = (Element) nodeList.item(i);
 
-                    return Long.parseLong(currentElement.getElementsByTagName(day.toString()).item(0).getTextContent());
+                    return Integer.parseInt(currentElement.getElementsByTagName(dayPart.toString()).item(0).getTextContent());
                 }
             }
         }
         return 0;
     }
 
-    public void appendTime(RadioStation radioStation, Day day, final long time) throws TransformerException {
+    public void setVolume(Day day, DayPart dayPart, final int volume) throws TransformerException {
 
-        if(!radioStationExists(radioStation)) {
-            insertRadioStation(radioStation);
+        if(!dayExists(day)) {
+            insertBlankVolumeContent();
         }
 
-        NodeList nodeList = root.getElementsByTagName("Station");
+        NodeList nodeList = root.getChildNodes();
 
         for(int i = 0; i < nodeList.getLength(); ++i) {
             Node currentNode = nodeList.item(i);
-            final int id = Integer.parseInt(currentNode.getAttributes().getNamedItem("id").getTextContent());
 
-            if(radioStation.getId() == id) {
+            final String fileDay = currentNode.getNodeName();
+
+            if(day.toString().equals(fileDay)) {
                 if (nodeList.item(i).getNodeType() == Node.ELEMENT_NODE) {
-
-                    final long currentTime = getTime(radioStation, day);
-                    final long totalTime = currentTime + time;
 
                     Element currentElement = (Element) nodeList.item(i);
 
-                    currentElement.getElementsByTagName(day.toString()).item(0).setTextContent(Long.toString(totalTime));
+                    currentElement.getElementsByTagName(dayPart.toString()).item(0).setTextContent(Integer.toString(volume));
                 }
             }
         }
         writeToFile();
-    }
-
-    public long getTotalTime(RadioStation radioStation) {
-        long totalTime = 0;
-        for(Day day : Day.values()) {
-            totalTime += getTime(radioStation, day);
-        }
-        return totalTime;
     }
 }

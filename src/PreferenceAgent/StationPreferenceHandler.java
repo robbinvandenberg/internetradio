@@ -5,10 +5,6 @@ import RadioPlayer.MusicController;
 import RadioPlayer.RadioStation;
 
 import javax.xml.transform.TransformerException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -44,10 +40,8 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
             if(listenTime >= UPDATE_THRESHOLD) {
                 if(favoritesFile != null) {
                     FavouritesFile.Day currentDay = getCurrentDay();
-                    Long currentListenTime = favoritesFile.getTime(lastChoosenStation, currentDay);
                     try {
-                        System.out.println("Listening time: " + (currentListenTime + listenTime));
-                        favoritesFile.setTime(lastChoosenStation, currentDay, currentListenTime + listenTime);
+                        favoritesFile.appendTime(lastChoosenStation, currentDay, listenTime);
                     }
                     catch (TransformerException e){
                         e.printStackTrace();
