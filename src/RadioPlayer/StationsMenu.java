@@ -33,7 +33,7 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	private RadioStation selectedRadiostation = null;
 	private MainMenu mainMenu;
 	private RadiostationWebservice radioStationWebservice;
-	
+
 	/**
 	 * The constructor of RadioPlayer.StationsMenu.
 	 * 
@@ -56,7 +56,8 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 		setUndecorated(true);
 		
 		UI_Element back = ui.getElementById("btnBack");
-		backButton = new JButton("Back");
+		backButton = new JButton("Fetching..");
+		backButton.setEnabled(false);
 		backButton.setFont(back.getFont());
 		backButton.setBounds(back.getxPos(), back.getyPos(), back.getxLength(), back.getyLength());
 		backButton.addActionListener(this);
@@ -93,16 +94,19 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	 */
 	private void buildList()
 	{
-			//download all radiostations
-			ArrayList<RadioStation> result = radioStationWebservice.getRadiostations();
+		//download all radiostations
 
-			System.out.println(result.toString());
-			model.clear();
-			for (RadioStation r : result)
-			{
-				JListEntry jlistEntry = new JListEntry(r);
-				model.addElement(jlistEntry);
-			}
+		ArrayList<RadioStation> result = radioStationWebservice.getRadiostations();
+
+		System.out.println(result.toString());
+		model.clear();
+		for (RadioStation r : result)
+		{
+			JListEntry jlistEntry = new JListEntry(r);
+			model.addElement(jlistEntry);
+		}
+		backButton.setText("Back");
+		backButton.setEnabled(true);
 	}
 	
 	/**
@@ -114,7 +118,6 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 		{
 			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 			mainMenu.setVisible(true);setRadiostationButtonsEnabled(false);
-
 		}
 		else if (e.getSource() == playButton && selectedRadiostation != null)
 		{

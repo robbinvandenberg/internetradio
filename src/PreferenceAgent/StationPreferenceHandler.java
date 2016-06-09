@@ -19,22 +19,21 @@ import java.util.TimerTask;
 public class StationPreferenceHandler implements MusicController.OnRadioStationChangedListener {
 
     private RadioStation lastChoosenStation = null;
-    private final static String DAYS[] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     private Timer timer;
     private int timerCounter = 0;
 
-    private String beginHour;
-
-    private static FavouritesFile testFile = null;
-
-    private static final int UPDATE_THRESHOLD = 0;
-
-    private static final int TIMER_DELAY_HOURS = 1;
+    private static FavouritesFile favoritesFile = null;
+    private static final int UPDATE_THRESHOLD = 10;
+    private static final int TIMER_DELAY_MINUTES = 1;
 
     public StationPreferenceHandler() {
-
+        try {
+            favoritesFile = FavouritesFile.load("radiostationFavorites.xml");
+        }
+        catch (UnableToParseFavoritesFileException e){
+            e.printStackTrace();
+        }
         timer = new Timer();
-
     }
 
     @Override
@@ -42,48 +41,49 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
         if(lastChoosenStation != null){
             int listenTime = stopListenTimer();
 
-            if(listenTime >= UPDATE_THRESHOLD)
-                return;
-                //xmlManager.updateRadiostation(lastChoosenStation, listenTime, beginHour, getCurrentHour(), getCurrentDay());
+            if(listenTime >= UPDATE_THRESHOLD) {
+                if(favoritesFile != null) {
+                    FavouritesFile.Day currentDay = getCurrentDay();
+                    Long currentListenTime = favoritesFile.getTime(lastChoosenStation, currentDay);
+                    try {
+                        System.out.println("Listening time: " + (currentListenTime + listenTime));
+                        favoritesFile.setTime(lastChoosenStation, currentDay, currentListenTime + listenTime);
+                    }
+                    catch (TransformerException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
         lastChoosenStation = rs;
-
         startListenTimer();
     }
 
-    private String getCurrentDay(){
-        return DAYS[Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-2];
+    private FavouritesFile.Day getCurrentDay(){
+        return FavouritesFile.Day.values()[Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1];
     }
 
 
 
     private void startListenTimer(){
-        beginHour = getCurrentHour();
-        System.out.println(beginHour);
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                System.out.println("Timer++");
                 timerCounter++;
             }
-        }, TIMER_DELAY_HOURS * 60 * 1000, 1 * 60 * 1000);
+        }, TIMER_DELAY_MINUTES * 60 * 1000, 1 * 60 * 1000);
     }
 
     private int stopListenTimer(){
         int returnValue;
         timer.cancel();
         timer.purge();
+        timer = new Timer();
         returnValue = timerCounter;
         timerCounter = 0;
         return returnValue;
     }
-
-    private String getCurrentHour() {
-        DateFormat df = new SimpleDateFormat("HH");
-        Calendar cal = Calendar.getInstance();
-        return df.format(cal.getTime());
-    }
-
-
 }
 
 

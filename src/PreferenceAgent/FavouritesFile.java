@@ -23,13 +23,13 @@ import java.io.IOException;
 public class FavouritesFile {
 
     public enum Day {
+        SUNDAY,
         MONDAY,
         TUESDAY,
         WEDNESDAY,
         THURSDAY,
         FRIDAY,
         SATURDAY,
-        SUNDAY,
     }
 
     private static DocumentBuilderFactory documentBuilderFactory;
