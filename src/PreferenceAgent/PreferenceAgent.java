@@ -27,6 +27,7 @@ public class PreferenceAgent extends Agent {
 
         musicController = new MusicController();
         musicController.setOnRadioStationChangedListener(stationPreferenceHandler);
+        musicController.setOnPauseListener(stationPreferenceHandler);
 
         mainMenu = new MainMenu(musicController);
 

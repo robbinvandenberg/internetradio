@@ -1,6 +1,9 @@
 package RadioPlayer;
 
-import java.awt.Color;
+import PreferenceAgent.FavouritesFile;
+import PreferenceAgent.Utils.DateUtils;
+
+import java.awt.*;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -95,11 +98,32 @@ public class StationsMenu extends JFrame implements ActionListener, MouseListene
 	private void buildList()
 	{
 		//download all radiostations
-
 		ArrayList<RadioStation> result = radioStationWebservice.getRadiostations();
-
-		System.out.println(result.toString());
 		model.clear();
+		for(int i =1; i < result.size(); ++i) {
+			RadioStation current = result.get(i-1);
+			RadioStation next = result.get(i);
+
+			try {
+				Long currentRadioStationTime = FavouritesFile.load("radiostationFavorites.xml").getTime(current, DateUtils.getCurrentDay());
+				Long nextRadioStationTime = FavouritesFile.load("radiostationFavorites.xml").getTime(next, DateUtils.getCurrentDay());
+
+				if(nextRadioStationTime > currentRadioStationTime) {
+					RadioStation temp = current;
+					current = next;
+					next = temp;
+
+					result.set(i-1, current);
+					result.set(i, next);
+
+					i = 0;
+				}
+
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		for (RadioStation r : result)
 		{
 			JListEntry jlistEntry = new JListEntry(r);

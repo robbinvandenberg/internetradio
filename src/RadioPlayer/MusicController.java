@@ -20,6 +20,10 @@ public class MusicController {
 		void onRadioStationChanged (RadioStation rs);
 	}
 
+	public interface OnPauseListener {
+		void onPause ();
+	}
+
 	private DeviceHandler deviceHandler = new DeviceHandler();
 	private BasicPlayer myMusicPlayer;
 	private BasicController playerController;
@@ -31,7 +35,8 @@ public class MusicController {
 
 	private Thread playMusicThread;
 
-	private ArrayList<OnRadioStationChangedListener> listeners = new ArrayList<>();
+	private ArrayList<OnRadioStationChangedListener> onRadioStationChangedListeners = new ArrayList<>();
+	private ArrayList<OnPauseListener> onPauselisteners = new ArrayList<>();
 	
 	/**
 	 * The current play state
@@ -97,7 +102,7 @@ public class MusicController {
 		});
 		playMusicThread.start();
 
-		for(OnRadioStationChangedListener listener : listeners) {
+		for(OnRadioStationChangedListener listener : onRadioStationChangedListeners) {
 			listener.onRadioStationChanged(rs);
 		}
 	}
@@ -109,6 +114,9 @@ public class MusicController {
 		try {
 			playerController.pause();
 			playState = PlayState.PAUSED;
+			for (OnPauseListener listener : onPauselisteners){
+				listener.onPause();
+			}
 		} catch (BasicPlayerException e) {
 		}
 	}
@@ -203,12 +211,22 @@ public class MusicController {
 	}
 
 	public void setOnRadioStationChangedListener (OnRadioStationChangedListener listener) {
-		listeners.add(listener);
+		onRadioStationChangedListeners.add(listener);
 	}
 
 	public void removeOnRadioStationChangedListener (OnRadioStationChangedListener listener) {
-		if (listeners.contains(listener)) {
-			listeners.remove(listener);
+		if (onRadioStationChangedListeners.contains(listener)) {
+			onRadioStationChangedListeners.remove(listener);
+		}
+	}
+
+	public void setOnPauseListener (OnPauseListener listener) {
+		onPauselisteners.add(listener);
+	}
+
+	public void removeOnPauseListener (OnPauseListener listener) {
+		if (onPauselisteners.contains(listener)) {
+			onPauselisteners.remove(listener);
 		}
 	}
 }

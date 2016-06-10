@@ -1,25 +1,25 @@
 package PreferenceAgent;
 
 import PreferenceAgent.Exceptions.UnableToParseFavoritesFileException;
+import PreferenceAgent.Utils.DateUtils;
 import RadioPlayer.MusicController;
 import RadioPlayer.RadioStation;
 
 import javax.xml.transform.TransformerException;
-import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
  * Created by nick on 17-5-2016.
  */
-public class StationPreferenceHandler implements MusicController.OnRadioStationChangedListener {
+public class StationPreferenceHandler implements MusicController.OnRadioStationChangedListener, MusicController.OnPauseListener {
 
     private RadioStation lastChosenStation = null;
     private Timer timer;
     private int timerCounter = 0;
 
     private static FavouritesFile favoritesFile = null;
-    private static final int UPDATE_THRESHOLD = 0;
+    private static final int UPDATE_THRESHOLD = 10;
     private static final int TIMER_DELAY_MINUTES = 1;
 
     public StationPreferenceHandler() {
@@ -39,7 +39,7 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
 
             if(listenTime >= UPDATE_THRESHOLD) {
                 if(favoritesFile != null) {
-                    FavouritesFile.Day currentDay = getCurrentDay();
+                    DateUtils.Day currentDay = DateUtils.getCurrentDay();
                     try {
                         favoritesFile.appendTime(lastChosenStation, currentDay, listenTime);
                     }
@@ -53,11 +53,22 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
         startListenTimer();
     }
 
-    private FavouritesFile.Day getCurrentDay(){
-        return FavouritesFile.Day.values()[Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1];
+    @Override
+    public void onPause() {
+        if(lastChosenStation != null) {
+            int listenTime = stopListenTimer();
+            if (listenTime >= UPDATE_THRESHOLD) {
+                if (favoritesFile != null) {
+                    DateUtils.Day currentDay = DateUtils.getCurrentDay();
+                    try {
+                        favoritesFile.appendTime(lastChosenStation, currentDay, listenTime);
+                    } catch (TransformerException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
-
-
 
     private void startListenTimer(){
         timer.scheduleAtFixedRate(new TimerTask() {

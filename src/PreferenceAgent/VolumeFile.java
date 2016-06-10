@@ -1,7 +1,7 @@
 package PreferenceAgent;
 
 import PreferenceAgent.Exceptions.UnableToParseVolumeFileException;
-import RadioPlayer.RadioStation;
+import PreferenceAgent.Utils.DateUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,23 +21,6 @@ import java.io.IOException;
  * Created by Patrick on 24-5-2016.
  */
 public class VolumeFile {
-
-    public enum DayPart {
-        NIGHT,
-        MORNING,
-        AFTERNOON,
-        EVENING,
-    }
-
-    public enum Day {
-        SUNDAY,
-        MONDAY,
-        TUESDAY,
-        WEDNESDAY,
-        THURSDAY,
-        FRIDAY,
-        SATURDAY,
-    }
 
     private static DocumentBuilderFactory documentBuilderFactory;
     private static TransformerFactory transformerFactory;
@@ -107,11 +90,11 @@ public class VolumeFile {
     }
 
     private void insertBlankVolumeContent() {
-        for(int i = 0; i < Day.values().length; i++) {
-            Element dayElement = document.createElement(Day.values()[i].toString());
+        for(int i = 0; i < DateUtils.Day.values().length; i++) {
+            Element dayElement = document.createElement(DateUtils.Day.values()[i].toString());
 
-            for(int j = 0; j < DayPart.values().length; j++){
-                Element currentDayPart = document.createElement(DayPart.values()[j].toString());
+            for(int j = 0; j < DateUtils.DayPart.values().length; j++){
+                Element currentDayPart = document.createElement(DateUtils.DayPart.values()[j].toString());
                 currentDayPart.appendChild(document.createTextNode("50"));
                 dayElement.appendChild(currentDayPart);
             }
@@ -126,7 +109,7 @@ public class VolumeFile {
         }
     }
 
-    private boolean dayExists(Day day) {
+    private boolean dayExists(DateUtils.Day day) {
 
         NodeList nodeList = root.getChildNodes();
 
@@ -139,7 +122,7 @@ public class VolumeFile {
         return false;
     }
 
-    public int getVolume(Day day, DayPart dayPart) {
+    public int getVolume(DateUtils.Day day, DateUtils.DayPart dayPart) {
 
         if(!dayExists(day)) {
             insertBlankVolumeContent();
@@ -163,7 +146,7 @@ public class VolumeFile {
         return 0;
     }
 
-    public void setVolume(Day day, DayPart dayPart, final int volume) throws TransformerException {
+    public void setVolume(DateUtils.Day day, DateUtils.DayPart dayPart, final int volume) throws TransformerException {
 
         if(!dayExists(day)) {
             insertBlankVolumeContent();

@@ -1,6 +1,7 @@
 package PreferenceAgent;
 
 import PreferenceAgent.Exceptions.UnableToParseFavoritesFileException;
+import PreferenceAgent.Utils.DateUtils;
 import RadioPlayer.RadioStation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -21,16 +22,6 @@ import java.io.IOException;
  * Created by Patrick on 24-5-2016.
  */
 public class FavouritesFile {
-
-    public enum Day {
-        SUNDAY,
-        MONDAY,
-        TUESDAY,
-        WEDNESDAY,
-        THURSDAY,
-        FRIDAY,
-        SATURDAY,
-    }
 
     private static DocumentBuilderFactory documentBuilderFactory;
     private static TransformerFactory transformerFactory;
@@ -106,8 +97,8 @@ public class FavouritesFile {
         stationElement.setAttribute("id", Integer.toString(radioStation.getId()));
         stationElement.setAttribute("name", radioStation.getName());
 
-        for(int i =0;i < Day.values().length; ++i) {
-            Element day = document.createElement(Day.values()[i].toString());
+        for(int i = 0; i < DateUtils.Day.values().length; ++i) {
+            Element day = document.createElement(DateUtils.Day.values()[i].toString());
             day.appendChild(document.createTextNode("0"));
             stationElement.appendChild(day);
         }
@@ -134,7 +125,7 @@ public class FavouritesFile {
         return false;
     }
 
-    public long getTime(RadioStation radioStation, Day day) {
+    public long getTime(RadioStation radioStation, DateUtils.Day day) {
 
         if(!radioStationExists(radioStation)) {
             insertRadioStation(radioStation);
@@ -157,7 +148,7 @@ public class FavouritesFile {
         return 0;
     }
 
-    public void appendTime(RadioStation radioStation, Day day, final long time) throws TransformerException {
+    public void appendTime(RadioStation radioStation, DateUtils.Day day, final long time) throws TransformerException {
 
         if(!radioStationExists(radioStation)) {
             insertRadioStation(radioStation);
@@ -186,7 +177,7 @@ public class FavouritesFile {
 
     public long getTotalTime(RadioStation radioStation) {
         long totalTime = 0;
-        for(Day day : Day.values()) {
+        for(DateUtils.Day day : DateUtils.Day.values()) {
             totalTime += getTime(radioStation, day);
         }
         return totalTime;
