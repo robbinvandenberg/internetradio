@@ -14,12 +14,12 @@ import java.util.TimerTask;
  */
 public class StationPreferenceHandler implements MusicController.OnRadioStationChangedListener {
 
-    private RadioStation lastChoosenStation = null;
+    private RadioStation lastChosenStation = null;
     private Timer timer;
     private int timerCounter = 0;
 
     private static FavouritesFile favoritesFile = null;
-    private static final int UPDATE_THRESHOLD = 10;
+    private static final int UPDATE_THRESHOLD = 0;
     private static final int TIMER_DELAY_MINUTES = 1;
 
     public StationPreferenceHandler() {
@@ -34,14 +34,14 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
 
     @Override
     public void onRadioStationChanged(RadioStation rs) {
-        if(lastChoosenStation != null){
+        if(lastChosenStation != null){
             int listenTime = stopListenTimer();
 
             if(listenTime >= UPDATE_THRESHOLD) {
                 if(favoritesFile != null) {
                     FavouritesFile.Day currentDay = getCurrentDay();
                     try {
-                        favoritesFile.appendTime(lastChoosenStation, currentDay, listenTime);
+                        favoritesFile.appendTime(lastChosenStation, currentDay, listenTime);
                     }
                     catch (TransformerException e){
                         e.printStackTrace();
@@ -49,7 +49,7 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
                 }
             }
         }
-        lastChoosenStation = rs;
+        lastChosenStation = rs;
         startListenTimer();
     }
 
@@ -63,7 +63,6 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Timer++");
                 timerCounter++;
             }
         }, TIMER_DELAY_MINUTES * 60 * 1000, 1 * 60 * 1000);

@@ -1,6 +1,6 @@
 package PreferenceAgent;
 
-import PreferenceAgent.Exceptions.UnableToParseFavoritesFileException;
+import PreferenceAgent.Exceptions.UnableToParseVolumeFileException;
 import RadioPlayer.RadioStation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -24,10 +24,9 @@ public class VolumeFile {
 
     public enum DayPart {
         NIGHT,
-        MIDNIGHT,
         MORNING,
-        EARLY_AFTERNOON,
         AFTERNOON,
+        EVENING,
     }
 
     public enum Day {
@@ -57,7 +56,7 @@ public class VolumeFile {
         root = document.getDocumentElement();
     }
 
-    public static VolumeFile load(final String filename) throws UnableToParseFavoritesFileException {
+    public static VolumeFile load(final String filename) throws UnableToParseVolumeFileException {
 
         try {
             documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -83,13 +82,13 @@ public class VolumeFile {
             return favoritesFile;
 
         } catch (SAXException e) {
-            throw new UnableToParseFavoritesFileException(e);
+            throw new UnableToParseVolumeFileException(e);
         }  catch (IOException e) {
-            throw new UnableToParseFavoritesFileException(e);
+            throw new UnableToParseVolumeFileException(e);
         } catch (ParserConfigurationException e) {
-            throw new UnableToParseFavoritesFileException(e);
+            throw new UnableToParseVolumeFileException(e);
         } catch (TransformerConfigurationException e) {
-            throw new UnableToParseFavoritesFileException(e);
+            throw new UnableToParseVolumeFileException(e);
         }
     }
 
@@ -113,7 +112,7 @@ public class VolumeFile {
 
             for(int j = 0; j < DayPart.values().length; j++){
                 Element currentDayPart = document.createElement(DayPart.values()[j].toString());
-                currentDayPart.appendChild(document.createTextNode("0"));
+                currentDayPart.appendChild(document.createTextNode("50"));
                 dayElement.appendChild(currentDayPart);
             }
 
