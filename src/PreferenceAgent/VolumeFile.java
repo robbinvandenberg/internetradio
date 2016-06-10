@@ -27,18 +27,27 @@ public class VolumeFile {
     private static DocumentBuilder documentBuilder;
     private static Transformer transformer;
 
-    private static final String filePrefix = "out/production/internetradio/";
-
     private String filename;
     private Document document = null;
     private Element root = null;
 
+    /**
+     * private constructor of VolumeFile
+     * @param filename
+     * @param document
+     */
     private VolumeFile(String filename, Document document) {
         this.filename = filename;
         this.document = document;
         root = document.getDocumentElement();
     }
 
+    /**
+     * Used to parse and load the Volume file xml
+     * @param filename
+     * @return
+     * @throws UnableToParseVolumeFileException
+     */
     public static VolumeFile load(final String filename) throws UnableToParseVolumeFileException {
 
         try {
@@ -48,7 +57,7 @@ public class VolumeFile {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
             transformer = transformerFactory.newTransformer();
 
-            File file = new File(filePrefix + filename);
+            File file = new File(Constants.FILEPREFIX + filename);
 
             if (!file.exists()) {
                 file.createNewFile();
@@ -75,6 +84,10 @@ public class VolumeFile {
         }
     }
 
+    /**
+     * Writes changes to the loaded xml file
+     * @throws TransformerException
+     */
     private void writeToFile() throws TransformerException {
         DOMSource source = new DOMSource(document);
 
@@ -85,10 +98,13 @@ public class VolumeFile {
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 
-        StreamResult result = new StreamResult(filePrefix + filename);
+        StreamResult result = new StreamResult(Constants.FILEPREFIX + filename);
         transformer.transform(source, result);
     }
 
+    /**
+     * Inserts standard data to the xml file
+     */
     private void insertBlankVolumeContent() {
         for(int i = 0; i < DateUtils.Day.values().length; i++) {
             Element dayElement = document.createElement(DateUtils.Day.values()[i].toString());
@@ -109,6 +125,11 @@ public class VolumeFile {
         }
     }
 
+    /**
+     * Checks if a the given day exists in the loaded file
+     * @param day
+     * @return true if given day exists
+     */
     private boolean dayExists(DateUtils.Day day) {
 
         NodeList nodeList = root.getChildNodes();
@@ -122,6 +143,12 @@ public class VolumeFile {
         return false;
     }
 
+    /**
+     * Gets the volume that has been listened to at a given dayPart
+     * @param day
+     * @param dayPart
+     * @return the volume listened to in int
+     */
     public int getVolume(DateUtils.Day day, DateUtils.DayPart dayPart) {
 
         if(!dayExists(day)) {
@@ -146,6 +173,13 @@ public class VolumeFile {
         return 0;
     }
 
+    /**
+     * Sets the volume at a given day and dayPart
+     * @param day
+     * @param dayPart
+     * @param volume
+     * @throws TransformerException
+     */
     public void setVolume(DateUtils.Day day, DateUtils.DayPart dayPart, final int volume) throws TransformerException {
 
         if(!dayExists(day)) {

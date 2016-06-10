@@ -38,26 +38,40 @@ public class VolumePreferenceHandler implements MainMenu.OnVolumeChangedListener
         }
     };
 
+    /**
+     * Constuctor of the VolumePreferenceHandler
+     */
     public VolumePreferenceHandler() {
         timer = new Timer();
         checkDayPartThread = new Thread(StartHandlingDayPartChange);
         checkDayPartThread.start();
         try {
-            volumeFile = VolumeFile.load("volumeHandler.xml");
+            volumeFile = VolumeFile.load(Constants.VOLUME_FILE_FILENAME);
             setVolumeOnBoot();
         } catch (UnableToParseVolumeFileException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * needs to be called to set the correct volume at boot
+     */
     private void setVolumeOnBoot(){
         setDeviceVolume(volumeFile.getVolume(DateUtils.getCurrentDay(), DateUtils.getCurrentDayPart()));
     }
 
+    /**
+     * Sets the volume of the internet radio
+     * @param volume
+     */
     private void setDeviceVolume(int volume){
         DeviceHandler.getInstance().setVolume(volume);
     }
 
+    /**
+     * Gets called when the volume is changed. If the volume gets changed before the specified delay is over the timer gets restarted
+     * @param volume
+     */
     @Override
     public void onVolumeChanged(int volume) {
         lastVolume = volume;
@@ -70,6 +84,9 @@ public class VolumePreferenceHandler implements MainMenu.OnVolumeChangedListener
         writeVolumeAfterDelay();
     }
 
+    /**
+     * Writes volume to xml after a specified amount of time. If the volume gets changed the timer gets restarted
+     */
     private void writeVolumeAfterDelay() {
         taskActive = true;
         timer.schedule(

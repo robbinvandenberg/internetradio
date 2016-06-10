@@ -22,9 +22,12 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
     private static final int UPDATE_THRESHOLD = 10;
     private static final int TIMER_DELAY_MINUTES = 1;
 
+    /**
+     * Constructor of the StationPreferenceHandler
+     */
     public StationPreferenceHandler() {
         try {
-            favoritesFile = FavouritesFile.load("radiostationFavorites.xml");
+            favoritesFile = FavouritesFile.load(Constants.FAVORITES_FILE_FILENAME);
         }
         catch (UnableToParseFavoritesFileException e){
             e.printStackTrace();
@@ -32,6 +35,10 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
         timer = new Timer();
     }
 
+    /**
+     * called when the Radiostation is changed by the user
+     * @param rs
+     */
     @Override
     public void onRadioStationChanged(RadioStation rs) {
         if(lastChosenStation != null){
@@ -53,6 +60,9 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
         startListenTimer();
     }
 
+    /**
+     * Called when the user pauses the playing Radiostation
+     */
     @Override
     public void onPause() {
         if(lastChosenStation != null) {
@@ -70,6 +80,9 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
         }
     }
 
+    /**
+     * Starts the timer that keeps the time listened to a Radiostation in minutes
+     */
     private void startListenTimer(){
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -79,6 +92,10 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
         }, TIMER_DELAY_MINUTES * 60 * 1000, 1 * 60 * 1000);
     }
 
+    /**
+     * Stops the current running timer
+     * @return the time listened to a Radiostation
+     */
     private int stopListenTimer(){
         int returnValue;
         timer.cancel();

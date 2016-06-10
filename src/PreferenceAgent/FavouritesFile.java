@@ -3,10 +3,7 @@ package PreferenceAgent;
 import PreferenceAgent.Exceptions.UnableToParseFavoritesFileException;
 import PreferenceAgent.Utils.DateUtils;
 import RadioPlayer.RadioStation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -28,18 +25,28 @@ public class FavouritesFile {
     private static DocumentBuilder documentBuilder;
     private static Transformer transformer;
 
-    private static final String filePrefix = "out/production/internetradio/";
-
     private String filename;
     private Document document = null;
     private Element root = null;
 
+
+    /**
+     * Private constructor of Favorites file
+     * @param filename
+     * @param document
+     */
     private FavouritesFile(String filename, Document document) {
         this.filename = filename;
         this.document = document;
         root = document.getDocumentElement();
     }
 
+    /**
+     * Used to parse and load the Favorites file xml
+     * @param filename
+     * @return
+     * @throws UnableToParseFavoritesFileException
+     */
     public static FavouritesFile load(final String filename) throws UnableToParseFavoritesFileException {
 
         try {
@@ -50,7 +57,7 @@ public class FavouritesFile {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
             transformer = transformerFactory.newTransformer();
 
-            File file = new File(filePrefix + filename);
+            File file = new File(Constants.FILEPREFIX + filename);
 
             if (!file.exists()) {
                 file.createNewFile();
@@ -77,6 +84,10 @@ public class FavouritesFile {
         }
     }
 
+    /**
+     * Writes changes to the loaded xml file
+     * @throws TransformerException
+     */
     private void writeToFile() throws TransformerException {
         DOMSource source = new DOMSource(document);
 
@@ -87,10 +98,14 @@ public class FavouritesFile {
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 
-        StreamResult result = new StreamResult(filePrefix + filename);
+        StreamResult result = new StreamResult(Constants.FILEPREFIX + filename);
         transformer.transform(source, result);
     }
 
+    /**
+     * Insert radiostation to DOM. Doesn't write to the xml file by itself
+     * @param radioStation
+     */
     private void insertRadioStation(RadioStation radioStation) {
 
         Element stationElement = document.createElement("Station");
@@ -111,6 +126,11 @@ public class FavouritesFile {
         }
     }
 
+    /**
+     * Check if radiostation exists
+     * @param radioStation
+     * @return true if station is loaded from xml file
+     */
     private boolean radioStationExists(RadioStation radioStation) {
 
         NodeList nodeList = root.getElementsByTagName("Station");
@@ -125,6 +145,12 @@ public class FavouritesFile {
         return false;
     }
 
+    /**
+     * Gets the time a Radiostation has been listened to in minutes from a given day
+     * @param radioStation
+     * @param day
+     * @return the time listened in Long
+     */
     public long getTime(RadioStation radioStation, DateUtils.Day day) {
 
         if(!radioStationExists(radioStation)) {
@@ -148,6 +174,13 @@ public class FavouritesFile {
         return 0;
     }
 
+    /**
+     * Appends time to the given Radiostation on a given day
+     * @param radioStation
+     * @param day
+     * @param time
+     * @throws TransformerException
+     */
     public void appendTime(RadioStation radioStation, DateUtils.Day day, final long time) throws TransformerException {
 
         if(!radioStationExists(radioStation)) {
@@ -175,6 +208,11 @@ public class FavouritesFile {
         writeToFile();
     }
 
+    /**
+     * Gets total listen time of all stations
+     * @param radioStation
+     * @return time in Long
+     */
     public long getTotalTime(RadioStation radioStation) {
         long totalTime = 0;
         for(DateUtils.Day day : DateUtils.Day.values()) {
