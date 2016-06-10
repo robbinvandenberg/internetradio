@@ -67,7 +67,7 @@ public final class DeviceHandler {
         //DigitalInput clockwiseSignal = board.getPin(BBBNames.P8_8).as(DigitalInput.class);
         //DigitalInput counterClockwiseSignal = board.getPin(BBBNames.P8_10).as(DigitalInput.class);
 
-		if(!System.getProperty("os.name").startsWith("Windows")) {
+		if(System.getProperty("os.name").contains("Raspbian")) {
 			if(gpioController == null) {
 				gpioController = GpioFactory.getInstance();
 				if(amplifierSignal == null){
