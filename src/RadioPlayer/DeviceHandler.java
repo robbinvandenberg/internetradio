@@ -67,7 +67,7 @@ public final class DeviceHandler {
         //DigitalInput clockwiseSignal = board.getPin(BBBNames.P8_8).as(DigitalInput.class);
         //DigitalInput counterClockwiseSignal = board.getPin(BBBNames.P8_10).as(DigitalInput.class);
 
-		if(System.getProperty("os.name").contains("Raspbian")) {
+		if(isOnRaspbian()) {
 			if(gpioController == null) {
 				gpioController = GpioFactory.getInstance();
 				if(amplifierSignal == null){
@@ -326,16 +326,14 @@ public final class DeviceHandler {
 	public void amplifierSwitch(boolean state){
 		if(state)
 		{
-			if(!System.getProperty("os.name").startsWith("Windows")) {
+			if(isOnRaspbian()) {
 				amplifierSignal.high();
-				System.out.println("Ga aaaaan");
 			}
 		}
 		else
 		{
-			if(!System.getProperty("os.name").startsWith("Windows")) {
+			if(isOnRaspbian()) {
 				amplifierSignal.low();
-				System.out.println("Ga uuiutiuitt");
 			}
 		}
 	}	
@@ -451,6 +449,14 @@ public final class DeviceHandler {
 	 */
 	public void setBass(int x){
 		sBASS = x;
+	}
+
+	/**
+	 * Check if app is running on raspbian
+	 * @return true if running in raspbian
+     */
+	private boolean isOnRaspbian(){
+		return System.getProperty("os.name").contains("Raspbian");
 	}
 
 }

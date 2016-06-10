@@ -1,1 +1,1 @@
-http://VAIO:7778/acc
+http://ubuntu-pc:7778/acc
