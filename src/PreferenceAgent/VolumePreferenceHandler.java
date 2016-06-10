@@ -1,7 +1,7 @@
 package PreferenceAgent;
 
-import PreferenceAgent.Exceptions.UnableToParseFavoritesFileException;
 import PreferenceAgent.Exceptions.UnableToParseVolumeFileException;
+import RadioPlayer.DeviceHandler;
 import RadioPlayer.MainMenu;
 
 import javax.xml.transform.TransformerException;
@@ -10,8 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ScheduledFuture;
 
 /**
  * Created by nick on 17-5-2016.
@@ -21,16 +19,46 @@ public class VolumePreferenceHandler implements MainMenu.OnVolumeChangedListener
     private Timer timer;
     private VolumeFile volumeFile;
     private static final int TIMER_DELAY_MINUTES = 1;
+    private static final int DAYPART_CHECKRATE_MINUTES = 1;
     private int lastVolume = 0;
     private boolean taskActive = false;
+    private Thread checkDayPartThread;
+
+    private Runnable StartHandlingDayPartChange = new Runnable(){
+        public void run(){
+            System.out.println("Runnable running");
+            while(!Thread.currentThread().isInterrupted()){
+                VolumeFile.DayPart lastDaypart = getCurrentDayPart();
+                while (lastDaypart == getCurrentDayPart()){
+                    try {
+                        Thread.sleep(DAYPART_CHECKRATE_MINUTES * 60 * 1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                setDeviceVolume(volumeFile.getVolume(getCurrentDay(),getCurrentDayPart()));
+            }
+        }
+    };
 
     public VolumePreferenceHandler() {
         timer = new Timer();
+        checkDayPartThread = new Thread(StartHandlingDayPartChange);
+        checkDayPartThread.start();
         try {
             volumeFile = VolumeFile.load("volumeHandler.xml");
+            setVolumeOnBoot();
         } catch (UnableToParseVolumeFileException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setVolumeOnBoot(){
+        setDeviceVolume(volumeFile.getVolume(getCurrentDay(),getCurrentDayPart()));
+    }
+
+    private void setDeviceVolume(int volume){
+        DeviceHandler.getInstance().setVolume(volume);
     }
 
     @Override
@@ -42,7 +70,6 @@ public class VolumePreferenceHandler implements MainMenu.OnVolumeChangedListener
             timer.purge();
             timer = new Timer();
         }
-
         writeVolumeAfterDelay();
     }
 
@@ -76,7 +103,6 @@ public class VolumePreferenceHandler implements MainMenu.OnVolumeChangedListener
 
         SimpleDateFormat format = new SimpleDateFormat("HH");
         int currentHour = Integer.parseInt(format.format(date));
-        System.out.println(currentHour);
 
         if (currentHour >= 0 && currentHour < 6) { // night
             return VolumeFile.DayPart.values()[0];

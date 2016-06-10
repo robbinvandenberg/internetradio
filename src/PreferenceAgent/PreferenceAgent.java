@@ -24,14 +24,15 @@ public class PreferenceAgent extends Agent {
      */
     public void setup() {
         stationPreferenceHandler = new StationPreferenceHandler();
-        volumePreferenceHandler = new VolumePreferenceHandler();
 
         musicController = new MusicController();
         musicController.setOnRadioStationChangedListener(stationPreferenceHandler);
+
         mainMenu = new MainMenu(musicController);
 
-        mainMenu.setOnVolumeChangedListener(volumePreferenceHandler);
+        volumePreferenceHandler = new VolumePreferenceHandler();
 
+        mainMenu.setOnVolumeChangedListener(volumePreferenceHandler);
         mainMenu.setVisible(true);
     }
 
