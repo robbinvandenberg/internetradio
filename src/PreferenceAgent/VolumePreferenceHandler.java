@@ -62,7 +62,7 @@ public class VolumePreferenceHandler implements MainMenu.OnVolumeChangedListener
 
     /**
      * Sets the volume of the internet radio
-     * @param volume
+     * @param volume Target volume you want to set
      */
     private void setDeviceVolume(int volume){
         DeviceHandler.getInstance().setVolume(volume);
@@ -70,7 +70,7 @@ public class VolumePreferenceHandler implements MainMenu.OnVolumeChangedListener
 
     /**
      * Gets called when the volume is changed. If the volume gets changed before the specified delay is over the timer gets restarted
-     * @param volume
+     * @param volume The current volume that has been changed
      */
     @Override
     public void onVolumeChanged(int volume) {
