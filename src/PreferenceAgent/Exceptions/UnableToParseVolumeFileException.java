@@ -16,7 +16,7 @@ public class UnableToParseVolumeFileException extends Exception{
 
     /**
      * Unable to parse volume file exception with message contructor
-     * @param message
+     * @param message the exception message
      */
     public UnableToParseVolumeFileException(String message) {
         super(message);
@@ -24,7 +24,7 @@ public class UnableToParseVolumeFileException extends Exception{
 
     /**
      * Unable to parse volume file exception with message and innerexception contructor
-     * @param innerException
+     * @param innerException the inner exception
      */
     public UnableToParseVolumeFileException(Exception innerException) {
         super(innerException);
@@ -32,7 +32,8 @@ public class UnableToParseVolumeFileException extends Exception{
 
     /**
      * Unable to parse volume file exception with message and innerexception contructor
-     * @param innerException
+     * @param message the exception message
+     * @param innerException the inner exception
      */
     public UnableToParseVolumeFileException(String message, Exception innerException) {
         super(message, innerException);

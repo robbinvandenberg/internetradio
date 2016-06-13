@@ -32,8 +32,8 @@ public class FavouritesFile {
 
     /**
      * Private constructor of Favorites file
-     * @param filename
-     * @param document
+     * @param filename The filename of the favorites file
+     * @param document The document of the favorites file
      */
     private FavouritesFile(String filename, Document document) {
         this.filename = filename;
@@ -43,9 +43,9 @@ public class FavouritesFile {
 
     /**
      * Used to parse and load the Favorites file xml
-     * @param filename
-     * @return
-     * @throws UnableToParseFavoritesFileException
+     * @param filename The filename of the favorites file you want to load
+     * @return Gives the loaded favorites file
+     * @throws UnableToParseFavoritesFileException throws the favorites file exception
      */
     public static FavouritesFile load(final String filename) throws UnableToParseFavoritesFileException {
 
@@ -104,7 +104,7 @@ public class FavouritesFile {
 
     /**
      * Insert radiostation to DOM. Doesn't write to the xml file by itself
-     * @param radioStation
+     * @param radioStation The radiostation you want to insert
      */
     private void insertRadioStation(RadioStation radioStation) {
 
@@ -128,7 +128,7 @@ public class FavouritesFile {
 
     /**
      * Check if radiostation exists
-     * @param radioStation
+     * @param radioStation The radiostation you want to check
      * @return true if station is loaded from xml file
      */
     private boolean radioStationExists(RadioStation radioStation) {
@@ -147,8 +147,8 @@ public class FavouritesFile {
 
     /**
      * Gets the time a Radiostation has been listened to in minutes from a given day
-     * @param radioStation
-     * @param day
+     * @param radioStation The radiostation you want peek the time of
+     * @param day The day of the radiostation you want to peek
      * @return the time listened in Long
      */
     public long getTime(RadioStation radioStation, DateUtils.Day day) {
@@ -176,10 +176,10 @@ public class FavouritesFile {
 
     /**
      * Appends time to the given Radiostation on a given day
-     * @param radioStation
-     * @param day
-     * @param time
-     * @throws TransformerException
+     * @param radioStation The target radiostation
+     * @param day The target day
+     * @param time The time you want to append
+     * @throws TransformerException throws the tranformer exception
      */
     public void appendTime(RadioStation radioStation, DateUtils.Day day, final long time) throws TransformerException {
 
@@ -210,7 +210,7 @@ public class FavouritesFile {
 
     /**
      * Gets total listen time of all stations
-     * @param radioStation
+     * @param radioStation The target radio station you want the total time of
      * @return time in Long
      */
     public long getTotalTime(RadioStation radioStation) {

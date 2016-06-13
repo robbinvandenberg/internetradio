@@ -16,7 +16,7 @@ public class UnableToParseFavoritesFileException extends Exception{
 
     /**
      * Unable to parse favorites file exception for super class with message constructor
-     * @param message
+     * @param message the exception message
      */
     public UnableToParseFavoritesFileException(String message) {
         super(message);
@@ -24,7 +24,7 @@ public class UnableToParseFavoritesFileException extends Exception{
 
     /**
      * Unable to parse favorites file exception for super class with inner exception
-     * @param innerException
+     * @param innerException the inner exception
      */
     public UnableToParseFavoritesFileException(Exception innerException) {
         super(innerException);
@@ -32,8 +32,8 @@ public class UnableToParseFavoritesFileException extends Exception{
 
     /**
      * Unable to parse favorites file exception for super class with message and inner exception
-     * @param message
-     * @param innerException
+     * @param message the exception message
+     * @param innerException the inner exception
      */
     public UnableToParseFavoritesFileException(String message, Exception innerException) {
         super(message, innerException);
