@@ -210,20 +210,36 @@ public class MusicController {
 		}
 	}
 
+	/**
+	 * Setter for the radiostation changed listener
+	 * @param listener The listener
+     */
 	public void setOnRadioStationChangedListener (OnRadioStationChangedListener listener) {
 		onRadioStationChangedListeners.add(listener);
 	}
 
+	/**
+	 * Remove the on radiostation changed listener
+	 * @param listener The listener
+     */
 	public void removeOnRadioStationChangedListener (OnRadioStationChangedListener listener) {
 		if (onRadioStationChangedListeners.contains(listener)) {
 			onRadioStationChangedListeners.remove(listener);
 		}
 	}
 
+	/**
+	 * Setter for the on pause listener
+	 * @param listener The listener
+     */
 	public void setOnPauseListener (OnPauseListener listener) {
 		onPauselisteners.add(listener);
 	}
 
+	/**
+	 * Remove the on pause listener
+	 * @param listener The listener
+     */
 	public void removeOnPauseListener (OnPauseListener listener) {
 		if (onPauselisteners.contains(listener)) {
 			onPauselisteners.remove(listener);
