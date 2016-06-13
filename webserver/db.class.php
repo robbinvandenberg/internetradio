@@ -1,6 +1,13 @@
 <?php
+/**
+    Class to retrieve the radiostations from database
+*/
 class InternetradioPDO extends PDO
 {
+    /**
+      * Read the ini file to load the config parameters.
+      * @param $file The ini file
+      */
     public function __construct($file = 'db.ini')
     {
         if (!$settings = parse_ini_file($file, TRUE)) throw new exception('Unable to open ' . $file . '.');
@@ -40,7 +47,7 @@ class InternetradioPDO extends PDO
     }
 
 	/**
-	 * Executes a SELECT query on the COUNT of a given filter
+	 * (NOT USED) Executes a SELECT query on the COUNT of a given filter
 	 * and returns the count
 	 * 
 	 * @param key

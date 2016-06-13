@@ -1,6 +1,9 @@
 <?php
 
-// Process API GET CALLS
+/**
+  * Process API GET CALLS
+  * (e.g. yourapidomain.nl/api.php?query=radiostations , returns all radiostations)
+ */
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
 	if(isset($_GET['query'])) {
 		switch($_GET['query']) {
