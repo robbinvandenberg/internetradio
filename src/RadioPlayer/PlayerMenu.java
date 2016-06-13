@@ -5,5 +5,5 @@ package RadioPlayer;
  */
 public interface PlayerMenu {
 
-    public void setRadioStation(RadioStation radioStation);
+    void setRadioStation(RadioStation radioStation);
 }
