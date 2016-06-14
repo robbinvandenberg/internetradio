@@ -37,7 +37,7 @@ public class StationPreferenceHandler implements MusicController.OnRadioStationC
 
     /**
      * called when the Radiostation is changed by the user
-     * @param rs
+     * @param rs The target radiostation that has been changed
      */
     @Override
     public void onRadioStationChanged(RadioStation rs) {

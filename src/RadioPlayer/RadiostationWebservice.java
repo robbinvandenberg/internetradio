@@ -74,9 +74,14 @@ public class RadiostationWebservice {
 		}
 		return stations;
 	}
-	
 
 
+	/**
+	 * Get the data over HTTP request from the query
+	 * @param query The query to be executed
+	 * @return json object with the content
+	 * @throws IOException
+     */
 	private JSONArray HTTPGetDataFromQuery(String query) throws IOException {
 		URL url = new URL(webserviceUri + query);
 		BufferedReader streamReader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));

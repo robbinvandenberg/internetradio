@@ -33,8 +33,8 @@ public class VolumeFile {
 
     /**
      * private constructor of VolumeFile
-     * @param filename
-     * @param document
+     * @param filename The filename of the volume file
+     * @param document The document of the colume file
      */
     private VolumeFile(String filename, Document document) {
         this.filename = filename;
@@ -44,9 +44,9 @@ public class VolumeFile {
 
     /**
      * Used to parse and load the Volume file xml
-     * @param filename
-     * @return
-     * @throws UnableToParseVolumeFileException
+     * @param filename The filename of the volume file you want to load
+     * @return gives the  loaded volume file
+     * @throws UnableToParseVolumeFileException throws the unable to parse volume file exception
      */
     public static VolumeFile load(final String filename) throws UnableToParseVolumeFileException {
 
@@ -127,7 +127,7 @@ public class VolumeFile {
 
     /**
      * Checks if a the given day exists in the loaded file
-     * @param day
+     * @param day The target day you want to check
      * @return true if given day exists
      */
     private boolean dayExists(DateUtils.Day day) {
@@ -145,9 +145,9 @@ public class VolumeFile {
 
     /**
      * Gets the volume that has been listened to at a given dayPart
-     * @param day
-     * @param dayPart
-     * @return the volume listened to in int
+     * @param day The target day
+     * @param dayPart the target daypart you want the current volume of
+     * @return gives the current volume of the selected daypart
      */
     public int getVolume(DateUtils.Day day, DateUtils.DayPart dayPart) {
 
@@ -175,10 +175,10 @@ public class VolumeFile {
 
     /**
      * Sets the volume at a given day and dayPart
-     * @param day
-     * @param dayPart
-     * @param volume
-     * @throws TransformerException
+     * @param day Target day
+     * @param dayPart Target daypart you want to set the volume to
+     * @param volume targtet volume you want to set
+     * @throws TransformerException Throws the tranformer exception
      */
     public void setVolume(DateUtils.Day day, DateUtils.DayPart dayPart, final int volume) throws TransformerException {
 

@@ -288,6 +288,11 @@ public class MainMenu extends JFrame implements ActionListener,ChangeListener, D
 	public void windowDeactivated(WindowEvent e) {
 	}
 
+	/**
+	 * Used to set the radiostation for the main menu
+	 * @param radioStation The radiostation to be set
+     */
+
 	@Override
 	public void setRadioStation(RadioStation radioStation) {
 		currentRadioStation = radioStation;
@@ -296,10 +301,18 @@ public class MainMenu extends JFrame implements ActionListener,ChangeListener, D
 		stationGenreLabel.setText(currentRadioStation.getGenre());
 	}
 
+	/**
+	 * Set the volume on changed listener
+	 * @param listener The Volume listener
+     */
 	public void setOnVolumeChangedListener(OnVolumeChangedListener listener) {
 		listeners.add(listener);
 	}
 
+	/**
+	 * Remove the on volume changed listener
+	 * @param listener The listener to be removed
+     */
 	public void removeOnVolumeChangedListener (OnVolumeChangedListener listener) {
 		if (listeners.contains(listener)) {
 			listeners.remove(listener);
