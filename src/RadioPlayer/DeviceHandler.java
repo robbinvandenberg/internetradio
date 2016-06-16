@@ -67,7 +67,7 @@ public final class DeviceHandler {
         //DigitalInput clockwiseSignal = board.getPin(BBBNames.P8_8).as(DigitalInput.class);
         //DigitalInput counterClockwiseSignal = board.getPin(BBBNames.P8_10).as(DigitalInput.class);
 
-		if(isOnRaspbian()) {
+		if(isOnLinux()) {
 			if(gpioController == null) {
 				gpioController = GpioFactory.getInstance();
 				if(amplifierSignal == null){
@@ -326,13 +326,13 @@ public final class DeviceHandler {
 	public void amplifierSwitch(boolean state){
 		if(state)
 		{
-			if(isOnRaspbian()) {
+			if(isOnLinux()) {
 				amplifierSignal.high();
 			}
 		}
 		else
 		{
-			if(isOnRaspbian()) {
+			if(isOnLinux()) {
 				amplifierSignal.low();
 			}
 		}
@@ -455,8 +455,8 @@ public final class DeviceHandler {
 	 * Check if app is running on raspbian
 	 * @return true if running in raspbian
      */
-	private boolean isOnRaspbian(){
-		return System.getProperty("os.name").contains("Raspbian");
+	private boolean isOnLinux(){
+		return System.getProperty("os.name").contains("Linux");
 	}
 
 }

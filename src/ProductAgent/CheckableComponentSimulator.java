@@ -4,6 +4,7 @@ import ProductAgent.Exceptions.UnableToParseComponentFileException;
 import ProductAgent.Exceptions.UnableToParseSimulationFileException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -109,10 +110,10 @@ public class CheckableComponentSimulator extends CheckableComponent {
 
     public static CheckableComponent fromFile(String fileName) throws UnableToParseComponentFileException, UnableToParseSimulationFileException {
         ComponentFile file = ComponentFile.Load(fileName);
-        String paths[] = fileName.split("[/]");
+        String paths[] = fileName.split("\\" + File.separator);
         String path = "";
         for(int i = 0; i < paths.length-1; i++){
-            path += paths[i] + '/';
+            path += paths[i] + File.separator;
         }
         path += "simulation.xml";
         SimulationFile simFile = SimulationFile.Load(path);
