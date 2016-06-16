@@ -28,4 +28,6 @@ public class Constants {
      */
 
     public static final String FILEPREFIX = DeviceHandler.getInstance().ExecutionPath.getAbsolutePath()+ File.separator;
+
+    public static final String PREFERENCE_DIR = File.separator + "preferences" + File.separator;
 }

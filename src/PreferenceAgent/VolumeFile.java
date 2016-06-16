@@ -53,7 +53,7 @@ public class VolumeFile {
 
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
             transformer = transformerFactory.newTransformer();
-            File file = new File(Constants.FILEPREFIX + filename);
+            File file = new File(Constants.FILEPREFIX + Constants.PREFERENCE_DIR + filename);
 
             if (!file.exists()) {
                 file.createNewFile();

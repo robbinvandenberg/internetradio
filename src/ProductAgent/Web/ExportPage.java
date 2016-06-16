@@ -1,14 +1,13 @@
 package ProductAgent.Web;
 
+import PreferenceAgent.Constants;
 import ProductAgent.ExportZip;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import com.sun.xml.internal.bind.CycleRecoverable;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 
 /**
  * Created by robbin on 6-6-2016.
@@ -24,16 +23,18 @@ public class ExportPage implements HttpHandler {
         httpExchange.sendResponseHeaders(200, 0);
 
         // Set default path
-        Path dir = FileSystems.getDefault().getPath("");
+        /*Path dir = FileSystems.getDefault().getPath("");
         // Try get the path to project folder
         try {
             dir = FileSystems.getDefault().getPath(new File(".").getCanonicalPath() + "\\src\\components");
         } catch(IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         // Generate the zip file
-        ExportZip zip = new ExportZip(dir.toAbsolutePath().toString(), httpExchange.getResponseBody());
+        //ExportZip zip = new ExportZip(dir.toAbsolutePath().toString(), httpExchange.getResponseBody());
+        ExportZip zip = new ExportZip(Constants.FILEPREFIX + "components", httpExchange.getResponseBody());
+        //zip.addExtraDirectory(Constants.FILEPREFIX + Constants.PREFERENCE_DIR);
         zip.zipIt();
 
         return;

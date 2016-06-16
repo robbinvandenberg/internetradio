@@ -1,5 +1,6 @@
 package ProductAgent;
 
+import PreferenceAgent.Constants;
 import ProductAgent.Exceptions.UnableToParseComponentFileException;
 import ProductAgent.Exceptions.UnableToParseSimulationFileException;
 import ProductAgent.Exceptions.UnableToStoreComponentFileException;
@@ -123,23 +124,25 @@ public class ProductAgent extends Agent {
         };
 
         // Set default test path
-        Path dir = FileSystems.getDefault().getPath("");
+        /*Path dir = FileSystems.getDefault().getPath("");
         // Try get the path to project folder
         try {
             dir = FileSystems.getDefault().getPath(new File(".").getCanonicalPath() + "\\src\\components\\" + componentType);
         } catch(IOException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        Path dir = new File(Constants.FILEPREFIX + "components" + File.separator + componentType).toPath();
 
         // Process all the components inside checkable components folder
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, filter)) {
             for (Path path : stream) {
                 // Iterate over the paths in the directory and add found components
                 if(componentType.equals("checkable")) {
-                    addComponentToCheckAbles("components/" + componentType + "/" + path.getFileName() + "/componentInfo.xml");
+                    addComponentToCheckAbles("components" + File.separator + componentType + File.separator + path.getFileName() + File.separator + "componentInfo.xml");
                 }
                 else {
-                    addComponentToNonCheckAbles("components/" + componentType + "/" + path.getFileName() + "/componentInfo.xml");
+                    addComponentToNonCheckAbles("components" + File.separator + componentType + File.separator + path.getFileName() + File.separator + "componentInfo.xml");
                 }
             }
         } catch (IOException e) {

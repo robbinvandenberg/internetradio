@@ -1,8 +1,8 @@
 package ProductAgent;
 
+import PreferenceAgent.Constants;
 import ProductAgent.Exceptions.UnableToParseComponentFileException;
 import ProductAgent.Exceptions.UnableToStoreComponentFileException;
-import jade.util.leap.Collection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -33,7 +33,7 @@ import java.util.Vector;
  */
 public class ComponentFile {
 
-    private static final String filePrefix = "out/production/internetradio/";
+    private static final String filePrefix = Constants.FILEPREFIX;
     private static final String dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
     private String fileName;
     private Document document;
