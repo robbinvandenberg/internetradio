@@ -18,7 +18,7 @@ import org.json.JSONObject;
  * favorite XML read and write functionality.
  */
 public class RadiostationWebservice {
-	private static final String webserviceUri = "http://muelders.nl/api.php?query=";
+	private static final String webserviceUri = "http://internetradio.000webhostapp.com/api.php?query=";
 	
 	/**
 	 * 
